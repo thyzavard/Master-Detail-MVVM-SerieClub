@@ -1,0 +1,42 @@
+﻿<Window x:Name="Window_PersoProfil" x:Class="Projet.Presentation.Forms.WindowPersoProfil"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Projet.Presentation.Forms"
+        mc:Ignorable="d"
+        Title="Personnaliser son profil" Height="380" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False">
+    <Grid>
+        <Label x:Name="l_test"  ></Label>
+        <StackPanel Margin="0,10,0,0">
+            <Label HorizontalAlignment="Center">Photo de profil</Label>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Image Height="75" Width="75"></Image>
+                <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10">Parcourir...</Button>
+            </StackPanel>
+
+            <Label x:Name="labele" HorizontalAlignment="Center">Description</Label>
+            <TextBox Name="TextBox_desc" Width="200" Height="50"></TextBox>
+            <Label HorizontalAlignment="Center">Date de naissance</Label>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <ComboBox x:Name="cmbJour"></ComboBox>
+                <Label x:Name="l_s1">/</Label>
+                <ComboBox x:Name="cmbMois"></ComboBox>
+                <Label x:Name="l_s2">/</Label>
+                <ComboBox x:Name="cmbAnnee"></ComboBox>
+            </StackPanel>
+            <Label HorizontalAlignment="Center">Sexe</Label>
+            <ComboBox x:Name="cmbSexe" Width="120"></ComboBox>
+
+            <Grid>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20">
+                    <Button Margin="5" BorderBrush="Red" Width="75" Click="Retour_Click">Retour</Button>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right" Margin="20">
+                    <Button Margin="5" BorderBrush="Green" Width="75" Click="Confirm_Click">Sauvegarder</Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

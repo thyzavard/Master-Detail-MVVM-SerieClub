@@ -1,0 +1,36 @@
+﻿<Window x:Class="Projet.Presentation.Forms.WindowAdd"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Projet.Presentation.Forms"
+        mc:Ignorable="d"
+        Title="Ajout d'une série" Height="440" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel Margin="0,10,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Image Height="75" Width="75"></Image>
+                <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10">Parcourir...</Button>
+            </StackPanel>
+            <Label HorizontalAlignment="Center">Nom de la série</Label>
+            <TextBox x:Name="textbox_NomSerie" Width="120" MaxLength="80"></TextBox>
+            <Label HorizontalAlignment="Center">Description</Label>
+            <TextBox x:Name="textbox_DescSerie"  Width="200" Height="50" MaxLength="500"></TextBox>
+            <Label HorizontalAlignment="Center">Genre</Label>
+            <TextBox x:Name="textbox_Genre" Width="120" MaxLength="80"></TextBox>
+            <Label HorizontalAlignment="Center">Producteur</Label>
+            <TextBox x:Name="textbox_Producteur" Width="120" MaxLength="80"></TextBox>
+            <Label HorizontalAlignment="Center">Durée moyenne des épisodes</Label>
+            <TextBox x:Name="textbox_nbEp" Width="120" MaxLength="80"></TextBox>
+
+            <Grid>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
+                    <Button Margin="5" BorderBrush="Red" Width="75" Click="Retour_Click">Retour</Button>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right" Margin="10">
+                    <Button Margin="5" BorderBrush="Green" Width="75">Ajouter</Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,28 @@
+﻿<Window x:Name="WindowConnexion" x:Class="Projet.Presentation.Forms.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Projet.Presentation.Forms"
+        mc:Ignorable="d"
+        Title="Série Club" Height="240" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel Margin="0,10,0,0">
+            <Label HorizontalAlignment="Center">Identifiant</Label>
+            <TextBox Name="textboxId_Acc" Width="120" MaxLength="15"></TextBox>
+            <Label HorizontalAlignment="Center">Mot de passe</Label>
+            <PasswordBox Name="passwordBox_Acc" Width="120" MaxLength="40"></PasswordBox>
+            <Button x:Name="Ok_btn" Margin="10" Width="75" BorderBrush="Green" Click="btnConfirmer_Click">Confirmer</Button>
+            <Button Click="Button_Click">Test</Button>
+            <Grid>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20">
+                    <Button Margin="5" BorderBrush="Red" Width="75" Click="btnQuitter_Click">Quitter</Button>
+                </StackPanel>
+                <TextBlock HorizontalAlignment="Right" Margin="20">
+                    <Button Margin="5" BorderBrush="Orange" Width="75" Click="btnInscription_Click">S'inscrire</Button>
+                </TextBlock>
+            </Grid>
+        </StackPanel>
+
+    </Grid>
+</Window>

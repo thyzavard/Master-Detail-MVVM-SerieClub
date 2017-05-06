@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="Projet.Presentation.Forms.ViewProfil"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Projet.Presentation.Forms"
+             mc:Ignorable="d" 
+             d:DesignHeight="569" d:DesignWidth="742" FontSize="20">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="Bisque" Orientation="Horizontal">
+            <!--<Image Width="100" Height="100" Margin="80,0,20,0"/>-->
+            <Rectangle Width="100" Height="100" Fill="#FF4B0808" Margin="80,0,20,0"></Rectangle>
+            <StackPanel VerticalAlignment="Center">
+                <Label x:Name="l_pseudoUser" FontSize="25">Pseudo</Label>
+                <Label x:Name="l_descritpion">Description...</Label>
+            </StackPanel>
+        </StackPanel>
+
+        <Label Content="Série favorites" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center"></Label>
+        
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3">
+            
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>
