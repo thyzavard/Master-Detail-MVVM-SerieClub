@@ -42,6 +42,7 @@
                 <Button x:Name="btn_Profil" Margin="20" Click="Profil_Click">Profil</Button>
                 <Button Margin="20" FontSize="15" Click="PersoProfil_Click">Personnaliser le profil</Button>
                 <Button Margin="20" Click="btnDeco_Click">Se déconnecter</Button>
+                <Button x:Name="btn_admin" Margin="20" Click="admin_Click">Administration</Button>
             </StackPanel>
         </DockPanel>
 

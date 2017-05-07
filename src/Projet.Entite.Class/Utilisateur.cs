@@ -14,6 +14,7 @@ namespace Projet.Entite.Class
         public String sexe { get; set; }
         public string dateDeNaissance { get; set; }
         public List<Serie> serieadd { get; set; }
+        public bool modo { get; set; }
 
         public Utilisateur(string pseudo, string password)
         {

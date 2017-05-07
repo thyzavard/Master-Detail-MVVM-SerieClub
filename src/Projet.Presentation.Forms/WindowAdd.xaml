@@ -5,32 +5,106 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Projet.Presentation.Forms"
         mc:Ignorable="d"
-        Title="Ajout d'une série" Height="440" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Panneau de configuration" Height="500" Width="310" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <StackPanel Margin="0,10,0,0">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Image Height="75" Width="75"></Image>
-                <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10">Parcourir...</Button>
-            </StackPanel>
-            <Label HorizontalAlignment="Center">Nom de la série</Label>
-            <TextBox x:Name="textbox_NomSerie" Width="120" MaxLength="80"></TextBox>
-            <Label HorizontalAlignment="Center">Description</Label>
-            <TextBox x:Name="textbox_DescSerie"  Width="200" Height="50" MaxLength="500"></TextBox>
-            <Label HorizontalAlignment="Center">Genre</Label>
-            <TextBox x:Name="textbox_Genre" Width="120" MaxLength="80"></TextBox>
-            <Label HorizontalAlignment="Center">Producteur</Label>
-            <TextBox x:Name="textbox_Producteur" Width="120" MaxLength="80"></TextBox>
-            <Label HorizontalAlignment="Center">Durée moyenne des épisodes</Label>
-            <TextBox x:Name="textbox_nbEp" Width="120" MaxLength="80"></TextBox>
+        <TabControl>
+            <TabItem Header="Ajouter">
+                <StackPanel Margin="0,10,0,0">
+                    <Label HorizontalAlignment="Center">Image de la série</Label>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Image Height="75" Width="75"></Image>
+                        <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10">Parcourir...</Button>
+                    </StackPanel>
+                    <Label HorizontalAlignment="Center">Nom de la série</Label>
+                    <TextBox x:Name="textbox_NomSerie" Width="120" MaxLength="80"></TextBox>
+                    <Label HorizontalAlignment="Center">Description</Label>
+                    <TextBox x:Name="textbox_DescSerie"  Width="200" Height="50" MaxLength="500"></TextBox>
+                    <Label HorizontalAlignment="Center">Genre</Label>
+                    <ComboBox x:Name="cmb_genre" Width="120"></ComboBox>
+                    <Label HorizontalAlignment="Center">Producteur</Label>
+                    <TextBox x:Name="textbox_Producteur" Width="120" MaxLength="80"></TextBox>
+                    <Label HorizontalAlignment="Center">Durée moyenne des épisodes</Label>
+                    <TextBox x:Name="textbox_dureep" Width="120" MaxLength="80"></TextBox>
 
-            <Grid>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
-                    <Button Margin="5" BorderBrush="Red" Width="75" Click="Retour_Click">Retour</Button>
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
+                            <Button Margin="5" BorderBrush="Red" Width="75" Click="Retour_Click">Retour</Button>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Right" Margin="10">
+                            <Button Margin="5" BorderBrush="Green" Width="75" Click="Confirm_Click">Ajouter</Button>
+                        </StackPanel>
+                    </Grid>
                 </StackPanel>
-                <StackPanel HorizontalAlignment="Right" Margin="10">
-                    <Button Margin="5" BorderBrush="Green" Width="75">Ajouter</Button>
+            </TabItem>
+            
+            <TabItem Header="Modifier">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="0,10,0,0">
+                        <Label HorizontalAlignment="Center">Série à modifier</Label>
+                        <ComboBox x:Name="cmbserie" Width="150"></ComboBox>
+                        <Button x:Name="ok_btn" Width="75" Margin="0,10,0,0" Click="ok_btn_Click">Ok</Button>
+
+                        <Label HorizontalAlignment="Center" Margin="0,15,0,0">Image de la série</Label>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Image x:Name="imgmodif" Height="75" Width="75"></Image>
+                            <Button x:Name="btnmodif_parcourir" Width="75" Height="25" VerticalAlignment="Bottom" Margin="10">Parcourir...</Button>
+                        </StackPanel>
+                        <Label HorizontalAlignment="Center">Description</Label>
+                        <TextBox x:Name="textboxmodif_DescSerie"  Width="200" Height="50" MaxLength="500"></TextBox>
+                        <Label HorizontalAlignment="Center">Genre</Label>
+                        <ComboBox x:Name="cmb_genremodif" Width="120"></ComboBox>
+                        <Label HorizontalAlignment="Center">Producteur</Label>
+                        <TextBox x:Name="textboxmodif_Producteur" Width="120" MaxLength="80"></TextBox>
+                        <Label HorizontalAlignment="Center">Durée moyenne des épisodes</Label>
+                        <TextBox x:Name="textboxmodif_dureep" Width="120" MaxLength="80"></TextBox>
+
+
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
+                                <Button Margin="5" BorderBrush="Red" Width="75" Click="Retour_Click">Retour</Button>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Right" Margin="10">
+                                <Button Margin="5" BorderBrush="Green" Width="75" Click="Modif_Click" >Modifier</Button>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+                
+            </TabItem>
+            
+            <TabItem Header="Supprimer">
+                <StackPanel Margin="0,150,0,0">
+                    <Label HorizontalAlignment="Center">Choisir la série à supprimer</Label>
+                    <ComboBox x:Name="cmbsuppr" Width="150"></ComboBox>
+                    
+                    <Grid Margin="0,140,0,0">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
+                            <Button Margin="5" BorderBrush="Red" Width="75" Click="Retour_Click">Retour</Button>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Right" Margin="10">
+                            <Button Margin="5" BorderBrush="Green" Width="75" Click="Supprimer_Click" >Supprimer</Button>
+                        </StackPanel>
+                    </Grid>
                 </StackPanel>
-            </Grid>
-        </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Gestion modo">
+                <StackPanel Margin="0,150,0,0">
+                    <Label HorizontalAlignment="Center">Choisir le pseudo de l'utilisateur</Label>
+                    <ComboBox x:Name="cmb_pseudo" Width="120"></ComboBox>
+
+                    <Grid Margin="0,10,0,0">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
+                            <Button Margin="5" BorderBrush="Red" Width="75" Click="down_Click">Destituer</Button>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Right" Margin="10">
+                            <Button Margin="5" BorderBrush="Green" Width="75" Click="up_Click" >Promouvoir</Button>
+                        </StackPanel>
+                    </Grid>
+                    <Button Width="75" Margin="0,140,0,0" BorderBrush="Red" Click="Retour_Click">Retour</Button>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+        
     </Grid>
 </Window>

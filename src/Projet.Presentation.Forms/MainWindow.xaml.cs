@@ -30,13 +30,6 @@ namespace Projet.Presentation.Forms
 
         private void btnConfirmer_Click(object sender, RoutedEventArgs e)
         {
-			if (textboxId_Acc.Text == "admin" && passwordBox_Acc.Password == "admin")
-            {
-                WindowAdd add = new WindowAdd();
-                this.Hide();
-                add.Show();
-            }
-
             if(textboxId_Acc.Text != "" || passwordBox_Acc.Password != "")
             {
                 if(Service.Fonctions.GestionBDD.verifLoginMdp(textboxId_Acc.Text, passwordBox_Acc.Password))

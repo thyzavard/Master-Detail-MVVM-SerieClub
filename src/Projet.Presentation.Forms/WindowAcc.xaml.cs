@@ -26,6 +26,15 @@ namespace Projet.Presentation.Forms
             btn_Acc.IsEnabled = false;
             l_user.Content = user.pseudo;
             utilisateur = user;
+
+            if (user.modo)
+            {
+                btn_admin.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                btn_admin.Visibility = Visibility.Hidden;
+            }
         }
 
         private void Acceuil_Click(object sender, RoutedEventArgs e)
@@ -54,6 +63,12 @@ namespace Projet.Presentation.Forms
         private void PersoProfil_Click(object sender, RoutedEventArgs e)
         {
             WindowPersoProfil w = new WindowPersoProfil(utilisateur);
+            w.Show();
+        }
+
+        private void admin_Click(object sender, RoutedEventArgs e)
+        {
+            WindowAdd w = new WindowAdd();
             w.Show();
         }
     }

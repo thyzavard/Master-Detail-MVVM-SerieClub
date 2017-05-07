@@ -33,11 +33,12 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <StackPanel>
-                            <TextBlock Text="{Binding nom}"></TextBlock>
-                            <Button Width="150">Add</Button>
-                            <TextBlock Text="{Binding note}"></TextBlock>
-                        </StackPanel>
+                        <StackPanel Margin="30,0,30,0">
+                                <TextBlock Text="{Binding nom}" HorizontalAlignment="Center" FontSize="15"></TextBlock>
+                                <TextBlock Text="{Binding note}" FontSize="12" HorizontalAlignment="Center">/10</TextBlock>
+                                <Rectangle Height="100" Width="75" Fill="Brown"></Rectangle>
+                                <Button FontSize="10" BorderBrush="Orange">Add</Button>
+                            </StackPanel>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
