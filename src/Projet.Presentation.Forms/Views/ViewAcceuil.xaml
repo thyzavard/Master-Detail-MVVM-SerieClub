@@ -20,10 +20,14 @@
            <RowDefinition Height="*"/>
            <RowDefinition Height="Auto"/>
            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+           <RowDefinition Height="Auto"/>
+           <RowDefinition Height="*"/>
+           <RowDefinition Height="Auto"/>
+           <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-            <Label x:Name="l_genre" Grid.Row="0" Grid.ColumnSpan="3" Background="Beige">Action</Label>
-        <ListBox Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding listserie}" Background="Cornsilk">
+        <Label x:Name="l_genre" Grid.Row="0" Grid.ColumnSpan="3" Background="Beige">Action</Label>
+        <ListBox Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding listserieAction}" Background="Cornsilk">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel></WrapPanel>
@@ -34,30 +38,109 @@
                 <DataTemplate>
                     <Grid>
                         <StackPanel Margin="30,0,30,0">
-                                <TextBlock Text="{Binding nom}" HorizontalAlignment="Center" FontSize="15"></TextBlock>
+                                <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40">Add</Button>
+                                <Rectangle Height="130" Width="90" Fill="Brown"></Rectangle>
+                                <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
                                 <TextBlock Text="{Binding note}" FontSize="12" HorizontalAlignment="Center">/10</TextBlock>
-                                <Rectangle Height="100" Width="75" Fill="Brown"></Rectangle>
-                                <Button FontSize="10" BorderBrush="Orange">Add</Button>
                             </StackPanel>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        
-        <Label Grid.Row="2" Grid.ColumnSpan="3" Background="Beige">Horreur</Label>
-       
-        
-        
-        <Label Grid.Row="4" Grid.ColumnSpan="3" Background="Beige">Fantastique</Label>
 
-        
-            
-            
+            <Label Grid.Row="2" Grid.ColumnSpan="3" Background="Beige">Horreur</Label>
+            <ListBox Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding listserieHorreur}" Background="Cornsilk">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <StackPanel Margin="30,0,30,0">
+                                <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40">Add
+                                </Button>
+                                <Rectangle Height="120" Width="90" Fill="Brown"></Rectangle>
+                                <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
+                                <TextBlock Text="{Binding note}" FontSize="12" HorizontalAlignment="Center">/10</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
-        
-        
-        
 
-    </Grid>
+            <Label Grid.Row="4" Grid.ColumnSpan="3" Background="Beige">Fantastique</Label>
+            <ListBox Grid.Row="5" Grid.ColumnSpan="3" ItemsSource="{Binding listserieFantastique}" Background="Cornsilk">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <StackPanel Margin="30,0,30,0">
+                                <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40">Add</Button>
+                                <Rectangle Height="120" Width="90" Fill="Brown"></Rectangle>
+                                <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
+                                <TextBlock Text="{Binding note}" FontSize="12" HorizontalAlignment="Center">/10</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+
+            <Label Grid.Row="6" Grid.ColumnSpan="3" Background="Beige">Comédie</Label>
+            <ListBox Grid.Row="7" Grid.ColumnSpan="3" ItemsSource="{Binding listserieComedie}" Background="Cornsilk">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <StackPanel Margin="30,0,30,0">
+                                <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40">Add</Button>
+                                <Rectangle Height="120" Width="90" Fill="Brown"></Rectangle>
+                                <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
+                                <TextBlock Text="{Binding note}" FontSize="12" HorizontalAlignment="Center">/10</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Label Grid.Row="8" Grid.ColumnSpan="3" Background="Beige">Drame</Label>
+            <ListBox Grid.Row="9" Grid.ColumnSpan="3" ItemsSource="{Binding listserieDrame}" Background="Cornsilk">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <StackPanel Margin="30,0,30,0">
+                                <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40">Add</Button>
+                                <Rectangle Height="120" Width="90" Fill="Brown"></Rectangle>
+                                <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
+                                <TextBlock Text="{Binding note}" FontSize="12" HorizontalAlignment="Center">/10</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+
+
+        </Grid>
     </ScrollViewer>
 </UserControl>

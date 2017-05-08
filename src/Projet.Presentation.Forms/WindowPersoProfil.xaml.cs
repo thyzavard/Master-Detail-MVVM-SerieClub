@@ -116,5 +116,15 @@ namespace Projet.Presentation.Forms
             }
             Close();
         }
+
+        private void btn_parcourir_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Title = "Select a picture";
+            openFile.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+              "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+              "Portable Network Graphic (*.png)|*.png";
+            openFile.ShowDialog();
+        }
     }
 }

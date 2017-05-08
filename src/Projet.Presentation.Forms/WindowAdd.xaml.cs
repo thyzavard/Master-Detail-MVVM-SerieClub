@@ -47,7 +47,7 @@ namespace Projet.Presentation.Forms
 
 
             cmb_genre.Items.Add("Action");
-            cmb_genre.Items.Add("Comédie");
+            cmb_genre.Items.Add("Comedie");
             cmb_genre.Items.Add("Drame");
             cmb_genre.Items.Add("Fantastique");
             cmb_genre.Items.Add("Horreur");

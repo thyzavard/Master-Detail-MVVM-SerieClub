@@ -37,11 +37,11 @@
         <DockPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" Background="GhostWhite">
             <StackPanel VerticalAlignment="Center" >
                 <TextBox x:Name="textBox_search" Margin="30,0,30,50">Rechercher...</TextBox>
-                <Label x:Name="l_user" HorizontalAlignment="Center">TEST</Label>
+                <Label x:Name="l_user" HorizontalAlignment="Center"></Label>
                 <Button x:Name="btn_Acc" Margin="20" Click="Acceuil_Click">Accueil</Button>
                 <Button x:Name="btn_Profil" Margin="20" Click="Profil_Click">Profil</Button>
                 <Button Margin="20" FontSize="15" Click="PersoProfil_Click">Personnaliser le profil</Button>
-                <Button Margin="20" Click="btnDeco_Click">Se déconnecter</Button>
+                <Button Margin="20" Click="btnDeco_Click" BorderBrush="red">Se déconnecter</Button>
                 <Button x:Name="btn_admin" Margin="20" Click="admin_Click">Administration</Button>
             </StackPanel>
         </DockPanel>

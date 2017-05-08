@@ -31,7 +31,7 @@
 
         <Label Content="Série favorites" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center"></Label>
         
-        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3">
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto">
             
         </ScrollViewer>
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Projet.Entite.Class;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,10 +20,12 @@ namespace Projet.Presentation.Forms
     /// </summary>
     public partial class WindowAcc : Window
     {
-        private Entite.Class.Utilisateur utilisateur;
-        public WindowAcc(Entite.Class.Utilisateur user)
+        private Utilisateur utilisateur;
+
+        public WindowAcc(Utilisateur user)
         {
             InitializeComponent();
+
             btn_Acc.IsEnabled = false;
             l_user.Content = user.pseudo;
             utilisateur = user;
