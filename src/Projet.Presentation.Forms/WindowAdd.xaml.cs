@@ -44,6 +44,12 @@ namespace Projet.Presentation.Forms
             textboxmodif_Producteur.Visibility = Visibility.Hidden;
             imgmodif.Visibility = Visibility.Hidden;
             btnmodif_parcourir.Visibility = Visibility.Hidden;
+            l_duremoy.Visibility = Visibility.Hidden;
+            l_genre.Visibility = Visibility.Hidden;
+            l_img.Visibility = Visibility.Hidden;
+            l_prod.Visibility = Visibility.Hidden;
+
+            l_desc.Content = "Aucune série sélectionnée";
 
 
             cmb_genre.Items.Add("Action");
@@ -112,6 +118,11 @@ namespace Projet.Presentation.Forms
                 textboxmodif_Producteur.Visibility = Visibility.Visible;
                 imgmodif.Visibility = Visibility.Visible;
                 btnmodif_parcourir.Visibility = Visibility.Visible;
+                l_desc.Content = "Description";
+                l_duremoy.Visibility = Visibility.Visible;
+                l_genre.Visibility = Visibility.Visible;
+                l_img.Visibility = Visibility.Visible;
+                l_prod.Visibility = Visibility.Visible;
 
                 textboxmodif_DescSerie.Text = seriemodif.description;
                 textboxmodif_dureep.Text = seriemodif.dureeMoy.ToString();
@@ -136,6 +147,12 @@ namespace Projet.Presentation.Forms
                 textboxmodif_Producteur.Visibility = Visibility.Hidden;
                 imgmodif.Visibility = Visibility.Hidden;
                 btnmodif_parcourir.Visibility = Visibility.Hidden;
+                btnmodif_parcourir.Visibility = Visibility.Hidden;
+                l_duremoy.Visibility = Visibility.Hidden;
+                l_genre.Visibility = Visibility.Hidden;
+                l_img.Visibility = Visibility.Hidden;
+                l_prod.Visibility = Visibility.Hidden;
+                l_desc.Content = "Aucune série sélectionnée";
             }
         }
 

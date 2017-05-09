@@ -41,7 +41,6 @@
                                 <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40">Add</Button>
                                 <Rectangle Height="130" Width="90" Fill="Brown"></Rectangle>
                                 <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
-                                <TextBlock Text="{Binding note}" FontSize="12" HorizontalAlignment="Center">/10</TextBlock>
                             </StackPanel>
                     </Grid>
                 </DataTemplate>
@@ -64,7 +63,6 @@
                                 </Button>
                                 <Rectangle Height="120" Width="90" Fill="Brown"></Rectangle>
                                 <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
-                                <TextBlock Text="{Binding note}" FontSize="12" HorizontalAlignment="Center">/10</TextBlock>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
@@ -87,7 +85,6 @@
                                 <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40">Add</Button>
                                 <Rectangle Height="120" Width="90" Fill="Brown"></Rectangle>
                                 <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
-                                <TextBlock Text="{Binding note}" FontSize="12" HorizontalAlignment="Center">/10</TextBlock>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
@@ -110,7 +107,6 @@
                                 <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40">Add</Button>
                                 <Rectangle Height="120" Width="90" Fill="Brown"></Rectangle>
                                 <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
-                                <TextBlock Text="{Binding note}" FontSize="12" HorizontalAlignment="Center">/10</TextBlock>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
@@ -132,7 +128,6 @@
                                 <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40">Add</Button>
                                 <Rectangle Height="120" Width="90" Fill="Brown"></Rectangle>
                                 <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
-                                <TextBlock Text="{Binding note}" FontSize="12" HorizontalAlignment="Center">/10</TextBlock>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>

@@ -11,9 +11,9 @@ namespace Projet.Service.Fonctions
 {
     public class GestionBDD
     {
+        private static SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=U:\1ère_année\C#\Projet_Git\serie-club\src\Persistance\SerieClub.mdf;Integrated Security=True");
         public static Utilisateur remplirUser (String pseudo)
         {
-           SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\Programming software\C#\PROJECT\Projet_BDD\2015\Serie_club.mdf;Integrated Security=True;Connect Timeout=30");
             Utilisateur user = new Utilisateur();
             con.Open();
             user.pseudo = pseudo;
@@ -49,7 +49,6 @@ namespace Projet.Service.Fonctions
 
         public static Boolean verifLoginMdp(String pseudo, String mdp)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\Programming software\C#\PROJECT\Projet_BDD\2015\Serie_club.mdf;Integrated Security=True;Connect Timeout=30");
             SqlDataAdapter sda = new SqlDataAdapter("Select Count(*) From Utilisateur where Pseudo='" + pseudo + "' AND Password='" + mdp + "'", con);
             DataTable dt = new DataTable();
             sda.Fill(dt);
@@ -66,7 +65,6 @@ namespace Projet.Service.Fonctions
 
         public static Boolean verifLogin(String pseudo)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\Programming software\C#\PROJECT\Projet_BDD\2015\Serie_club.mdf;Integrated Security=True;Connect Timeout=30");
             SqlDataAdapter sda = new SqlDataAdapter("Select Count(*) From Utilisateur where Pseudo='" + pseudo + "'", con);
             DataTable dt = new DataTable();
             sda.Fill(dt);
@@ -83,7 +81,6 @@ namespace Projet.Service.Fonctions
 
         public static void inscription(String pseudo, String mdp)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\Programming software\C#\PROJECT\Projet_BDD\2015\Serie_club.mdf;Integrated Security=True;Connect Timeout=30");
             SqlDataAdapter sda2 = new SqlDataAdapter("Insert into Utilisateur (Pseudo, Password, Description, Sexe, DateDeNaissance, Modo) values('" +pseudo+ "', '" +mdp+ "' , '" + "Description..." + "', '" + "Pas spécifié..." + "', '" + "00/00/0000" + "', '"+"false"+"')", con);
             DataTable dt2 = new DataTable();
             sda2.Fill(dt2);
@@ -91,7 +88,6 @@ namespace Projet.Service.Fonctions
 
         public static void updateDescription(String desc, String pseudo)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\Programming software\C#\PROJECT\Projet_BDD\2015\Serie_club.mdf;Integrated Security=True;Connect Timeout=30");
             SqlDataAdapter sda = new SqlDataAdapter("Update Utilisateur set Description =' " +desc+ "' where Pseudo='" + pseudo + "'", con);
             DataTable dt = new DataTable();
             sda.Fill(dt);
@@ -99,7 +95,6 @@ namespace Projet.Service.Fonctions
 
         public static void updateDdn(String ddn, String pseudo)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\Programming software\C#\PROJECT\Projet_BDD\2015\Serie_club.mdf;Integrated Security=True;Connect Timeout=30");
             SqlDataAdapter sdaddn = new SqlDataAdapter("Update Utilisateur set DateDeNaissance ='" +ddn+ "'  where Pseudo='" + pseudo + "'", con);
             DataTable dtddn = new DataTable();
             sdaddn.Fill(dtddn);
@@ -107,7 +102,6 @@ namespace Projet.Service.Fonctions
 
         public static void updateSexe(String sexe, String pseudo)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\Programming software\C#\PROJECT\Projet_BDD\2015\Serie_club.mdf;Integrated Security=True;Connect Timeout=30");
             SqlDataAdapter sdasexe = new SqlDataAdapter("Update Utilisateur set Sexe ='" +sexe+ "' where Pseudo='" + pseudo + "'", con);
             DataTable dtsexe = new DataTable();
             sdasexe.Fill(dtsexe);
@@ -116,7 +110,6 @@ namespace Projet.Service.Fonctions
         public static Serie remplirSerieAction()
         {
             Serie s = new Serie();
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\Programming software\C#\PROJECT\Projet_BDD\2015\Serie_club.mdf;Integrated Security=True;Connect Timeout=30");
             SqlCommand cmddesc = new SqlCommand("Select Nom From Utilisateur where Genre='" +"Action"+ "' ", con);
             SqlDataReader dr = cmddesc.ExecuteReader();
             dr.Read();
@@ -129,7 +122,6 @@ namespace Projet.Service.Fonctions
 
        public static void ajouter_Serie(string nom, string desc, string genre, string producteur, int dureemoy)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\Programming software\C#\PROJECT\Projet_BDD\2015\Serie_club.mdf;Integrated Security=True;Connect Timeout=30");
             SqlDataAdapter sda = new SqlDataAdapter("Insert into Serie (Nom, Description, Genre, Note, Producteur, DureeMoyenne) values('"+nom+"', '"+desc+"', '"+genre+"','"+0+"','"+producteur+"','"+dureemoy+"') ", con);
             DataTable dtserie = new DataTable();
             sda.Fill(dtserie);
@@ -137,7 +129,6 @@ namespace Projet.Service.Fonctions
 
         public static Boolean verifSerie(string nom)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\Programming software\C#\PROJECT\Projet_BDD\2015\Serie_club.mdf;Integrated Security=True;Connect Timeout=30");
             SqlDataAdapter sda = new SqlDataAdapter("Select Count(*) From Serie where Nom='" +nom+ "'", con);
             DataTable dt = new DataTable();
             sda.Fill(dt);
@@ -155,7 +146,6 @@ namespace Projet.Service.Fonctions
         public static List<string> returnTouteSerie()
         {
             List<string> list = new List<string>();
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\Programming software\C#\PROJECT\Projet_BDD\2015\Serie_club.mdf;Integrated Security=True;Connect Timeout=30");
             con.Open();
             var command = new SqlCommand("Select Nom from Serie", con);
             using(var reader = command.ExecuteReader())
@@ -172,7 +162,6 @@ namespace Projet.Service.Fonctions
         public static List<string> returnToutUtilisateur()
         {
             List<string> list = new List<string>();
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\Programming software\C#\PROJECT\Projet_BDD\2015\Serie_club.mdf;Integrated Security=True;Connect Timeout=30");
             con.Open();
             var command = new SqlCommand("Select Pseudo from Utilisateur", con);
             using (var reader = command.ExecuteReader())
@@ -189,7 +178,6 @@ namespace Projet.Service.Fonctions
 
         public static void supprSerie(string nom)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\Programming software\C#\PROJECT\Projet_BDD\2015\Serie_club.mdf;Integrated Security=True;Connect Timeout=30");
             con.Open();
             SqlCommand cmd = new SqlCommand("Delete from Serie where Nom='" +nom+ "' ", con);
             cmd.ExecuteNonQuery();
@@ -198,7 +186,6 @@ namespace Projet.Service.Fonctions
 
         public static Serie remplirSerie(string nom)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\Programming software\C#\PROJECT\Projet_BDD\2015\Serie_club.mdf;Integrated Security=True;Connect Timeout=30");
             Serie serie = new Serie();
             con.Open();
             serie.nom = nom;
@@ -234,7 +221,6 @@ namespace Projet.Service.Fonctions
 
         public static void updateSerie(string nom, string desc, int dureMoy, string producteur, string genre)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\Programming software\C#\PROJECT\Projet_BDD\2015\Serie_club.mdf;Integrated Security=True;Connect Timeout=30");
             SqlDataAdapter sdaSerie = new SqlDataAdapter("Update Serie set Description ='" + desc + "', Producteur ='"+producteur+"', Genre ='"+genre+"', DureeMoyenne ='"+dureMoy+"' where Nom='"+nom+"'", con);
             DataTable dt = new DataTable();
             sdaSerie.Fill(dt);
@@ -242,7 +228,6 @@ namespace Projet.Service.Fonctions
 
         public static bool upModo(string pseudo)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\Programming software\C#\PROJECT\Projet_BDD\2015\Serie_club.mdf;Integrated Security=True;Connect Timeout=30");
             con.Open();
             SqlCommand cmd = new SqlCommand("Select Modo from Utilisateur where Pseudo='" + pseudo + "'", con);
             SqlDataReader dr = cmd.ExecuteReader();
@@ -267,7 +252,6 @@ namespace Projet.Service.Fonctions
 
         public static bool downModo(string pseudo)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\Programming software\C#\PROJECT\Projet_BDD\2015\Serie_club.mdf;Integrated Security=True;Connect Timeout=30");
             con.Open();
             SqlCommand cmd = new SqlCommand("Select Modo from Utilisateur where Pseudo='" + pseudo + "'", con);
             SqlDataReader dr = cmd.ExecuteReader();
