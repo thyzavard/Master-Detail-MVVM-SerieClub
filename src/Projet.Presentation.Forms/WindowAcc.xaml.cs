@@ -1,4 +1,5 @@
 ﻿using Projet.Entite.Class;
+using Projet.Presentation.Forms.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,6 +74,11 @@ namespace Projet.Presentation.Forms
         {
             WindowAdd w = new WindowAdd();
             w.Show();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new ViewDescSerie();
         }
     }
 }

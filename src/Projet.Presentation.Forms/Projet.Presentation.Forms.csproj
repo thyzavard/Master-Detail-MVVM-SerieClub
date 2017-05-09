@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\ViewDescSerie.cs" />
     <Compile Include="Views\ViewAcceuil.xaml.cs">
       <DependentUpon>ViewAcceuil.xaml</DependentUpon>
     </Compile>
@@ -64,6 +65,9 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewAccueil.cs" />
     <Compile Include="ViewModel\ViewProfil.cs" />
+    <Compile Include="Views\ViewDescSerie.xaml.cs">
+      <DependentUpon>ViewDescSerie.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ViewProfil.xaml.cs">
       <DependentUpon>ViewProfil.xaml</DependentUpon>
     </Compile>
@@ -95,6 +99,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\ViewAcceuil.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewDescSerie.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
