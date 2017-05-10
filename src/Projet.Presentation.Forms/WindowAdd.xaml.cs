@@ -70,7 +70,7 @@ namespace Projet.Presentation.Forms
             Close();        
         }
 
-        private void Confirm_Click(object sender, RoutedEventArgs e)
+        private void AddSerie_Click(object sender, RoutedEventArgs e)
         {
             if (textbox_NomSerie.Text == "" || textbox_Producteur.Text == "" || cmb_genre.Text == "" || textbox_DescSerie.Text == "" || textbox_dureep.Text == "")
             {
@@ -84,6 +84,10 @@ namespace Projet.Presentation.Forms
             {
                 GestionBDD.ajouter_Serie(textbox_NomSerie.Text, textbox_DescSerie.Text, cmb_genre.Text, textbox_Producteur.Text, int.Parse(textbox_dureep.Text));
                 MessageBox.Show("Inscription enregistrée", "Confirmation", MessageBoxButton.OK);
+                textbox_DescSerie.Text = "";
+                textbox_dureep.Text = "";
+                textbox_NomSerie.Text = "";
+                textbox_Producteur.Text = "";
             }
         }
 
@@ -152,6 +156,7 @@ namespace Projet.Presentation.Forms
                 l_genre.Visibility = Visibility.Hidden;
                 l_img.Visibility = Visibility.Hidden;
                 l_prod.Visibility = Visibility.Hidden;
+                cmbserie.Text = "";
                 l_desc.Content = "Aucune série sélectionnée";
             }
         }

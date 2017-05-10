@@ -55,27 +55,12 @@ namespace Projet.Presentation.Forms
             Serie s5 = new Serie();
             s5.nom = "Test";
 
-            Serie s6 = new Serie();
-            s6.nom = "yolo";
-
-            Serie s7 = new Serie();
-            s7.nom = "Test";
-
-            Serie s8 = new Serie();
-            s8.nom = "Test";
-
-            Serie s9 = new Serie();
-            s9.nom = "Test";
-
-            Serie s10 = new Serie();
-            s10.nom = "Test";
 
             listSerieUser.Add(s);
             listSerieUser.Add(s1);
             listSerieUser.Add(s3);
             listSerieUser.Add(s4);
             listSerieUser.Add(s5);
-            listSerieUser.Add(s6);
 
 
             if (listSerieUser.Count == 0)
