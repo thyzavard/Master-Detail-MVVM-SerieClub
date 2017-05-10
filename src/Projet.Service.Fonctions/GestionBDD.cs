@@ -11,7 +11,7 @@ namespace Projet.Service.Fonctions
 {
     public class GestionBDD
     {
-        private static SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\C#\PROJECT\Projet_BDD\2017\Serie_Club.mdf;Integrated Security=True;Connect Timeout=30");
+        private static SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=U:\1ère_année\C#\Projet_Git\serie-club\src\Persistance\Serie-Club.mdf;Integrated Security=True");
         public static Utilisateur remplirUser (String pseudo)
         {
             Utilisateur user = new Utilisateur();

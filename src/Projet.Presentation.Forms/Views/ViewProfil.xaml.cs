@@ -76,14 +76,29 @@ namespace Projet.Presentation.Forms
             listSerieUser.Add(s4);
             listSerieUser.Add(s5);
             listSerieUser.Add(s6);
-            listSerieUser.Add(s7);
-            listSerieUser.Add(s8);
-            listSerieUser.Add(s9);
-            listSerieUser.Add(s10);
+
+
+            if (listSerieUser.Count == 0)
+            {
+                l_seriefav.Content = "Aucune série ajoutée en favoris...";
+            }
+            else if (listSerieUser.Count == 1)
+            {
+                l_seriefav.Content = "Série en favoris";
+            }
+            else
+            {
+                l_seriefav.Content = "Séries en favoris";
+            }
         }
         public ViewProfil()
         {
             InitializeComponent();
+        }
+
+        private void Info_btn(object sender, RoutedEventArgs e)
+        {
+            DataContext = new ViewSerie();
         }
     }
 }

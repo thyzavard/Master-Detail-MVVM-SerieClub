@@ -83,9 +83,6 @@
     <Compile Include="WindowPersoProfil.xaml.cs">
       <DependentUpon>WindowPersoProfil.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WindowProfil.xaml.cs">
-      <DependentUpon>WindowProfil.xaml</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -123,10 +120,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowPersoProfil.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WindowProfil.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
