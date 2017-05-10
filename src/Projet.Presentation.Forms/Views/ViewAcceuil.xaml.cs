@@ -23,31 +23,11 @@ namespace Projet.Presentation.Forms
     /// </summary>
     public partial class ViewAcceuil : UserControl
     {
-        public List<Serie> listserieAction
-        {
-            get;
-            set;
-        }
-        public List<Serie> listserieHorreur
-        {
-            get;
-            set;
-        }
-        public List<Serie> listserieFantastique
-        {
-            get;
-            set;
-        }
-        public List<Serie> listserieDrame
-        {
-            get;
-            set;
-        }
-        public List<Serie> listserieComedie
-        {
-            get;
-            set;
-        }
+        public List<Serie> listserieAction { get; set; }
+        public List<Serie> listserieHorreur { get; set; }
+        public List<Serie> listserieFantastique { get; set; }
+        public List<Serie> listserieDrame { get; set; }
+        public List<Serie> listserieComedie { get; set; }
 
         public ViewAcceuil()
         {

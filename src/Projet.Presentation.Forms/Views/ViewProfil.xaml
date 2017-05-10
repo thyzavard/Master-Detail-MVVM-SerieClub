@@ -8,8 +8,8 @@
              d:DesignHeight="569" d:DesignWidth="742" FontSize="20">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1.5*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="1.1*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -30,9 +30,28 @@
         </StackPanel>
 
         <Label Content="Série favorites" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center"></Label>
+
         
-        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto">
-            
+        <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto">
+            <ListBox ItemsSource="{Binding listSerieUser}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="3"></UniformGrid>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+
+                        <StackPanel Margin="30,0,30,0">
+                            <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40">Info</Button>
+                            <Rectangle Height="130" Width="90" Fill="Brown"></Rectangle>
+                            <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
+                        </StackPanel>
+                        
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </ScrollViewer>
 
     </Grid>

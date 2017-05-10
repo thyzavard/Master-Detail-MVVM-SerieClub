@@ -30,7 +30,7 @@
         <ListBox Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding listserieAction}" Background="Cornsilk">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel></WrapPanel>
+                    <WrapPanel/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
             
