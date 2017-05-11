@@ -34,5 +34,10 @@ namespace Projet.Entite.Class
         public Serie()
         {
         }
+
+        public Serie(string nom)
+        {
+            this.nom = nom;
+        }
     }
 }
