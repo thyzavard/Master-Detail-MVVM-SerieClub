@@ -41,7 +41,29 @@
         <DockPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" Background="GhostWhite">
             <StackPanel VerticalAlignment="Center" >
                 <Button x:Name="btn_admin" Margin="20" Click="admin_Click">Administration</Button>
-                <TextBox x:Name="textBox_search" Margin="30,0,30,50" ></TextBox>
+                <TextBox x:Name="textBox_search" Margin="30,0,30,50">
+
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Style.Resources>
+                                <VisualBrush x:Key="FaintSearch" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                    <VisualBrush.Visual>
+                                        <Label Content="Search" Foreground="LightGray"  />
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Style.Resources>
+                            <Style.Triggers>
+                                <Trigger Property="IsKeyboardFocused" Value="False">
+                                    <Setter Property="Background" Value="{StaticResource FaintSearch}" />
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter Property="Background" Value="White" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+
+                </TextBox>
                 <Label x:Name="l_user" HorizontalAlignment="Center"></Label>
                 <Button x:Name="btn_Acc" Margin="20" Click="Acceuil_Click">Accueil</Button>
                 <Button x:Name="btn_Profil" Margin="20" Click="Profil_Click">Profil</Button>
