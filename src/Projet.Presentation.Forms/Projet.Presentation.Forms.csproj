@@ -57,14 +57,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\ViewAccueil.cs" />
+    <Compile Include="ViewModel\ViewProfil.cs" />
     <Compile Include="ViewModel\ViewSerie.cs" />
     <Compile Include="Views\ViewAcceuil.xaml.cs">
       <DependentUpon>ViewAcceuil.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\RelayCommand.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\ViewAccueil.cs" />
-    <Compile Include="ViewModel\ViewProfil.cs" />
     <Compile Include="Views\ViewProfil.xaml.cs">
       <DependentUpon>ViewProfil.xaml</DependentUpon>
     </Compile>
