@@ -29,6 +29,8 @@ namespace Projet.Presentation.Forms
         public List<Serie> listserieDrame { get; set; }
         public List<Serie> listserieComedie { get; set; }
 
+        private ListBox ListBox1 = new ListBox();
+
         public ViewAcceuil()
         {
             InitializeComponent();
@@ -64,6 +66,9 @@ namespace Projet.Presentation.Forms
                     listserieDrame.Add(serie);
                 }
             }
+
+
+           
 
         }
     }

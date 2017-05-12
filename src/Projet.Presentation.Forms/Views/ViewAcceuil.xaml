@@ -24,10 +24,10 @@
            <RowDefinition Height="*"/>
            <RowDefinition Height="Auto"/>
            <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+        </Grid.RowDefinitions>
 
         <Label x:Name="l_genre" Grid.Row="0" Grid.ColumnSpan="3" Background="Beige">Action</Label>
-        <ListBox Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding listserieAction}" Background="Cornsilk">
+        <ListBox Name="yolo" Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding listserieAction}" Background="Cornsilk">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel/>
@@ -41,7 +41,7 @@
                                 <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40">Add</Button>
                                 <Rectangle Height="130" Width="90" Fill="Brown"></Rectangle>
                                 <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
-                            </StackPanel>
+                        </StackPanel>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
