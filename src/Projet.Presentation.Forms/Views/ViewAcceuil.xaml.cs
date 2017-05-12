@@ -71,6 +71,11 @@ namespace Projet.Presentation.Forms
            
         }
 
+        public ViewAcceuil()
+        {
+            InitializeComponent();
+        }
+
         private void add_click(object sender, RoutedEventArgs e)
         {
             //GestionBDD.addSerieUtilisateur(utilisateur.pseudo,);

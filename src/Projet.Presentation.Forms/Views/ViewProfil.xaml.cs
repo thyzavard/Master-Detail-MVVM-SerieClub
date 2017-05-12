@@ -40,17 +40,7 @@ namespace Projet.Presentation.Forms
 
             //*****Gestion Série*****
             listSerieUser = new List<Serie>();
-
-            List<string> listnbSerie = new List<string>();
-
-            listnbSerie = GestionBDD.returnSerieUtilisateur(user.pseudo);
-
-            for(int i = 0; i < listnbSerie.Count; i++)
-            {
-                Serie serie = GestionBDD.remplirSerie(listnbSerie[i]);
-                listSerieUser.Add(serie);
-            }
-
+            listSerieUser = user.serieadd;
 
 
             if (listSerieUser.Count == 0)
@@ -73,7 +63,7 @@ namespace Projet.Presentation.Forms
 
         private void Info_btn(object sender, RoutedEventArgs e)
         {
-            DataContext = new ViewSerie();
+            
         }
     }
 }

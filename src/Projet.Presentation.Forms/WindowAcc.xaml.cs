@@ -1,4 +1,5 @@
 ﻿using Projet.Entite.Class;
+using Projet.Service.Fonctions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +26,22 @@ namespace Projet.Presentation.Forms
         public WindowAcc(Utilisateur user)
         {
             InitializeComponent();
-
+            
             btn_Acc.IsEnabled = false;
             l_user.Content = user.pseudo;
+
             utilisateur = user;
+
+            List<string> listnbSerie = new List<string>();
+            List<Serie> listSerie = new List<Serie>();
+            listnbSerie = GestionBDD.returnSerieUtilisateur(user.pseudo);
+
+            for (int i = 0; i < listnbSerie.Count; i++)
+            {
+                Serie serie = GestionBDD.remplirSerie(listnbSerie[i]);
+                listSerie.Add(serie);
+            }
+            utilisateur.serieadd = listSerie;
 
             if (user.modo)
             {
@@ -38,6 +51,7 @@ namespace Projet.Presentation.Forms
             {
                 btn_admin.Visibility = Visibility.Hidden;
             }
+            DataContext = new ViewAcceuil(utilisateur);
         }
 
         private void Acceuil_Click(object sender, RoutedEventArgs e)

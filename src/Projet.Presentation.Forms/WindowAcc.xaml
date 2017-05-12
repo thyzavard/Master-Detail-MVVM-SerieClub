@@ -8,9 +8,9 @@
         xmlns:views="clr-namespace:Projet.Presentation.Forms"
         mc:Ignorable="d"
          Title="Serie Club" Height="600" Width="1000" FontSize="16" WindowStartupLocation="CenterScreen">
-    <!--<Window.DataContext>
+    <Window.DataContext>
         <views:ViewAcceuil/>
-    </Window.DataContext>-->
+    </Window.DataContext>
     
     <Window.Resources>
         <DataTemplate x:Name="viewAcceuilTemplate" DataType="{x:Type viewmodels:ViewAccueil}">

@@ -41,6 +41,12 @@
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
 
+                <!--<ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>-->
+
                 <ListBox.ItemTemplate>
                     <DataTemplate>
 
