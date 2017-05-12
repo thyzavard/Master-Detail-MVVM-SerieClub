@@ -42,7 +42,7 @@ namespace Projet.Presentation.Forms
 
         private void Acceuil_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new ViewAcceuil();
+            DataContext = new ViewAcceuil(utilisateur);
             btn_Profil.IsEnabled = true;
             btn_Acc.IsEnabled = false;
             textBox_search.Visibility = Visibility.Visible;

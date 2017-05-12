@@ -1,4 +1,5 @@
 ﻿using Projet.Entite.Class;
+using Projet.Service.Fonctions;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -40,27 +41,16 @@ namespace Projet.Presentation.Forms
             //*****Gestion Série*****
             listSerieUser = new List<Serie>();
 
-            Serie s = new Serie();
-            s.nom = "Test";
+            List<string> listnbSerie = new List<string>();
 
-            Serie s1 = new Serie();
-            s1.nom = "yolo";
+            listnbSerie = GestionBDD.returnSerieUtilisateur(user.pseudo);
 
-            Serie s3 = new Serie();
-            s3.nom = "Test";
+            for(int i = 0; i < listnbSerie.Count; i++)
+            {
+                Serie serie = GestionBDD.remplirSerie(listnbSerie[i]);
+                listSerieUser.Add(serie);
+            }
 
-            Serie s4 = new Serie();
-            s4.nom = "yolo";
-
-            Serie s5 = new Serie();
-            s5.nom = "Test";
-
-
-            listSerieUser.Add(s);
-            listSerieUser.Add(s1);
-            listSerieUser.Add(s3);
-            listSerieUser.Add(s4);
-            listSerieUser.Add(s5);
 
 
             if (listSerieUser.Count == 0)

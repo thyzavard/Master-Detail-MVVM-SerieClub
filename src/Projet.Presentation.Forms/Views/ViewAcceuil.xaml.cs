@@ -29,11 +29,13 @@ namespace Projet.Presentation.Forms
         public List<Serie> listserieDrame { get; set; }
         public List<Serie> listserieComedie { get; set; }
 
-        private ListBox ListBox1 = new ListBox();
+        private Utilisateur utilisateur;
 
-        public ViewAcceuil()
+        public ViewAcceuil(Utilisateur user)
         {
             InitializeComponent();
+
+            utilisateur = user;
 
             List<string> listNom = GestionBDD.returnTouteSerie();
             listserieAction = new List<Serie>();
@@ -66,10 +68,13 @@ namespace Projet.Presentation.Forms
                     listserieDrame.Add(serie);
                 }
             }
-
-
            
-
         }
+
+        private void add_click(object sender, RoutedEventArgs e)
+        {
+            //GestionBDD.addSerieUtilisateur(utilisateur.pseudo,);
+        }
+
     }
 }

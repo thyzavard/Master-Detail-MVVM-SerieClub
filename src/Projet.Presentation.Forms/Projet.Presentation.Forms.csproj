@@ -62,7 +62,6 @@
       <DependentUpon>ViewAcceuil.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\RelayCommand.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewAccueil.cs" />
     <Compile Include="ViewModel\ViewProfil.cs" />
     <Compile Include="Views\ViewProfil.xaml.cs">

@@ -11,7 +11,7 @@ namespace Projet.Service.Fonctions
 {
     public class GestionBDD
     {
-        private static SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Utilisateur\Source\Repos\Projet\src\Persistance\SerieClub.mdf;Integrated Security=True;Connect Timeout=30");
+        private static SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=U:\1ère_année\C#\Projet_Git\serie-club\src\Persistance\Serie-Club.mdf;Integrated Security=True");
         public static Utilisateur remplirUser (String pseudo)
         {
             Utilisateur user = new Utilisateur();
@@ -221,9 +221,10 @@ namespace Projet.Service.Fonctions
 
         public static void updateSerie(string nom, string desc, int dureMoy, string producteur, string genre)
         {
-            SqlDataAdapter sdaSerie = new SqlDataAdapter("Update Serie set Description ='" + desc + "', Producteur ='"+producteur+"', Genre ='"+genre+"', DureeMoyenne ='"+dureMoy+"' where Nom='"+nom+"'", con);
-            DataTable dt = new DataTable();
-            sdaSerie.Fill(dt);
+            con.Open();
+            SqlCommand cmd = new SqlCommand("Update Serie set Description ='" + desc + "', Producteur ='"+producteur+"', Genre ='"+genre+"', DureeMoyenne ='"+dureMoy+"' where Nom='"+nom+"'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
         }
 
         public static bool upModo(string pseudo)
@@ -242,9 +243,8 @@ namespace Projet.Service.Fonctions
             }
             else
             {
-                SqlDataAdapter sda = new SqlDataAdapter("Update Utilisateur set Modo='" + "true" + "' where Pseudo='" + pseudo + "'", con);
-                DataTable dt = new DataTable();
-                sda.Fill(dt);
+                SqlCommand command = new SqlCommand("Update Utilisateur set Modo='" + "true" + "' where Pseudo='" + pseudo + "'", con);
+                command.ExecuteNonQuery();
                 con.Close();
                 return true;
             } 
@@ -266,13 +266,38 @@ namespace Projet.Service.Fonctions
             }
             else
             {
-                SqlDataAdapter sda = new SqlDataAdapter("Update Utilisateur set Modo='" + "false" + "' where Pseudo='" + pseudo + "'", con);
-                DataTable dt = new DataTable();
-                sda.Fill(dt);
+                SqlCommand command = new SqlCommand("Update Utilisateur set Modo='" + "false" + "' where Pseudo='" + pseudo + "'", con);
+                command.ExecuteNonQuery();
                 con.Close();
                 return true;
             }
         }
+
+        public static void addSerieUtilisateur(string pseudo, string nomSerie)
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("Insert into UtilisateurSerie (IdUtilisateur, IdSerie) values('" + pseudo + "', '" + nomSerie + "') ", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+        public static List<string> returnSerieUtilisateur(string pseudo)
+        {
+            List<string> list = new List<string>();
+            con.Open();
+            var command = new SqlCommand("Select IdSerie from UtilisateurSerie where IdUtilisateur='"+pseudo+"'", con);
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    list.Add(reader.GetString(0));
+                }
+            }
+            con.Close();
+            return list;
+        }
+
+        
         
     }
 }
