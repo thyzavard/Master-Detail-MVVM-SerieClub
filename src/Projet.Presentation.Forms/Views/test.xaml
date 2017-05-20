@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="test" Height="300" Width="300">
     <Window.DataContext>
-        <vm:ViewAccueil/>
+        <vm:Test/>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>

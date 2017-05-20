@@ -12,14 +12,23 @@
             <TextBox Name="textboxId_Acc" Width="120" MaxLength="15"></TextBox>
             <Label HorizontalAlignment="Center">Mot de passe</Label>
             <PasswordBox Name="passwordBox_Acc" Width="120" MaxLength="40"></PasswordBox>
-            <Button x:Name="Ok_btn" Margin="10" Width="75" BorderBrush="Green" Click="btnConfirmer_Click">Confirmer</Button>
-            <Button Click="Button_Click">Test</Button>
+
+
+            <Button x:Name="Ok_btn" Margin="10" Width="75" BorderBrush="Green" Content="Confirmer"/>
+            <Button Content="Test"/>
+            
+            
+            
             <Grid>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20">
-                    <Button Margin="5" BorderBrush="Red" Width="75" Click="btnQuitter_Click">Quitter</Button>
+                    
+                    <Button Margin="5" BorderBrush="Red" Width="75" Content="Quitter"/>
+                
                 </StackPanel>
                 <TextBlock HorizontalAlignment="Right" Margin="20">
-                    <Button Margin="5" BorderBrush="Orange" Width="75" Click="btnInscription_Click">S'inscrire</Button>
+                    
+                    <Button Margin="5" BorderBrush="Orange" Width="75" Content="S'inscrire"/>
+
                 </TextBlock>
             </Grid>
         </StackPanel>

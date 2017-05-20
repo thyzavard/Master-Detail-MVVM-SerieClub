@@ -26,58 +26,6 @@ namespace Projet.Presentation.Forms
         {
             InitializeComponent();
 
-            btn_Acc.IsEnabled = false;
-            l_user.Content = user.pseudo;
-            utilisateur = user;
-
-            if (user.modo)
-            {
-                btn_admin.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                btn_admin.Visibility = Visibility.Hidden;
-            }
-        }
-
-        private void Acceuil_Click(object sender, RoutedEventArgs e)
-        {
-            DataContext = new ViewAcceuil();
-            btn_Profil.IsEnabled = true;
-            btn_Acc.IsEnabled = false;
-            textBox_search.Visibility = Visibility.Visible;
-        }
-
-        private void Profil_Click(object sender, RoutedEventArgs e)
-        {
-            DataContext = new ViewProfil(utilisateur);
-            btn_Acc.IsEnabled = true;
-            btn_Profil.IsEnabled = false;
-            textBox_search.Visibility = Visibility.Hidden;
-        }
-
-        private void btnDeco_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow m = new MainWindow();
-            Close();
-            m.Show();
-        }
-
-        private void PersoProfil_Click(object sender, RoutedEventArgs e)
-        {
-            WindowPersoProfil w = new WindowPersoProfil(utilisateur);
-            w.Show();
-        }
-
-        private void admin_Click(object sender, RoutedEventArgs e)
-        {
-            WindowAdd w = new WindowAdd();
-            w.Show();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            DataContext = new ViewSerie();
         }
     }
 }

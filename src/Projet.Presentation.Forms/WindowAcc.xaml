@@ -5,22 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Projet.Presentation.Forms"
         xmlns:viewmodels="clr-namespace:Projet.Presentation.Forms.ViewModel"
-        xmlns:views="clr-namespace:Projet.Presentation.Forms"
+        xmlns:views="clr-namespace:Projet.Presentation.Forms.Views"
+        xmlns:vm="clr-namespace:Projet.Presentation.Forms.ViewModel"
         mc:Ignorable="d"
          Title="Serie Club" Height="600" Width="1000" FontSize="16" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
-        <views:ViewAcceuil/>
+        <vm:MainViewModel/>
     </Window.DataContext>
     
     <Window.Resources>
-        <DataTemplate x:Name="viewAcceuilTemplate" DataType="{x:Type viewmodels:ViewAccueil}">
-            <views:ViewAcceuil DataContext="{Binding}"/>
+        <DataTemplate DataType="{x:Type vm:ViewAccueil}">
+            <views:ViewAcceuil/>
         </DataTemplate>
-        <DataTemplate x:Name="viewProfilTemplate" DataType="{x:Type viewmodels:ViewProfil}">
-            <views:ViewProfil DataContext="{Binding}"/>
+        <DataTemplate DataType="{x:Type vm:ViewProfil}">
+            <views:ViewProfil/>
         </DataTemplate>
-        <DataTemplate x:Name="viewSerieTemplate" DataType="{x:Type viewmodels:ViewSerie}">
-            <views:ViewSerie DataContext="{Binding}"/>
+        <DataTemplate DataType="{x:Type vm:ViewSerie}">
+            <views:ViewSerie/>
         </DataTemplate>
     </Window.Resources>
     <Grid>
@@ -40,7 +41,13 @@
 
         <DockPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" Background="GhostWhite">
             <StackPanel VerticalAlignment="Center" >
-                <Button x:Name="btn_admin" Margin="20" Click="admin_Click">Administration</Button>
+
+
+
+                <Button x:Name="btn_admin" Margin="20" Content="Administration"/>
+
+
+
                 <TextBox x:Name="textBox_search" Margin="30,0,30,50">
 
                     <TextBox.Style>
@@ -65,11 +72,17 @@
 
                 </TextBox>
                 <Label x:Name="l_user" HorizontalAlignment="Center"></Label>
-                <Button x:Name="btn_Acc" Margin="20" Click="Acceuil_Click">Accueil</Button>
-                <Button x:Name="btn_Profil" Margin="20" Click="Profil_Click">Profil</Button>
-                <Button Margin="20" FontSize="15" Click="PersoProfil_Click">Personnaliser le profil</Button>
-                <Button Margin="20" Click="btnDeco_Click" BorderBrush="red">Se déconnecter</Button>
-                <Button Click="Button_Click">test</Button>
+                
+                <Button x:Name="btn_Acc" Margin="20" >Accueil</Button>
+
+
+                <Button  Margin="20" Command="{Binding OpenViewProfilCommand}" Content="Profil" />
+
+
+                <Button Margin="20" FontSize="15" Content="Personnaliser le profil"/>
+                <Button Margin="20" Content="Se déconnecter" BorderBrush="red"/>
+                <Button Content="Test"/>
+            
             </StackPanel>
         </DockPanel>
 

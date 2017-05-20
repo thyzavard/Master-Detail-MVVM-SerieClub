@@ -10,29 +10,34 @@ namespace Projet.Presentation.Forms.Commands
     public class RelayCommand : ICommand
     {
 
-        private Action executeInternal;
+        private Action<object> _execute;
+        private Predicate<object> _canExecute;
 
         public event EventHandler CanExecuteChanged;
 
+        public RelayCommand(Action<object> execute, Predicate<object> canExecute)
+        {
+            _execute = execute;
+            _canExecute = canExecute;
+        }
+
         public bool CanExecute(object parameter)
         {
-            return true;
-
+            return _canExecute(parameter);
         }
 
         public void Execute(object parameter)
         {
-            executeInternal();
+            _execute(parameter);
         }
 
-
-        public RelayCommand(Action execute)
+        public void RaiseCanExecuteChanged()
         {
-            executeInternal=execute;
-
-     
-
-
+            if (CanExecuteChanged != null)
+            {
+                CanExecuteChanged(this, EventArgs.Empty);
+            }
         }
+
     }
 }

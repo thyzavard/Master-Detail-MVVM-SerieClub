@@ -44,9 +44,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Projet.Entite.Class\Projet.Entite.Class.csproj">
       <Project>{7c50da2d-6fb7-4ff1-a30e-52f33999f773}</Project>
       <Name>Projet.Entite.Class</Name>
