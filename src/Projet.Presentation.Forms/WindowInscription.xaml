@@ -7,10 +7,6 @@
         mc:Ignorable="d"
         Title="Inscription" Height="280" Width="300" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="103*"/>
-            <ColumnDefinition Width="191*"/>
-        </Grid.ColumnDefinitions>
         <StackPanel Margin="0,10,0,0" Grid.ColumnSpan="2">
             <Label HorizontalAlignment="Center">Identifiant</Label>
             <TextBox Width="120" MaxLength="15" Text="{Binding Pseudo, UpdateSourceTrigger=PropertyChanged}"></TextBox>

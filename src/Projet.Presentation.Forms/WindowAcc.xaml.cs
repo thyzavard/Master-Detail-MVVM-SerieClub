@@ -1,4 +1,5 @@
 ﻿using Projet.Entite.Class;
+using Projet.Presentation.Forms.ViewModel;
 using Projet.Service.Fonctions;
 using System;
 using System.Collections.Generic;
@@ -22,12 +23,15 @@ namespace Projet.Presentation.Forms
     public partial class WindowAcc : Window
     {
         private Utilisateur utilisateur;
+        private WindowAccViewModel _vm;
 
         public WindowAcc(Utilisateur user)
         {
             InitializeComponent();
-            
-            btn_Acc.IsEnabled = false;
+            _vm = new WindowAccViewModel(user);
+
+            DataContext = _vm;
+            /*
             l_user.Content = user.pseudo;
 
             utilisateur = user;
@@ -51,7 +55,7 @@ namespace Projet.Presentation.Forms
             {
                 btn_admin.Visibility = Visibility.Hidden;
             }
-            DataContext = new ViewAcceuil(utilisateur);
+            DataContext = new ViewAcceuil(utilisateur);*/
         }
 
         private void Acceuil_Click(object sender, RoutedEventArgs e)
@@ -77,7 +81,7 @@ namespace Projet.Presentation.Forms
             m.Show();
         }
 
-        private void PersoProfil_Click(object sender, RoutedEventArgs e)
+       /* private void PersoProfil_Click(object sender, RoutedEventArgs e)
         {
             WindowPersoProfil w = new WindowPersoProfil(utilisateur);
             w.Show();
@@ -87,7 +91,7 @@ namespace Projet.Presentation.Forms
         {
             WindowAdd w = new WindowAdd();
             w.Show();
-        }
+        }*/
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

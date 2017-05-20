@@ -29,7 +29,7 @@ namespace Projet.Presentation.Forms
         public WindowPersoProfil(Utilisateur user)
         {
             InitializeComponent();
-            utilisateur = user;
+            /*utilisateur = user;
 
             TextBox_desc.Text = user.description;
 
@@ -84,7 +84,7 @@ namespace Projet.Presentation.Forms
             cmbAnnee.SelectedIndex = 0;
             cmbJour.SelectedIndex = 0;
             cmbMois.SelectedIndex = 0;
-            cmbSexe.SelectedIndex = 0;
+            cmbSexe.SelectedIndex = 0;*/
         }
 
         
