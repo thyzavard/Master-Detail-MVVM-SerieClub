@@ -7,22 +7,26 @@
         mc:Ignorable="d"
         Title="Inscription" Height="280" Width="300" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
-        <StackPanel Margin="0,10,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="103*"/>
+            <ColumnDefinition Width="191*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Margin="0,10,0,0" Grid.ColumnSpan="2">
             <Label HorizontalAlignment="Center">Identifiant</Label>
-            <TextBox Name="textboxId" Width="120" MaxLength="15"></TextBox>
+            <TextBox Width="120" MaxLength="15" Text="{Binding Pseudo, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Label HorizontalAlignment="Center">Mot de passe</Label>
-            <PasswordBox Name="passwordBox1" Width="120" MaxLength="40"></PasswordBox>
+            <TextBox Width="120" MaxLength="40" Text="{Binding Password1, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Label HorizontalAlignment="Center">Retaper votre mot de passe</Label>
-            <PasswordBox Name="passwordBox2" Width="120" MaxLength="40"></PasswordBox>
+            <TextBox Width="120" MaxLength="40" Text="{Binding Password2, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Label HorizontalAlignment="Center">Sexe</Label>
-            <ComboBox x:Name="cmbSexe" Width="120"></ComboBox>
-            
+            <ComboBox x:Name="cmbSexe" Width="120" ItemsSource="{Binding Sexe, UpdateSourceTrigger=PropertyChanged}" SelectedValue="Pas spécifié..."></ComboBox>
+
             <Grid>
                 <StackPanel Orientation="Horizontal"  Margin="20" VerticalAlignment="Center">
-                    <Button  Margin="5" Width="75" BorderBrush="Red" Click="Quit_Click">Retour</Button>
+                    <Button  Margin="5" Width="75" BorderBrush="Red" Command="{Binding QuitCommand}">Retour</Button>
                 </StackPanel>
                 <TextBlock HorizontalAlignment="Right" Margin="20">
-                     <Button  Margin="5" Width="75" BorderBrush="Green" Click="Confirm_Click">S'inscrire</Button>
+                     <Button  Margin="5" Width="75" BorderBrush="Green" Command="{Binding InscriptionCommand}">S'inscrire</Button>
                 </TextBlock>
             </Grid>
         </StackPanel>

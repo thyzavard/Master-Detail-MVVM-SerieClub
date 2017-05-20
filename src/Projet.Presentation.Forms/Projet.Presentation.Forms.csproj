@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -57,11 +58,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewSerie.cs" />
+    <Compile Include="ViewModel\WindowInscriptionViewModel.cs" />
     <Compile Include="Views\ViewAcceuil.xaml.cs">
       <DependentUpon>ViewAcceuil.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\RelayCommand.cs" />
+    <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="ViewModel\ViewAccueil.cs" />
     <Compile Include="ViewModel\ViewProfil.cs" />
     <Compile Include="Views\ViewProfil.xaml.cs">

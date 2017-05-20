@@ -9,17 +9,16 @@
     <Grid>
         <StackPanel Margin="0,10,0,0">
             <Label HorizontalAlignment="Center">Identifiant</Label>
-            <TextBox Name="textboxId_Acc" Width="120" MaxLength="15"></TextBox>
+            <TextBox Width="120" MaxLength="15" Text="{Binding Identifiant,UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Label HorizontalAlignment="Center">Mot de passe</Label>
-            <PasswordBox Name="passwordBox_Acc" Width="120" MaxLength="40"></PasswordBox>
-            <Button x:Name="Ok_btn" Margin="10" Width="75" BorderBrush="Green" Click="btnConfirmer_Click">Confirmer</Button>
-            <Button Click="Button_Click">Test</Button>
+            <TextBox Width="120" MaxLength="40" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <Button x:Name="Ok_btn" Margin="10" Width="75" BorderBrush="Green" Command="{Binding ConnexionCommand}">Confirmer</Button>
             <Grid>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20">
-                    <Button Margin="5" BorderBrush="Red" Width="75" Click="btnQuitter_Click">Quitter</Button>
+                    <Button Margin="5" BorderBrush="Red" Width="75" Command="{Binding QuitCommand}">Quitter</Button>
                 </StackPanel>
                 <TextBlock HorizontalAlignment="Right" Margin="20">
-                    <Button Margin="5" BorderBrush="Orange" Width="75" Click="btnInscription_Click">S'inscrire</Button>
+                    <Button Margin="5" BorderBrush="Orange" Width="75" Command="{Binding InscrireCommand}" >S'inscrire</Button>
                 </TextBlock>
             </Grid>
         </StackPanel>
