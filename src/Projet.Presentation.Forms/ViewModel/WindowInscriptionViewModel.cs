@@ -11,15 +11,20 @@ namespace Projet.Presentation.Forms.ViewModel
 {
     public class WindowInscriptionViewModel
     {
+        #region private
         private string _pseudo;
         private string _password1;
         private string _password2;
-        private List<string> _sexe;
+        private List<string> _sexesource;
+        private string _selectSexe;
+        #endregion
 
-
+        #region Command
         public RelayCommand QuitCommand { get; set; }
         public RelayCommand InscriptionCommand { get; set; }
+        #endregion
 
+        #region Public
         public string Pseudo
         {
             get
@@ -62,25 +67,40 @@ namespace Projet.Presentation.Forms.ViewModel
             }
         }
 
-        public List<string> Sexe
+        public List<string> SexeSource
         {
             get
             {
-                return _sexe;
+                return _sexesource;
             }
 
             set
             {
-                _sexe = value;
+                _sexesource = value;
             }
         }
 
+        public string SelectSexe
+        {
+            get
+            {
+                return _selectSexe;
+            }
+            set
+            {
+                _selectSexe = value;
+                InscriptionCommand.RaiseCanExecuteChanged();
+            }
+        }
+        #endregion
+
         public WindowInscriptionViewModel()
         {
-            Sexe = new List<string>();
-            Sexe.Add("Pas spécifié...");
-            Sexe.Add("Masculin");
-            Sexe.Add("Féminin");
+            SexeSource = new List<string>();
+            SexeSource.Add("Pas spécifié...");
+            SexeSource.Add("Masculin");
+            SexeSource.Add("Féminin");
+            
             QuitCommand = new RelayCommand(OnQuit, CanExecuteQuit);
             InscriptionCommand = new RelayCommand(OnInscription, CanExecuteInscription);
         }
@@ -91,7 +111,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 if(Password1 != null && Password2 != null)
                 {
-                    if(Password1 == Password2)
+                    if (SelectSexe != null)
                     {
                         return true;
                     }
@@ -110,12 +130,20 @@ namespace Projet.Presentation.Forms.ViewModel
             }
             else
             {
-                GestionBDD.inscription(Pseudo, Password1);
-                /*if ( != "Pas spécifié...")
+                if(Password1 == Password2)
                 {
-                    GestionBDD.updateSexe(cmbSexe.Text, Pseudo);
-                }*/
-                MessageBox.Show("Inscription enregistrée", "Confirmation", MessageBoxButton.OK);
+                    GestionBDD.inscription(Pseudo, Password1);
+                    if (SelectSexe != "Pas spécifié...")
+                    {
+                        GestionBDD.updateSexe(SelectSexe, Pseudo);
+                    }
+                    MessageBox.Show("Inscription enregistrée", "Confirmation", MessageBoxButton.OK);
+                }
+                else
+                {
+                    MessageBox.Show("Veuillez rentrer le même mot de passe", "Mot de passe incorrect", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                
             }
         }
 

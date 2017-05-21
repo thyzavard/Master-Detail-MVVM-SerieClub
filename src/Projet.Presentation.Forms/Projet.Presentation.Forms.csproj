@@ -61,6 +61,7 @@
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewSerie.cs" />
     <Compile Include="ViewModel\WindowAccViewModel.cs" />
+    <Compile Include="ViewModel\WindowAddViewModel.cs" />
     <Compile Include="ViewModel\WindowInscriptionViewModel.cs" />
     <Compile Include="Views\ViewAcceuil.xaml.cs">
       <DependentUpon>ViewAcceuil.xaml</DependentUpon>

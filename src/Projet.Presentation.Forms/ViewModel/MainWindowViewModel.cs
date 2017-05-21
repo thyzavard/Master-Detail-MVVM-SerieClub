@@ -12,11 +12,18 @@ namespace Projet.Presentation.Forms.ViewModel
 {
     public class MainWindowViewModel
     {
+        #region private
+        private string _password;
+        private string _identifiant;
+        #endregion
+
+        #region Command
         public RelayCommand InscrireCommand { get; private set; }
         public RelayCommand ConnexionCommand { get; private set; }
         public RelayCommand QuitCommand { get; set; }
+        #endregion
 
-
+        #region Public
         public string Identifiant
         {
             get
@@ -43,9 +50,7 @@ namespace Projet.Presentation.Forms.ViewModel
                 ConnexionCommand.RaiseCanExecuteChanged();
             }
         }
-
-        private string _password;
-        private string _identifiant;
+        #endregion
 
         public MainWindowViewModel()
         {

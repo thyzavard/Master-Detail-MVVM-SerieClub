@@ -16,22 +16,22 @@
                         <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10">Parcourir...</Button>
                     </StackPanel>
                     <Label HorizontalAlignment="Center">Nom de la série</Label>
-                    <TextBox x:Name="textbox_NomSerie" Width="120" MaxLength="80"></TextBox>
+                    <TextBox x:Name="textbox_NomSerie" Width="120" MaxLength="80" Text="{Binding NomSerie, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                     <Label HorizontalAlignment="Center">Description</Label>
-                    <TextBox x:Name="textbox_DescSerie"  Width="200" Height="50" MaxLength="500"></TextBox>
+                    <TextBox x:Name="textbox_DescSerie"  Width="200" Height="50" MaxLength="500" Text="{Binding DescriptionSerie, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                     <Label HorizontalAlignment="Center">Genre</Label>
-                    <ComboBox x:Name="cmb_genre" Width="120"></ComboBox>
+                    <ComboBox Width="120" ItemsSource="{Binding GenreSource}" SelectedItem="{Binding SelectGenre}"></ComboBox>
                     <Label HorizontalAlignment="Center">Producteur</Label>
-                    <TextBox x:Name="textbox_Producteur" Width="120" MaxLength="80"></TextBox>
+                    <TextBox x:Name="textbox_Producteur" Width="120" MaxLength="80" Text="{Binding ProducteurSerie, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                     <Label HorizontalAlignment="Center">Durée moyenne des épisodes</Label>
-                    <TextBox x:Name="textbox_dureep" Width="120" MaxLength="80"></TextBox>
+                    <TextBox x:Name="textbox_dureep" Width="120" MaxLength="80" Text="{Binding DureeMoyenneSerie, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
                     <Grid>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
                             <Button Margin="5" BorderBrush="Red" Width="75" Click="Retour_Click">Retour</Button>
                         </StackPanel>
                         <StackPanel HorizontalAlignment="Right" Margin="10">
-                            <Button Margin="5" BorderBrush="Green" Width="75" Click="AddSerie_Click">Ajouter</Button>
+                            <Button Margin="5" BorderBrush="Green" Width="75" Command="{Binding AjouterSerieCommand}">Ajouter</Button>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
@@ -41,8 +41,8 @@
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel Margin="0,10,0,0">
                         <Label HorizontalAlignment="Center">Série à modifier</Label>
-                        <ComboBox x:Name="cmbserie" Width="150"></ComboBox>
-                        <Button x:Name="ok_btn" Width="75" Margin="0,10,0,0" Click="ok_btn_Click">Ok</Button>
+                        <ComboBox x:Name="cmbserie" Width="150" ItemsSource="{Binding Listserie}" SelectedItem="{Binding SelectSerie}"></ComboBox>
+                        <Button Width="75" Margin="0,10,0,0" Command="{Binding AfficherSerieModifCommand}">Ok</Button>
 
                         <Label x:Name="l_img" HorizontalAlignment="Center" Margin="0,15,0,0">Image de la série</Label>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -50,9 +50,9 @@
                             <Button x:Name="btnmodif_parcourir" Width="75" Height="25" VerticalAlignment="Bottom" Margin="10">Parcourir...</Button>
                         </StackPanel>
                         <Label x:Name="l_desc" HorizontalAlignment="Center">Description</Label>
-                        <TextBox x:Name="textboxmodif_DescSerie"  Width="200" Height="50" MaxLength="500"></TextBox>
+                        <TextBox Width="200" Height="50" MaxLength="500" Text="{Binding DescriptionSerie, Mode=TwoWay}"></TextBox>
                         <Label x:Name="l_genre" HorizontalAlignment="Center">Genre</Label>
-                        <ComboBox x:Name="cmb_genremodif" Width="120"></ComboBox>
+                        <ComboBox Width="120" ItemsSource="{Binding GenreSource}" SelectedItem="{Binding SelectGenre}"></ComboBox>
                         <Label x:Name="l_prod" HorizontalAlignment="Center">Producteur</Label>
                         <TextBox x:Name="textboxmodif_Producteur" Width="120" MaxLength="80"></TextBox>
                         <Label x:Name="l_duremoy" HorizontalAlignment="Center">Durée moyenne des épisodes</Label>
@@ -64,7 +64,7 @@
                                 <Button Margin="5" BorderBrush="Red" Width="75" Click="Retour_Click">Retour</Button>
                             </StackPanel>
                             <StackPanel HorizontalAlignment="Right" Margin="10">
-                                <Button Margin="5" BorderBrush="Green" Width="75" Click="Modif_Click" >Modifier</Button>
+                                <Button Margin="5" BorderBrush="Green" Width="75" Command="{Binding ModifierSerieCommand}" >Modifier</Button>
                             </StackPanel>
                         </Grid>
                     </StackPanel>

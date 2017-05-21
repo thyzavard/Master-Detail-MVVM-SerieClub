@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Projet.Presentation.Forms"
         mc:Ignorable="d"
-        Title="Inscription" Height="280" Width="300" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Inscription" Height="290" Width="300" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
-        <StackPanel Margin="0,10,0,0" Grid.ColumnSpan="2">
+        <StackPanel>
             <Label HorizontalAlignment="Center">Identifiant</Label>
             <TextBox Width="120" MaxLength="15" Text="{Binding Pseudo, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Label HorizontalAlignment="Center">Mot de passe</Label>
@@ -15,7 +15,7 @@
             <Label HorizontalAlignment="Center">Retaper votre mot de passe</Label>
             <TextBox Width="120" MaxLength="40" Text="{Binding Password2, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Label HorizontalAlignment="Center">Sexe</Label>
-            <ComboBox x:Name="cmbSexe" Width="120" ItemsSource="{Binding Sexe, UpdateSourceTrigger=PropertyChanged}" SelectedValue="Pas spécifié..."></ComboBox>
+            <ComboBox x:Name="cmbSexe" Width="120" ItemsSource="{Binding SexeSource}" SelectedItem="{Binding SelectSexe}"></ComboBox>
 
             <Grid>
                 <StackPanel Orientation="Horizontal"  Margin="20" VerticalAlignment="Center">
