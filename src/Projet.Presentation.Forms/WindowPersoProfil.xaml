@@ -16,7 +16,7 @@
             </StackPanel>
 
             <Label HorizontalAlignment="Center">Description</Label>
-            <TextBox Width="200" Height="50" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+            <TextBox Width="200" Height="50" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" TextWrapping="Wrap"></TextBox>
             <Label HorizontalAlignment="Center">Date de naissance</Label>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <ComboBox ItemsSource="{Binding ListJour}" SelectedIndex="0" SelectedItem="{Binding SelectedJour}"></ComboBox>

@@ -19,9 +19,9 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="Bisque">
-            <Label x:Name="l_nomserie" HorizontalAlignment="Center" Margin="0,40,0,0" FontSize="25">NOM SERIE</Label>
-            <Label x:Name="l_note" HorizontalAlignment="Center" Margin="0,0,0,10">Score : 8.5/10</Label>
-            <Button Width="140" Height="35" FontSize="16">Ajouter au favoris</Button>
+            <TextBlock Text="{Binding NomSerie}" HorizontalAlignment="Center" Margin="0,40,0,0" FontSize="25"></TextBlock>
+            <TextBlock Text="{Binding NoteSerie}" HorizontalAlignment="Center" Margin="0,0,0,10"></TextBlock>
+            <Button Width="140" Height="35" FontSize="16" Command="{Binding AjouterSerieCommand}">Ajouter au favoris</Button>
         </StackPanel>
 
         <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2" HorizontalScrollBarVisibility="Auto">
@@ -37,17 +37,20 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <StackPanel  Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
-                    <TextBlock x:Name="l_descriptionSerie" HorizontalAlignment="Center" Margin="0,20,0,0">Slt je suis la description mdr</TextBlock>
+                    <TextBlock Text="{Binding DescriptionSerie}" HorizontalAlignment="Center" Margin="0,20,0,0"></TextBlock>
                 </StackPanel>
                 <StackPanel  Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
-                    <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0">Ici seront les épisodes</TextBlock>
+                    <ListView ItemsSource="{Binding ListEpisode}">
+                        
+                    </ListView>
+                    <!--<TextBlock HorizontalAlignment="Center" Margin="0,20,0,0">Ici seront les épisodes</TextBlock>-->
                 </StackPanel>
                 <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2">
-                    <ComboBox x:Name="cmb_ep" Width="150" Margin="0,30,0,0"></ComboBox>
+                    <ComboBox ItemsSource="{Binding ListSaisonSerie}" SelectedItem="{Binding SelectedSaison}" Width="150" Margin="0,30,0,0"></ComboBox>
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center">
-                    <TextBox Width="400" Height="50">
+                    <TextBox Width="400" Height="50" Text="{Binding CommentaireSerie}" TextWrapping="Wrap">
                         <TextBox.Style>
                             <Style TargetType="TextBox">
                                 <Style.Resources>
@@ -68,7 +71,7 @@
                             </Style>
                         </TextBox.Style>
                     </TextBox>
-                    <Button Height="30" Width="100" HorizontalAlignment="Right" Margin="0,10,0,0">Envoyer !</Button>
+                    <Button Command="{Binding EnvoyerCommentaireCommand}"  Height="30" Width="100" HorizontalAlignment="Right" Margin="0,10,0,0">Envoyer !</Button>
                 </StackPanel>
             </Grid>
         </ScrollViewer>

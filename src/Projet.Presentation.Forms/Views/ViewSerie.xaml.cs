@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Projet.Presentation.Forms.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,14 @@ namespace Projet.Presentation.Forms
     /// </summary>
     public partial class ViewSerie : UserControl
     {
+        ViewSerieViewModel _vm;
+
         public ViewSerie()
         {
             InitializeComponent();
+            _vm = new ViewSerieViewModel();
+
+            DataContext = _vm;
         }
     }
 }
