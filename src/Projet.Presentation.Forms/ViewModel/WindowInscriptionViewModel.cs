@@ -20,8 +20,8 @@ namespace Projet.Presentation.Forms.ViewModel
         #endregion
 
         #region Command
-        public RelayCommand QuitCommand { get; set; }
-        public RelayCommand InscriptionCommand { get; set; }
+        public RelayCommand QuitCommand { get; private set; }
+        public RelayCommand InscriptionCommand { get; private set; }
         #endregion
 
         #region Public
@@ -100,7 +100,7 @@ namespace Projet.Presentation.Forms.ViewModel
             SexeSource.Add("Pas spécifié...");
             SexeSource.Add("Masculin");
             SexeSource.Add("Féminin");
-            
+
             QuitCommand = new RelayCommand(OnQuit, CanExecuteQuit);
             InscriptionCommand = new RelayCommand(OnInscription, CanExecuteInscription);
         }
@@ -109,7 +109,7 @@ namespace Projet.Presentation.Forms.ViewModel
         {
             if (Pseudo != null)
             {
-                if(Password1 != null && Password2 != null)
+                if (Password1 != null && Password2 != null)
                 {
                     if (SelectSexe != null)
                     {
@@ -130,7 +130,7 @@ namespace Projet.Presentation.Forms.ViewModel
             }
             else
             {
-                if(Password1 == Password2)
+                if (Password1 == Password2)
                 {
                     GestionBDD.inscription(Pseudo, Password1);
                     if (SelectSexe != "Pas spécifié...")
@@ -143,13 +143,13 @@ namespace Projet.Presentation.Forms.ViewModel
                 {
                     MessageBox.Show("Veuillez rentrer le même mot de passe", "Mot de passe incorrect", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-                
+
             }
         }
 
         private void OnQuit(object obj)
         {
-            
+
         }
 
         private bool CanExecuteQuit(object obj)

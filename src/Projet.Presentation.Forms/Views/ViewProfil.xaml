@@ -20,21 +20,19 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="Bisque" Orientation="Horizontal">
-            <!--<Image Width="100" Height="100" Margin="80,0,20,0"/>-->
-            <Rectangle Width="100" Height="100" Fill="#FF4B0808" Margin="80,0,20,0"></Rectangle>
+            <Image Width="100" Height="100" Margin="80,0,20,0"/>
             <StackPanel VerticalAlignment="Center">
-                <Label x:Name="l_pseudoUser" FontSize="25">Pseudo</Label>
-                <Label x:Name="l_descritpion">Description...</Label>
+                <TextBlock Text="{Binding CurrentPseudo}" FontSize="25"></TextBlock>
+                <TextBlock Text="{Binding CurrentDescription}"></TextBlock>
             </StackPanel>
         </StackPanel>
 
-        <Label x:Name="l_seriefav" Content="Série favorites" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center"></Label>
+        <TextBlock Text="{Binding TitreEnFonctionDuNbDeSerie}" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center"></TextBlock>
 
-        
+
         <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto">
-            <ListBox ItemsSource="{Binding listSerieUser}">
+            <ListBox ItemsSource="{Binding SerieUtilisateur}" SelectedItem="{Binding SelectedSerie}">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="3"></UniformGrid>
@@ -51,11 +49,11 @@
                     <DataTemplate>
 
                         <StackPanel Margin="30,0,30,0">
-                            <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40" Click="Info_btn">Info</Button>
+                            <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40" Command="{Binding DataContext.InfoSerieCommand, RelativeSource={RelativeSource AncestorType=ListBox}}">Infos</Button>
                             <Rectangle Height="130" Width="90" Fill="Brown"></Rectangle>
                             <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
                         </StackPanel>
-                        
+
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

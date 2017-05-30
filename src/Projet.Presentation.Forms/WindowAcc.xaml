@@ -6,23 +6,23 @@
         xmlns:local="clr-namespace:Projet.Presentation.Forms"
         xmlns:viewmodels="clr-namespace:Projet.Presentation.Forms.ViewModel"
         xmlns:views="clr-namespace:Projet.Presentation.Forms"
+        xmlns:converter="clr-namespace:Projet.Presentation.Forms.Converters"
         mc:Ignorable="d"
          Title="Serie Club" Height="600" Width="1000" FontSize="16" WindowStartupLocation="CenterScreen">
-    <!--<Window.DataContext>
-        <views:ViewAcceuil/>
-    </Window.DataContext>
-    
+
     <Window.Resources>
-        <DataTemplate x:Name="viewAcceuilTemplate" DataType="{x:Type viewmodels:ViewAccueil}">
-            <views:ViewAcceuil DataContext="{Binding}"/>
+        <DataTemplate DataType="{x:Type viewmodels:ViewAccueilViewModel}">
+            <views:ViewAcceuil/>
         </DataTemplate>
-        <DataTemplate x:Name="viewProfilTemplate" DataType="{x:Type viewmodels:ViewProfil}">
-            <views:ViewProfil DataContext="{Binding}"/>
+        <DataTemplate DataType="{x:Type viewmodels:ViewProfilViewModel}">
+            <views:ViewProfil/>
         </DataTemplate>
-        <DataTemplate x:Name="viewSerieTemplate" DataType="{x:Type viewmodels:ViewSerie}">
-            <views:ViewSerie DataContext="{Binding}"/>
+        <DataTemplate DataType="{x:Type viewmodels:ViewSerieViewModel}">
+            <views:ViewSerie/>
         </DataTemplate>
-    </Window.Resources>-->
+
+        <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -40,8 +40,8 @@
 
         <DockPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" Background="GhostWhite">
             <StackPanel VerticalAlignment="Center" >
-                <Button x:Name="btn_admin" Margin="20" Command="{Binding AdministrationCommand}">Administration</Button>
-                <TextBox x:Name="textBox_search" Margin="30,0,30,50">
+                <Button Margin="20" Command="{Binding AdministrationCommand}" Visibility="{Binding IsVisibleAdmin, Converter={StaticResource BooleanToVisibilityConverter}}">Administration</Button>
+                <TextBox Visibility="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="30,0,30,50">
 
                     <TextBox.Style>
                         <Style TargetType="TextBox">
@@ -62,18 +62,16 @@
                             </Style.Triggers>
                         </Style>
                     </TextBox.Style>
-
                 </TextBox>
-                <Label x:Name="l_user" HorizontalAlignment="Center" Content="{Binding Pseudo}"></Label>
-                <Button x:Name="btn_Acc" Margin="20" Click="Acceuil_Click">Accueil</Button>
-                <Button x:Name="btn_Profil" Margin="20" Click="Profil_Click">Profil</Button>
+                <Label HorizontalAlignment="Center" Content="{Binding Pseudo}"></Label>
+                <Button Margin="20" Command="{Binding OuvrirAcceuilCommand}">Accueil</Button>
+                <Button Margin="20" Command="{Binding OuvrirProfilCommand}">Profil</Button>
                 <Button Margin="20" FontSize="15" Command="{Binding PersoProfilCommand}">Personnaliser le profil</Button>
                 <Button Margin="20" Click="btnDeco_Click" BorderBrush="red">Se déconnecter</Button>
-                <Button Click="Button_Click">test</Button>
             </StackPanel>
         </DockPanel>
 
-        <ContentControl Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="5" Content="{Binding}"/>
+        <ContentControl Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="5" Content="{Binding SelectedViewModel}"/>
 
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
 ﻿using Projet.Entite.Class;
+using Projet.Presentation.Forms.ViewModel;
 using Projet.Service.Fonctions;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace Projet.Presentation.Forms
 {
     /// <summary>
@@ -23,63 +25,16 @@ namespace Projet.Presentation.Forms
     /// </summary>
     public partial class ViewAcceuil : UserControl
     {
-        public List<Serie> listserieAction { get; set; }
-        public List<Serie> listserieHorreur { get; set; }
-        public List<Serie> listserieFantastique { get; set; }
-        public List<Serie> listserieDrame { get; set; }
-        public List<Serie> listserieComedie { get; set; }
-
-        private Utilisateur utilisateur;
-
-        public ViewAcceuil(Utilisateur user)
-        {
-            InitializeComponent();
-
-            utilisateur = user;
-
-            List<string> listNom = GestionBDD.returnTouteSerie();
-            listserieAction = new List<Serie>();
-            listserieFantastique = new List<Serie>();
-            listserieHorreur = new List<Serie>();
-            listserieDrame = new List<Serie>();
-            listserieComedie = new List<Serie>();
-
-            for (int i = 0; i < listNom.Count; i++)
-            {
-                Serie serie = GestionBDD.remplirSerie(listNom[i]);
-                if(serie.genre == Genre.Action)
-                {
-                    listserieAction.Add(serie);
-                }
-                if(serie.genre == Genre.Horreur)
-                {
-                    listserieHorreur.Add(serie);
-                }
-                if(serie.genre == Genre.Fantastique)
-                {
-                    listserieFantastique.Add(serie);
-                }
-                if(serie.genre == Genre.Comedie)
-                {
-                    listserieComedie.Add(serie);
-                }
-                if (serie.genre == Genre.Drame)
-                {
-                    listserieDrame.Add(serie);
-                }
-            }
-           
-        }
+        private ViewAccueilViewModel _vm;
 
         public ViewAcceuil()
         {
             InitializeComponent();
+            _vm = new ViewAccueilViewModel();
+
+            DataContext = _vm;
         }
 
-        private void add_click(object sender, RoutedEventArgs e)
-        {
-            //GestionBDD.addSerieUtilisateur(utilisateur.pseudo,);
-        }
-
+        //private void StackPanel_PreviewMouseDown(object sender, MouseButtonEventArgs e)
     }
 }

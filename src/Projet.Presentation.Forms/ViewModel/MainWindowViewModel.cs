@@ -80,7 +80,9 @@ namespace Projet.Presentation.Forms.ViewModel
             if(GestionBDD.verifLoginMdp(Identifiant, Password))
             {
                 Utilisateur user = GestionBDD.remplirUser(Identifiant);
-                WindowAcc w = new WindowAcc(user);
+                UserCourant.SetNull();
+                UserCourant.Connect(user.pseudo, user.password, user.description, user.sexe, user.dateDeNaissance, user.modo);
+                WindowAcc w = new WindowAcc();
                 w.Show();
             }
             else

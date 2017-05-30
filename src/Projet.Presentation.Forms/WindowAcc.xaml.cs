@@ -22,13 +22,12 @@ namespace Projet.Presentation.Forms
     /// </summary>
     public partial class WindowAcc : Window
     {
-        private Utilisateur utilisateur;
         private WindowAccViewModel _vm;
 
-        public WindowAcc(Utilisateur user)
+        public WindowAcc()
         {
             InitializeComponent();
-            _vm = new WindowAccViewModel(user);
+            _vm = new WindowAccViewModel();
 
             DataContext = _vm;
             /*
@@ -58,44 +57,27 @@ namespace Projet.Presentation.Forms
             DataContext = new ViewAcceuil(utilisateur);*/
         }
 
-        private void Acceuil_Click(object sender, RoutedEventArgs e)
-        {
-            DataContext = new ViewAcceuil(utilisateur);
-            btn_Profil.IsEnabled = true;
-            btn_Acc.IsEnabled = false;
-            textBox_search.Visibility = Visibility.Visible;
-        }
+        /* private void Acceuil_Click(object sender, RoutedEventArgs e)
+         {
+             DataContext = new ViewAcceuil(utilisateur);
+             btn_Profil.IsEnabled = true;
+             btn_Acc.IsEnabled = false;
+             textBox_search.Visibility = Visibility.Visible;
+         }*/
 
-        private void Profil_Click(object sender, RoutedEventArgs e)
+        /*private void Profil_Click(object sender, RoutedEventArgs e)
         {
             DataContext = new ViewProfil(utilisateur);
             btn_Acc.IsEnabled = true;
             btn_Profil.IsEnabled = false;
             textBox_search.Visibility = Visibility.Hidden;
-        }
+        }*/
 
         private void btnDeco_Click(object sender, RoutedEventArgs e)
         {
             MainWindow m = new MainWindow();
             Close();
             m.Show();
-        }
-
-       /* private void PersoProfil_Click(object sender, RoutedEventArgs e)
-        {
-            WindowPersoProfil w = new WindowPersoProfil(utilisateur);
-            w.Show();
-        }
-
-        private void admin_Click(object sender, RoutedEventArgs e)
-        {
-            WindowAdd w = new WindowAdd();
-            w.Show();
-        }*/
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            DataContext = new ViewSerie();
         }
     }
 }

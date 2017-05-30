@@ -16,13 +16,13 @@
                         <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10">Parcourir...</Button>
                     </StackPanel>
                     <Label HorizontalAlignment="Center">Nom de la série</Label>
-                    <TextBox x:Name="textbox_NomSerie" Width="120" MaxLength="80" Text="{Binding NomSerie, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <TextBox x:Name="textbox_NomSerie" Width="120" MaxLength="80" Text="{Binding NomSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
                     <Label HorizontalAlignment="Center">Description</Label>
-                    <TextBox x:Name="textbox_DescSerie"  Width="200" Height="50" MaxLength="500" Text="{Binding DescriptionSerie, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <TextBox x:Name="textbox_DescSerie"  Width="200" Height="50" MaxLength="500" Text="{Binding DescriptionSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
                     <Label HorizontalAlignment="Center">Genre</Label>
-                    <ComboBox Width="120" ItemsSource="{Binding GenreSource}" SelectedItem="{Binding SelectGenre}"></ComboBox>
+                    <ComboBox Width="120" ItemsSource="{Binding GenreSource}" SelectedItem="{Binding SelectGenre, Mode=TwoWay}"></ComboBox>
                     <Label HorizontalAlignment="Center">Producteur</Label>
-                    <TextBox x:Name="textbox_Producteur" Width="120" MaxLength="80" Text="{Binding ProducteurSerie, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <TextBox x:Name="textbox_Producteur" Width="120" MaxLength="80" Text="{Binding ProducteurSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
                     <Label HorizontalAlignment="Center">Durée moyenne des épisodes</Label>
                     <TextBox x:Name="textbox_dureep" Width="120" MaxLength="80" Text="{Binding DureeMoyenneSerie, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
@@ -36,27 +36,26 @@
                     </Grid>
                 </StackPanel>
             </TabItem>
-            
+
             <TabItem Header="Modifier">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel Margin="0,10,0,0">
                         <Label HorizontalAlignment="Center">Série à modifier</Label>
-                        <ComboBox x:Name="cmbserie" Width="150" ItemsSource="{Binding Listserie}" SelectedItem="{Binding SelectSerie}"></ComboBox>
-                        <Button Width="75" Margin="0,10,0,0" Command="{Binding AfficherSerieModifCommand}">Ok</Button>
+                        <ComboBox Width="150" ItemsSource="{Binding Listserie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding SelectSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></ComboBox>
 
                         <Label x:Name="l_img" HorizontalAlignment="Center" Margin="0,15,0,0">Image de la série</Label>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Image x:Name="imgmodif" Height="75" Width="75"></Image>
                             <Button x:Name="btnmodif_parcourir" Width="75" Height="25" VerticalAlignment="Bottom" Margin="10">Parcourir...</Button>
                         </StackPanel>
-                        <Label x:Name="l_desc" HorizontalAlignment="Center">Description</Label>
-                        <TextBox Width="200" Height="50" MaxLength="500" Text="{Binding DescriptionSerie, Mode=TwoWay}"></TextBox>
-                        <Label x:Name="l_genre" HorizontalAlignment="Center">Genre</Label>
-                        <ComboBox Width="120" ItemsSource="{Binding GenreSource}" SelectedItem="{Binding SelectGenre}"></ComboBox>
-                        <Label x:Name="l_prod" HorizontalAlignment="Center">Producteur</Label>
-                        <TextBox x:Name="textboxmodif_Producteur" Width="120" MaxLength="80"></TextBox>
-                        <Label x:Name="l_duremoy" HorizontalAlignment="Center">Durée moyenne des épisodes</Label>
-                        <TextBox x:Name="textboxmodif_dureep" Width="120" MaxLength="80"></TextBox>
+                        <Label HorizontalAlignment="Center">Description</Label>
+                        <TextBox Width="200" Height="50" MaxLength="500" Text="{Binding Descriptionseriemodif, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <Label HorizontalAlignment="Center">Genre</Label>
+                        <ComboBox Width="120" ItemsSource="{Binding GenreSource}" SelectedItem="{Binding Selectgenremodif}" ></ComboBox>
+                        <Label HorizontalAlignment="Center">Producteur</Label>
+                        <TextBox Width="120" MaxLength="80" Text="{Binding Producteurseriemodif, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <Label HorizontalAlignment="Center" >Durée moyenne des épisodes</Label>
+                        <TextBox Width="120" MaxLength="80" Text="{Binding Dureemoyenneseriemodif, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
 
                         <Grid>
@@ -69,20 +68,20 @@
                         </Grid>
                     </StackPanel>
                 </ScrollViewer>
-                
+
             </TabItem>
-            
+
             <TabItem Header="Supprimer">
                 <StackPanel Margin="0,150,0,0">
                     <Label HorizontalAlignment="Center">Choisir la série à supprimer</Label>
-                    <ComboBox x:Name="cmbsuppr" Width="150"></ComboBox>
-                    
+                    <ComboBox Width="150" ItemsSource="{Binding Listserie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding Selectseriesuppr, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></ComboBox>
+
                     <Grid Margin="0,140,0,0">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
                             <Button Margin="5" BorderBrush="Green" Width="75" Click="Retour_Click">Retour</Button>
                         </StackPanel>
                         <StackPanel HorizontalAlignment="Right" Margin="10">
-                            <Button Margin="5" BorderBrush="Red" Width="75" Click="Supprimer_Click" >Supprimer</Button>
+                            <Button Margin="5" BorderBrush="Red" Width="75" Command="{Binding SupprimerSerieCommand}">Supprimer</Button>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
@@ -91,20 +90,20 @@
             <TabItem Header="Modération">
                 <StackPanel Margin="0,150,0,0">
                     <Label HorizontalAlignment="Center">Choisir le pseudo de l'utilisateur</Label>
-                    <ComboBox x:Name="cmb_pseudo" Width="120"></ComboBox>
+                    <ComboBox Width="120" ItemsSource="{Binding ListPseudo}" SelectedItem="{Binding Selectpseudo}"></ComboBox>
 
                     <Grid Margin="0,10,0,0">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
-                            <Button Margin="5" BorderBrush="Red" Width="75" Click="down_Click">Destituer</Button>
+                            <Button Margin="5" BorderBrush="Red" Width="75" Command="{Binding downAdminCommand}">Destituer</Button>
                         </StackPanel>
                         <StackPanel HorizontalAlignment="Right" Margin="10">
-                            <Button Margin="5" BorderBrush="Green" Width="75" Click="up_Click" >Promouvoir</Button>
+                            <Button Margin="5" BorderBrush="Green" Width="75" Command="{Binding upAdminCommand}" >Promouvoir</Button>
                         </StackPanel>
                     </Grid>
                     <Button Width="75" Margin="0,140,0,0" BorderBrush="Red" Click="Retour_Click">Retour</Button>
                 </StackPanel>
             </TabItem>
         </TabControl>
-        
+
     </Grid>
 </Window>

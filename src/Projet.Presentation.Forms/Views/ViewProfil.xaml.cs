@@ -1,4 +1,5 @@
 ﻿using Projet.Entite.Class;
+using Projet.Presentation.Forms.ViewModel;
 using Projet.Service.Fonctions;
 using System;
 using System.Collections.Generic;
@@ -23,47 +24,18 @@ namespace Projet.Presentation.Forms
     /// </summary>
     public partial class ViewProfil : UserControl
     {
-        public List<Serie> listSerieUser { get; set; }
+        private ViewProfilViewModel _vm;
 
-        public ViewProfil(Utilisateur user)
-        {
-            InitializeComponent();
-            l_pseudoUser.Content = user.pseudo;
-            if (user.description == "Description...")
-            {
-                l_descritpion.Content = "";
-            }
-            else
-            {
-                l_descritpion.Content = user.description;
-            }
-
-            //*****Gestion Série*****
-            listSerieUser = new List<Serie>();
-            listSerieUser = user.serieadd;
-
-
-            if (listSerieUser.Count == 0)
-            {
-                l_seriefav.Content = "Aucune série ajoutée en favoris...";
-            }
-            else if (listSerieUser.Count == 1)
-            {
-                l_seriefav.Content = "Série en favoris";
-            }
-            else
-            {
-                l_seriefav.Content = "Séries en favoris";
-            }
-        }
         public ViewProfil()
         {
             InitializeComponent();
+            _vm = new ViewProfilViewModel();
+
+            DataContext = _vm;
         }
 
-        private void Info_btn(object sender, RoutedEventArgs e)
-        {
-            
-        }
+        //CHARGER IMAGE PROFIL
+        /*string path = Path.Combine(Environment.CurrentDirectory, "images_profil_user");
+        ImageSelect = $"{path}/{user_courant.Pseudo}.jpg";*/
     }
 }

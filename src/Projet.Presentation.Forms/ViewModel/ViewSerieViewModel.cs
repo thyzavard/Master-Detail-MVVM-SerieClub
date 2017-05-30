@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
-    class ViewProfil
+    class ViewSerieViewModel
     {
     }
 }
