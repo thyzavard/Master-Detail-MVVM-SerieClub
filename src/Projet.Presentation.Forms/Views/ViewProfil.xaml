@@ -45,7 +45,7 @@
                     <DataTemplate>
 
                         <StackPanel Margin="30,0,30,0">
-                            <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40" Click="Info_btn">Info</Button>
+                            <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40" Content="Info"/>
                             <Rectangle Height="130" Width="90" Fill="Brown"></Rectangle>
                             <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
                         </StackPanel>

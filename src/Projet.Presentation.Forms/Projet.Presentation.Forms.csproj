@@ -34,6 +34,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -60,14 +64,10 @@
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="ViewModel\Test.cs" />
     <Compile Include="ViewModel\ViewAccueil.cs" />
     <Compile Include="ViewModel\ViewLogin.cs" />
     <Compile Include="ViewModel\ViewProfil.cs" />
     <Compile Include="ViewModel\ViewSerie.cs" />
-    <Compile Include="Views\test.xaml.cs">
-      <DependentUpon>test.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ViewAcceuil.xaml.cs">
       <DependentUpon>ViewAcceuil.xaml</DependentUpon>
     </Compile>
@@ -90,10 +90,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\test.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\ViewAcceuil.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

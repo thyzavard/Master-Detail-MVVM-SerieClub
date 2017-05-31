@@ -20,12 +20,9 @@ namespace Projet.Presentation.Forms
     /// </summary>
     public partial class WindowAcc : Window
     {
-        private Utilisateur utilisateur;
-
-        public WindowAcc(Utilisateur user)
+        public WindowAcc()
         {
             InitializeComponent();
-
         }
     }
 }
