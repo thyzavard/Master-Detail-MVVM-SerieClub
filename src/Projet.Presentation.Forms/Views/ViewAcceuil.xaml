@@ -27,7 +27,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Grid.ColumnSpan="3" Background="Beige">Action</Label>
+            <Label Grid.Row="0" Grid.ColumnSpan="3" Background="Wheat">Action</Label>
             <ListBox Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding ListserieAction}" SelectedItem="{Binding SelectedSerie}" Background="Cornsilk">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -39,7 +39,7 @@
                     <DataTemplate>
                         <Grid>
                             <StackPanel Margin="30,0,30,0">
-                                <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40" Command="{Binding DataContext.AjouterSerieCommand, RelativeSource={RelativeSource AncestorType=ListBox}}">Add</Button>
+                                <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40" Command="{Binding DataContext.AjouterSerieCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" Content="Add"></Button>
                                 <Rectangle Height="130" Width="90" Fill="Brown"></Rectangle>
                                 <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"/>
                             </StackPanel>

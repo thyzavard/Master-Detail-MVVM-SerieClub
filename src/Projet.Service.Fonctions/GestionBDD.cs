@@ -11,7 +11,7 @@ namespace Projet.Service.Fonctions
 {
     public class GestionBDD
     {
-        private static SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Documents\SerieClubClf.mdf;Integrated Security=True;Connect Timeout=30");
+        private static SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=U:\1ère_année\C#\Projet_Git\serie-club\src\Persistance\Serie-Club.mdf;Integrated Security=True");
         public static Utilisateur remplirUser(String pseudo)
         {
             Utilisateur user = new Utilisateur();
@@ -157,6 +157,57 @@ namespace Projet.Service.Fonctions
             }
             con.Close();
             return list;
+        }
+
+        public static List<Serie> returnTouteSerieFull()
+        {
+            List<string> list = new List<string>();
+            List<Serie> listSerie = new List<Serie>();
+            con.Open();
+            var command = new SqlCommand("Select Nom from Serie", con);
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    list.Add(reader.GetString(0));
+                }
+            }
+
+
+            for(int i = 0; i < list.Count; i++)
+            {
+                Serie serie = new Serie();
+                serie.nom = list[i];
+                //Description
+                SqlCommand cmddesc = new SqlCommand("Select Description from Serie where Nom='" + list[i] + "'", con);
+                SqlDataReader dr = cmddesc.ExecuteReader();
+                dr.Read();
+                serie.description = dr.GetString(0);
+                dr.Close();
+                //Producteur
+                SqlCommand cmdprod = new SqlCommand("Select Producteur from Serie where Nom='" + list[i] + "'", con);
+                dr = cmdprod.ExecuteReader();
+                dr.Read();
+                serie.producteur = dr.GetString(0);
+                dr.Close();
+                //Durée Moyenne
+                SqlCommand cmddure = new SqlCommand("Select DureeMoyenne from Serie where Nom='" + list[i] + "'", con);
+                dr = cmddure.ExecuteReader();
+                dr.Read();
+                serie.dureeMoy = dr.GetInt32(0);
+                dr.Close();
+                //Genre
+                SqlCommand cmdgenre = new SqlCommand("Select Genre from Serie where Nom='" + list[i] + "'", con);
+                dr = cmdgenre.ExecuteReader();
+                dr.Read();
+                var recup = dr.GetString(0);
+                Genre genre = (Genre)Enum.Parse(typeof(Genre), recup);
+                serie.genre = genre;
+                dr.Close();
+                listSerie.Add(serie);
+            }
+            con.Close();
+            return listSerie;
         }
 
         public static List<string> returnToutUtilisateur()

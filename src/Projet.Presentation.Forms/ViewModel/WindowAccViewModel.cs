@@ -160,7 +160,7 @@ namespace Projet.Presentation.Forms.ViewModel
         private void OnAdministration(object obj)
         {
             WindowAdd wp = new WindowAdd();
-            wp.Show();
+            wp.ShowDialog();
         }
 
         private bool CanExecuteAdministration(object obj)
@@ -172,7 +172,7 @@ namespace Projet.Presentation.Forms.ViewModel
         private void OnPersoProfil(object obj)
         {
             WindowPersoProfil w = new WindowPersoProfil();
-            w.Show();
+            w.ShowDialog();
         }
 
         private bool CanExecutePersoProfil(object obj)

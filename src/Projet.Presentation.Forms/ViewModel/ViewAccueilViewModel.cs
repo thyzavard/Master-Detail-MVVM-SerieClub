@@ -15,6 +15,7 @@ namespace Projet.Presentation.Forms.ViewModel
     public class ViewAccueilViewModel : INotifyPropertyChanged
     {
         #region private
+        private List<Serie> _listSerie;
         private List<Serie> _listserieAction;
         private List<Serie> _listserieHorreur;
         private List<Serie> _listserieFantastique;
@@ -24,6 +25,7 @@ namespace Projet.Presentation.Forms.ViewModel
         private object _selectedViewModel;
         private Serie _selectedSerie;
         private UserCourant _user_courant = UserCourant.Instance();
+        private string _ajouterOuSupprimerButton;
         #endregion
 
         #region Public
@@ -119,45 +121,61 @@ namespace Projet.Presentation.Forms.ViewModel
                 NotifyPropertyChanged(nameof(SelectedSerie));
             }
         }
+        public string AjouterOuSupprimerButton
+        {
+            get
+            {
+                return _ajouterOuSupprimerButton;
+            }
+
+            set
+            {
+                _ajouterOuSupprimerButton = value;
+                AjouterSerieCommand.RaiseCanExecuteChanged();
+                NotifyPropertyChanged(nameof(AjouterOuSupprimerButton));
+            }
+        }
         #endregion
 
         #region Command
         public RelayCommand AjouterSerieCommand { get; private set; }
+
+
         #endregion
 
         public ViewAccueilViewModel()
         {
             AjouterSerieCommand = new RelayCommand(OnAjouterSerie, CanExecuteAjouterSerie);
-
-            _listNom = GestionBDD.returnTouteSerie();
+            SelectedSerie = new Serie();
             ListserieAction = new List<Serie>();
             ListserieFantastique = new List<Serie>();
             ListserieHorreur = new List<Serie>();
             ListserieDrame = new List<Serie>();
             ListserieComedie = new List<Serie>();
 
-            for (int i = 0; i < _listNom.Count; i++)
+            _listSerie = GestionBDD.returnTouteSerieFull();
+
+            for(int i = 0; i < _listSerie.Count; i++)
             {
-                Serie serie = GestionBDD.remplirSerie(_listNom[i]);
-                if (serie.genre == Genre.Action)
+                if (_listSerie[i].genre == Genre.Action)
                 {
-                    ListserieAction.Add(serie);
+                    ListserieAction.Add(_listSerie[i]);
                 }
-                if (serie.genre == Genre.Horreur)
+                if (_listSerie[i].genre == Genre.Horreur)
                 {
-                    ListserieHorreur.Add(serie);
+                    ListserieHorreur.Add(_listSerie[i]);
                 }
-                if (serie.genre == Genre.Fantastique)
+                if (_listSerie[i].genre == Genre.Fantastique)
                 {
-                    ListserieFantastique.Add(serie);
+                    ListserieFantastique.Add(_listSerie[i]);
                 }
-                if (serie.genre == Genre.Comedie)
+                if (_listSerie[i].genre == Genre.Comedie)
                 {
-                    ListserieComedie.Add(serie);
+                    ListserieComedie.Add(_listSerie[i]);
                 }
-                if (serie.genre == Genre.Drame)
+                if (_listSerie[i].genre == Genre.Drame)
                 {
-                    ListserieDrame.Add(serie);
+                    ListserieDrame.Add(_listSerie[i]);
                 }
             }
         }
@@ -178,6 +196,14 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private bool CanExecuteAjouterSerie(object obj)
         {
+            /*if(GestionBDD.checkSiSerieAjouter(_user_courant.Pseudo, SelectedSerie.nom))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }*/
             return true;
         }
     }
