@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
@@ -57,6 +59,8 @@ namespace Projet.Presentation.Forms.ViewModel
             set
             {
                 _selectedViewModel = value;
+                OuvrirProfilCommand.RaiseCanExecuteChanged();
+                OuvrirAcceuilCommand.RaiseCanExecuteChanged();
                 NotifyPropertyChanged(nameof(SelectedViewModel));
             }
         }
@@ -101,14 +105,16 @@ namespace Projet.Presentation.Forms.ViewModel
 
         public WindowAccViewModel()
         {
-            SelectedViewModel = new ViewAccueilViewModel();
-            _user.Serieadd = GestionBDD.returnSerieUtilisateurFull(_user.Pseudo);
-            Pseudo = _user.Pseudo;
-
             PersoProfilCommand = new RelayCommand(OnPersoProfil, CanExecutePersoProfil);
             AdministrationCommand = new RelayCommand(OnAdministration, CanExecuteAdministration);
             OuvrirAcceuilCommand = new RelayCommand(OnOuvrirAcceuil, CanExecuteOuvrirAcceuil);
             OuvrirProfilCommand = new RelayCommand(OnOuvrirProfil, CanExecuteOuvrirProfil);
+
+            SelectedViewModel = new ViewAccueilViewModel();
+            _user.Serieadd = GestionBDD.returnSerieUtilisateurFull(_user.Pseudo);
+            string path = GestionBDD.loadPhotoProfil(_user.Pseudo);
+            _user.image = new BitmapImage(new Uri(path));
+            Pseudo = _user.Pseudo;
         }
 
         private void OnOuvrirProfil(object obj)
@@ -119,19 +125,15 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private bool CanExecuteOuvrirProfil(object obj)
         {
-            /*if (SelectedViewModel.GetType() != typeof(ViewProfilViewModel))
+            if (SelectedViewModel.GetType() != typeof(ViewProfilViewModel))
             {
                 return true;
-            }
-            else if(SelectedViewModel.GetType() == typeof(ViewProfilViewModel))
-            {
-                return false;
             }
             else
             {
                 return false;
-            }*/
-            return true;
+            }
+            //return true;
         }
 
         private void OnOuvrirAcceuil(object obj)
@@ -142,19 +144,15 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private bool CanExecuteOuvrirAcceuil(object obj)
         {
-            /*if (SelectedViewModel.GetType() != typeof(ViewAccueilViewModel))
+            if (SelectedViewModel.GetType() != typeof(ViewAccueilViewModel))
             {
                 return true;
-            }
-            else if(SelectedViewModel.GetType() == typeof(ViewAccueilViewModel))
-            {
-                return false;
             }
             else
             {
                 return false;
-            }*/
-            return true;
+            }
+            //return true;
         }
 
         private void OnAdministration(object obj)

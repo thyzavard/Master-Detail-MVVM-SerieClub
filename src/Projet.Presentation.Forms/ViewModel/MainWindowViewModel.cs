@@ -1,5 +1,6 @@
 ﻿using Projet.Entite.Class;
 using Projet.Presentation.Forms.Commands;
+using Projet.Presentation.Forms.Events;
 using Projet.Service.Fonctions;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace Projet.Presentation.Forms.ViewModel
         #region private
         private string _password;
         private string _identifiant;
+        private WindowAcc _wAcceuil;
+        private WindowInscription _wInscription;
         #endregion
 
         #region Command
@@ -57,6 +60,8 @@ namespace Projet.Presentation.Forms.ViewModel
             InscrireCommand = new RelayCommand(OnInscription, CanExecuteInscription);
             ConnexionCommand = new RelayCommand(OnLogin, CanExecuteLogin);
             QuitCommand = new RelayCommand(OnQuit, CanExecuteQuit);
+
+            _wInscription = new WindowInscription();
         }
 
         private void OnQuit(object obj)
@@ -79,11 +84,12 @@ namespace Projet.Presentation.Forms.ViewModel
         {
             if(GestionBDD.verifLoginMdp(Identifiant, Password))
             {
+                
                 Utilisateur user = GestionBDD.remplirUser(Identifiant);
                 UserCourant.SetNull();
                 UserCourant.Connect(user.pseudo, user.password, user.description, user.sexe, user.dateDeNaissance, user.modo);
-                WindowAcc w = new WindowAcc();
-                w.Show();
+                _wAcceuil = new WindowAcc();
+                _wAcceuil.Show();
             }
             else
             {
@@ -98,8 +104,13 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private void OnInscription(object obj)
         {
-            WindowInscription wInsc = new WindowInscription();
-            wInsc.Show();
+            _wInscription.Show();
+            WindowClosedEvent.GetInstance().Handler += OnCloseWInscription;
+        }
+        private void OnCloseWInscription(object sender, EventArgs e)
+        {
+            _wInscription.Close();
+            WindowClosedEvent.GetInstance().Handler -= OnCloseWInscription;
         }
     }
 }

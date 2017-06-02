@@ -21,7 +21,6 @@ namespace Projet.Presentation.Forms.ViewModel
         private List<Serie> _listserieFantastique;
         private List<Serie> _listserieDrame;
         private List<Serie> _listserieComedie;
-        private List<string> _listNom;
         private object _selectedViewModel;
         private Serie _selectedSerie;
         private UserCourant _user_courant = UserCourant.Instance();

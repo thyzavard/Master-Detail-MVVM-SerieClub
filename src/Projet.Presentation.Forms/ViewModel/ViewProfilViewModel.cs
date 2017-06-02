@@ -1,12 +1,17 @@
 ﻿using Projet.Entite.Class;
 using Projet.Presentation.Forms.Commands;
+using Projet.Presentation.Forms.Converters;
 using Projet.Service.Fonctions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
@@ -20,6 +25,7 @@ namespace Projet.Presentation.Forms.ViewModel
         private List<Serie> _serieUtilisateur;
         private UserCourant _user = UserCourant.Instance();
         private object _selectedViewModel;
+        private BitmapImage _imageUserCourant;
         #endregion
 
         #region Public
@@ -92,6 +98,19 @@ namespace Projet.Presentation.Forms.ViewModel
             }
         }
 
+        public BitmapImage ImageUserCourant
+        {
+            get
+            {
+                return _imageUserCourant;
+            }
+            set
+            {
+                _imageUserCourant = value;
+                NotifyPropertyChanged(nameof(ImageUserCourant));
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void NotifyPropertyChanged(String info)
@@ -111,16 +130,13 @@ namespace Projet.Presentation.Forms.ViewModel
         {
             CurrentPseudo = _user.Pseudo;
             CurrentDescription = _user.Description;
+            //ImageUserCourant = _user.image;
+
+            ImageUserCourant = GestionBDD.ConvertImage(ResourceImage._base);
+
 
             //*****GESTION SÉRIE UTILISATEUR*****
             SerieUtilisateur = _user.Serieadd;
-            /*_listNom = GestionBDD.returnSerieUtilisateur(_user.Pseudo);
-            SerieUtilisateur = new List<Serie>();
-            for (int i = 0; i < _listNom.Count; i++)
-            {
-                Serie serie = GestionBDD.remplirSerie(_listNom[i]);
-                SerieUtilisateur.Add(serie);
-            }*/
 
             //*****GESTION DU MESSAGE EN FONCTION DU NOMBRE DE SÉRIE*****
             if (SerieUtilisateur.Count == 0) { TitreEnFonctionDuNbDeSerie = "Je n'ai pas de séries préférées..."; }

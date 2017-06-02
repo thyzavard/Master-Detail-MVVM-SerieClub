@@ -26,6 +26,7 @@ namespace Projet.Presentation.Forms
     public partial class WindowInscription : Window
     {
         private WindowInscriptionViewModel _vm;
+
         public WindowInscription()
         {
             InitializeComponent();
