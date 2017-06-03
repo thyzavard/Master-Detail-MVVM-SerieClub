@@ -32,7 +32,7 @@
 
 
         <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto">
-            <ListBox ItemsSource="{Binding SerieUtilisateur}" SelectedItem="{Binding SelectedSerie}">
+            <ListBox ItemsSource="{Binding SerieUtilisateur, Mode=TwoWay}" SelectedItem="{Binding SelectedSerie}">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="3"></UniformGrid>
@@ -49,7 +49,8 @@
                     <DataTemplate>
 
                         <StackPanel Margin="30,0,30,0">
-                            <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40" Command="{Binding DataContext.InfoSerieCommand, RelativeSource={RelativeSource AncestorType=ListBox}}">Infos</Button>
+                            <Button FontSize="12" BorderBrush="Red" Margin="0,5,0,5" HorizontalAlignment="Stretch" Width="20" Command="{Binding DataContext.EnleverSerieCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" Content="x"/>
+                            <Button FontSize="12" BorderBrush="Blue" Margin="0,5,0,5" HorizontalAlignment="Stretch" Width="40" Command="{Binding DataContext.InfoSerieCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" Content="Infos"/>
                             <Rectangle Height="130" Width="90" Fill="Brown"></Rectangle>
                             <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
                         </StackPanel>

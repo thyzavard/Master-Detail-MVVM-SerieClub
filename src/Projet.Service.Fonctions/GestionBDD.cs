@@ -11,7 +11,7 @@ namespace Projet.Service.Fonctions
 {
     public class GestionBDD
     {
-        private static SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Documents\SerieClubClf.mdf;Integrated Security=True;Connect Timeout=30");
+        private static SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Utilisateur\Source\Repos\Projet\serie-club\src\Persistance\Serie-Club.mdf;Integrated Security=True;Connect Timeout=30");
         public static Utilisateur remplirUser(String pseudo)
         {
             Utilisateur user = new Utilisateur();
@@ -277,6 +277,14 @@ namespace Projet.Service.Fonctions
         {
             con.Open();
             var cmd = new SqlCommand("Insert into UtilisateurSerie (IdUtilisateur, IdSerie) values('" + pseudo + "', '" + nomSerie + "') ", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+        public static void removeSerieUtilisateur(string pseudo, string nomSerie)
+        {
+            con.Open();
+            var cmd = new SqlCommand("Delete from UtilisateurSerie where IdSerie='" + nomSerie + "' and IdUtilisateur='" + pseudo + "' ", con);
             cmd.ExecuteNonQuery();
             con.Close();
         }
