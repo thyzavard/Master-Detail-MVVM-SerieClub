@@ -1,6 +1,7 @@
 ﻿using Projet.Entite.Class;
 using Projet.Presentation.Forms.Commands;
 using Projet.Service.Fonctions;
+using Projet.Presentation.Forms.Extension;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Collections.ObjectModel;
 
 namespace Projet.Presentation.Forms.ViewModel
 {

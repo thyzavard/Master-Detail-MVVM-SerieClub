@@ -281,7 +281,14 @@ namespace Projet.Service.Fonctions
             return serie;
         }
 
-        public static void updateSerie(string nom, string desc, int dureMoy, string producteur, string genre)
+        public static void updateSerie(string nom, string desc, int dureMoy, string producteur, string genre, string path)
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("Update Serie set Description ='" + desc + "', Producteur ='" + producteur + "', Genre ='" + genre + "', DureeMoyenne ='" + dureMoy + "', PhotoSerie='"+path+"' where Nom='" + nom + "'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+        public static void updateSeriesansImage(string nom, string desc, int dureMoy, string producteur, string genre)
         {
             con.Open();
             SqlCommand cmd = new SqlCommand("Update Serie set Description ='" + desc + "', Producteur ='" + producteur + "', Genre ='" + genre + "', DureeMoyenne ='" + dureMoy + "' where Nom='" + nom + "'", con);
@@ -438,6 +445,13 @@ namespace Projet.Service.Fonctions
             command.ExecuteNonQuery();
             con.Close();
         }
+        public static void enregisterPhotoCouverture(string path, string pseudo)
+        {
+            con.Open();
+            var command = new SqlCommand("Update Utilisateur set PathCouverture='" + path + "' where Pseudo='" + pseudo + "'", con);
+            command.ExecuteNonQuery();
+            con.Close();
+        }
 
         public static string loadPhotoProfil(string pseudo)
         {
@@ -451,12 +465,16 @@ namespace Projet.Service.Fonctions
             return path;
         }
 
-        public static void updateImageSerie(string path, string nomserie)
+        public static string loadPhotoCouverture(string pseudo)
         {
             con.Open();
-            var command = new SqlCommand("Update Serie set PhotoSerie='" + path + "' where Nom='" + nomserie + "'", con);
-            command.ExecuteNonQuery();
+            var command = new SqlCommand("Select PathCouverture From Utilisateur where Pseudo='" + pseudo + "'", con);
+            SqlDataReader dr = command.ExecuteReader();
+            dr.Read();
+            string path = dr.GetString(0);
+            dr.Close();
             con.Close();
+            return path;
         }
 
 

@@ -31,13 +31,17 @@ namespace Projet.Presentation.Forms.ViewModel
         private string _selectedAnne;
         private UserCourant user = UserCourant.Instance();
         private OpenFileDialog openFile = new OpenFileDialog();
+        private OpenFileDialog _openFileCouverture = new OpenFileDialog();
         private UserCourant user_courant = UserCourant.Instance();
         private BitmapImage _imageCourant;
 
         private string _path;
         private string _fileName;
+        private string _fileNameCouverture;
         private string _sourceImage;
+        private string _sourceImageCouverture;
         private bool _verif = false;
+        private bool _verifCouv = false;
         #endregion
 
         #region Public
@@ -146,11 +150,25 @@ namespace Projet.Presentation.Forms.ViewModel
                 NotifyPropertyChanged(nameof(SourceImage));
             }
         }
+        public string SourceImageCouverture
+        {
+            get
+            {
+                return _sourceImageCouverture;
+            }
+            set
+            {
+                _sourceImageCouverture = value;
+                NotifyPropertyChanged(nameof(SourceImageCouverture));
+            }
+        }
+
         #endregion
 
         #region Command
         public RelayCommand SauverModifProfilCommand { get; private set; }
         public RelayCommand ParcourirImageCommand { get; private set; }
+        public RelayCommand ParcourirImageCouvertureCommand { get; private set; }
         #endregion
 
         public WindowPersoProfilViewModel()
@@ -160,7 +178,7 @@ namespace Projet.Presentation.Forms.ViewModel
 
             _path = Path.Combine(Environment.CurrentDirectory, "Images");
             SourceImage = user_courant.image.ToString();
-
+            SourceImageCouverture = user_courant.couverture.ToString();
 
             //Remplissage de la combobox Sexe
             Listsexe = new List<string>();
@@ -204,6 +222,25 @@ namespace Projet.Presentation.Forms.ViewModel
             //COMMANDE
             SauverModifProfilCommand = new RelayCommand(OnSauverModifProfil, CanExecuteSauverModifProfil);
             ParcourirImageCommand = new RelayCommand(OnParcourirImage, CanExecuteParcourirImage);
+            ParcourirImageCouvertureCommand = new RelayCommand(OnParcourirImageCouverture, CanExecuteParcourirImageCouverture);
+        }
+
+        private void OnParcourirImageCouverture(object obj)
+        {
+            _openFileCouverture.Title = "Selectionner une photo de couverture";
+            _openFileCouverture.DefaultExt = "jpg";
+            _openFileCouverture.Filter = "Fichier JPG (*.jpg)|*.jpg";
+            if(_openFileCouverture.ShowDialog() == true)
+            {
+                _fileNameCouverture = Path.GetFileName(_openFileCouverture.FileName);
+                SourceImageCouverture = Path.GetFullPath(_openFileCouverture.FileName);
+                _verifCouv = true;
+            }
+        }
+
+        private bool CanExecuteParcourirImageCouverture(object obj)
+        {
+            return true;
         }
 
         private void OnParcourirImage(object obj)
@@ -253,18 +290,52 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 if (!File.Exists($@"{_path}\{_fileName}"))
                 {
-                    File.Copy(openFile.FileName, Path.Combine(_path, _fileName));
-                    GestionBDD.enregisterPhotoProfil(_fileName, user.Pseudo);
-                    user.image = new BitmapImage(new Uri($@"{_path}\{_fileName}"));
+                    FileInfo f = new FileInfo(openFile.FileName);
+                    if (f.Length > 512000)
+                    {
+                        MessageBox.Show("La taille de l'image de profil est trop grande (500 ko maximum)", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else
+                    {
+                        File.Copy(openFile.FileName, Path.Combine(_path, _fileName));
+                        GestionBDD.enregisterPhotoProfil(_fileName, user.Pseudo);
+                        user.image = new BitmapImage(new Uri($@"{_path}\{_fileName}"));
+                        MessageBox.Show("Modification enregistrée");
+                    }
                 }
                 else
                 {
                     GestionBDD.enregisterPhotoProfil(_fileName, user.Pseudo);
                     user.image = new BitmapImage(new Uri($@"{_path}\{_fileName}"));
+                    MessageBox.Show("Modification enregistrée");
                 }
-                //File.Move($@"Images\{_fileName}", $@"Images\{user.Pseudo}.jpg");
             }
-            MessageBox.Show("Modification enregistrée");
+
+            if (_verifCouv)
+            {
+                if (!File.Exists($@"{_path}\{_fileNameCouverture}"))
+                {
+                    FileInfo f = new FileInfo(_openFileCouverture.FileName);
+                    if (f.Length > 716800)
+                    {
+                        MessageBox.Show("La taille de l'image de couverture est trop grande (700 ko maximum)", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else
+                    {
+                        File.Copy(_openFileCouverture.FileName, Path.Combine(_path, _fileNameCouverture));
+                        GestionBDD.enregisterPhotoCouverture(_fileNameCouverture, user.Pseudo);
+                        user.couverture = new BitmapImage(new Uri($@"{_path}\{_fileNameCouverture}"));
+                        MessageBox.Show("Modification enregistrée");
+                    }
+                }
+                else
+                {
+                    GestionBDD.enregisterPhotoCouverture(_fileNameCouverture, user.Pseudo);
+                    user.couverture = new BitmapImage(new Uri($@"{_path}\{_fileNameCouverture}"));
+                    MessageBox.Show("Modification enregistrée");
+                }
+            }
+            
         }
         private bool CanExecuteSauverModifProfil(object obj)
         {

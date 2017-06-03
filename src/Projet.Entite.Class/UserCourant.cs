@@ -22,6 +22,7 @@ namespace Projet.Entite.Class
         public List<Serie> Serieadd { get; set; }
         public bool Modo { get; set; }
         public BitmapImage image { get; set; }
+        public BitmapImage couverture { get; set; }
 
         public static void Connect(string pseudo, string mdp, string desc, string sexe, string ddn, bool modo)
         {

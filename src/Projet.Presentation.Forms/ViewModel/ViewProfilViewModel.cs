@@ -25,6 +25,7 @@ namespace Projet.Presentation.Forms.ViewModel
         private Serie _selectedSerie;
         private UserCourant _user_courant = UserCourant.Instance();
         private BitmapImage _imageUserCourant;
+        private BitmapImage _sourceImageCouverture;
         #endregion
 
         #region Public
@@ -72,6 +73,8 @@ namespace Projet.Presentation.Forms.ViewModel
             set
             {
                 _titreEnFonctionDuNbDeSerie = value;
+                EnleverSerieCommand.RaiseCanExecuteChanged();
+                NotifyPropertyChanged(nameof(TitreEnFonctionDuNbDeSerie));
             }
         }
 
@@ -100,6 +103,19 @@ namespace Projet.Presentation.Forms.ViewModel
                 NotifyPropertyChanged(nameof(ImageUserCourant));
             }
         }
+        public BitmapImage SourceImageCouverture
+        {
+            get
+            {
+                return _sourceImageCouverture;
+            }
+            set
+            {
+                _sourceImageCouverture = value;
+                NotifyPropertyChanged(nameof(SourceImageCouverture));
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -125,6 +141,7 @@ namespace Projet.Presentation.Forms.ViewModel
             CurrentPseudo = _user.Pseudo;
             CurrentDescription = _user.Description;
             ImageUserCourant = _user.image;
+            SourceImageCouverture = _user.couverture;
 
             //*****GESTION SÉRIE UTILISATEUR*****
             SerieUtilisateur = _user.Serieadd.ToObservableCollection();
@@ -153,7 +170,6 @@ namespace Projet.Presentation.Forms.ViewModel
                 GestionBDD.removeSerieUtilisateur(_user_courant.Pseudo, SelectedSerie.nom);
                 MessageBox.Show("Série enlevée des favoris !", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 SerieUtilisateur.Remove(SelectedSerie);
-               
             }
         }
 

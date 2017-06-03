@@ -12,13 +12,13 @@
                 <StackPanel>
                     <Label HorizontalAlignment="Center">Image de la série</Label>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Image Height="100" Width="75" Source="{Binding ImageSerieCourante}"></Image>
+                        <Image Height="100" Width="75" Source="{Binding SourceImage}"></Image>
                         <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageAddCommand}">Parcourir...</Button>
                     </StackPanel>
                     <Label HorizontalAlignment="Center">Nom de la série</Label>
-                    <TextBox x:Name="textbox_NomSerie" Width="120" MaxLength="80" Text="{Binding NomSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                    <TextBox x:Name="textbox_NomSerie" Width="120" MaxLength="80" Text="{Binding NomSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <Label HorizontalAlignment="Center">Description</Label>
-                    <TextBox x:Name="textbox_DescSerie"  Width="200" Height="50" MaxLength="500" Text="{Binding DescriptionSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                    <TextBox x:Name="textbox_DescSerie"  Width="200" Height="50" MaxLength="500" Text="{Binding DescriptionSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" TextWrapping="Wrap"/>
                     <Label HorizontalAlignment="Center">Genre</Label>
                     <ComboBox Width="120" ItemsSource="{Binding GenreSource}" SelectedItem="{Binding SelectGenre, Mode=TwoWay}"></ComboBox>
                     <Label HorizontalAlignment="Center">Producteur</Label>
@@ -45,11 +45,11 @@
 
                         <Label x:Name="l_img" HorizontalAlignment="Center" Margin="0,15,0,0">Image de la série</Label>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Image x:Name="imgmodif" Height="100" Width="75" Source="{Binding ImageSerieModif, Mode=TwoWay}"></Image>
+                            <Image x:Name="imgmodif" Height="100" Width="75" Source="{Binding SourceImageModif, Mode=TwoWay}"></Image>
                             <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageUpdateCommand}">Parcourir...</Button>
                         </StackPanel>
                         <Label HorizontalAlignment="Center">Description</Label>
-                        <TextBox Width="200" Height="50" MaxLength="500" Text="{Binding Descriptionseriemodif, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Width="200" Height="50" MaxLength="1000" Text="{Binding Descriptionseriemodif, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"/>
                         <Label HorizontalAlignment="Center">Genre</Label>
                         <ComboBox Width="120" ItemsSource="{Binding GenreSource}" SelectedItem="{Binding Selectgenremodif}" ></ComboBox>
                         <Label HorizontalAlignment="Center">Producteur</Label>

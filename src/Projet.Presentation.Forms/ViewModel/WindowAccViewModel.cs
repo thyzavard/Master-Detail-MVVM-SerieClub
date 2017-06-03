@@ -116,7 +116,10 @@ namespace Projet.Presentation.Forms.ViewModel
 
             //Chargement de la photo de profil
             string path = GestionBDD.loadPhotoProfil(_user.Pseudo);
+            string pathCouverture = GestionBDD.loadPhotoCouverture(_user.Pseudo);
+            _user.couverture = new BitmapImage(new Uri(($"{AppDomain.CurrentDomain.BaseDirectory}/Images/{pathCouverture}")));
             _user.image = new BitmapImage(new Uri(($"{AppDomain.CurrentDomain.BaseDirectory}/Images/{path}")));
+
 
             Pseudo = _user.Pseudo;
         }

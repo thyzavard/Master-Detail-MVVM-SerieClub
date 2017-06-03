@@ -45,6 +45,7 @@ namespace Projet.Presentation.Forms.ViewModel
         private string _fileNameModif;
         private string _sourceImageModif;
         private string _sourceImage;
+        private bool _verif = false;
 
         #endregion
 
@@ -171,7 +172,7 @@ namespace Projet.Presentation.Forms.ViewModel
                 Producteurseriemodif = _seriemodif.producteur;
                 Dureemoyenneseriemodif = _seriemodif.dureeMoy.ToString();
                 Selectgenremodif = _seriemodif.genre.ToString();
-                ImageSerieModif = _seriemodif.ImageSerie;
+                SourceImageModif = _seriemodif.ImageSerie.ToString();
             }
         }
 
@@ -287,12 +288,12 @@ namespace Projet.Presentation.Forms.ViewModel
         {
             get
             {
-                return SourceImage;
+                return _sourceImageModif;
             }
-
             set
             {
-                SourceImage = value;
+                _sourceImageModif = value;
+                ModifierSerieCommand.RaiseCanExecuteChanged();
                 ParcourirImageUpdateCommand.RaiseCanExecuteChanged();
                 NotifyPropertyChanged(nameof(SourceImageModif));
             }
@@ -304,10 +305,10 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _sourceImage;
             }
-
             set
             {
                 _sourceImage = value;
+                AjouterSerieCommand.RaiseCanExecuteChanged();
                 ParcourirImageAddCommand.RaiseCanExecuteChanged();
                 NotifyPropertyChanged(nameof(SourceImage));
             }
@@ -349,6 +350,7 @@ namespace Projet.Presentation.Forms.ViewModel
                 _fileNameModif = Path.GetFileName(_openFileModif.FileName);
                 //Aperçu de l'image
                 SourceImageModif = Path.GetFullPath(_openFileModif.FileName);
+                _verif = true;
             }
         }
 
@@ -469,12 +471,28 @@ namespace Projet.Presentation.Forms.ViewModel
         //COMMANDE MODIFIER SERIE
         private void OnModifierSerie(object obj)
         {
-            GestionBDD.updateSerie(SelectSerie, Descriptionseriemodif, int.Parse(Dureemoyenneseriemodif), Producteurseriemodif, Selectgenremodif);
-            //if(_seriemodif.ImageSerie != ImageSerieModif)
-            //{
-            GestionBDD.updateImageSerie(_fileNameModif, SelectSerie);
-            //}
-            MessageBox.Show("Modification enrgistrées");
+            if(_verif)
+            {
+                if (!File.Exists($@"{_path}\{_fileNameModif}"))
+                {
+                    FileInfo f = new FileInfo(_openFileModif.FileName);
+                    if (f.Length > 512000)
+                    {
+                        MessageBox.Show("La taille de l'image est trop grande (500 ko maximum)", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else
+                    {
+                        File.Copy(_openFileModif.FileName, Path.Combine(_path, _fileNameModif));
+                        GestionBDD.updateSerie(SelectSerie, Descriptionseriemodif, int.Parse(Dureemoyenneseriemodif), Producteurseriemodif, Selectgenremodif, _fileNameModif);
+                        MessageBox.Show("Modification enrgistrée");
+                    }
+                }
+            }
+            else
+            {
+                GestionBDD.updateSeriesansImage(SelectSerie, Descriptionseriemodif, int.Parse(Dureemoyenneseriemodif), Producteurseriemodif, Selectgenremodif);
+                MessageBox.Show("Modification enrgistrée");
+            }
         }
         private bool CanexecuteModifierSerie(object obj)
         {
@@ -500,14 +518,32 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 if (int.TryParse(DureeMoyenneSerie, out _result) == true)
                 {
-                    GestionBDD.ajouter_Serie(NomSerie, DescriptionSerie, SelectGenre, ProducteurSerie, int.Parse(DureeMoyenneSerie), _fileName);
-                    Listserie.Add(NomSerie);
-                    MessageBox.Show("Inscription enregistrée", "Confirmation", MessageBoxButton.OK);
-                    /*NomSerie = "";
-                    DescriptionSerie = null;
-                    SelectGenre = null;
-                    ProducteurSerie = null;
-                    DureeMoyenneSerie = null;*/
+                    if (!File.Exists($@"{_path}\{_fileName}"))
+                    {
+                        FileInfo f = new FileInfo(_openFile.FileName);
+                        if (f.Length > 512000)
+                        {
+                            MessageBox.Show("La taille de l'image est trop grande (500 ko maximum)", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        else
+                        {
+                            File.Copy(_openFile.FileName, Path.Combine(_path, _fileName));
+                            GestionBDD.ajouter_Serie(NomSerie, DescriptionSerie, SelectGenre, ProducteurSerie, int.Parse(DureeMoyenneSerie), _fileName);
+                            Listserie.Add(NomSerie);
+                            MessageBox.Show("Inscription enregistrée", "Confirmation", MessageBoxButton.OK);
+                        }
+                    }
+                    else
+                    {
+                        GestionBDD.ajouter_Serie(NomSerie, DescriptionSerie, SelectGenre, ProducteurSerie, int.Parse(DureeMoyenneSerie), _fileName);
+                        Listserie.Add(NomSerie);
+                        MessageBox.Show("Ajout enregistrée", "Confirmation", MessageBoxButton.OK);
+                        /*NomSerie = "";
+                        DescriptionSerie = null;
+                        SelectGenre = null;
+                        ProducteurSerie = null;
+                        DureeMoyenneSerie = null;*/
+                    }
                 }
                 else
                 {
@@ -518,7 +554,7 @@ namespace Projet.Presentation.Forms.ViewModel
         }
         private bool CanexecuteAjouterSerie(object obj)
         {
-            if (NomSerie != null && DescriptionSerie != null && ProducteurSerie != null && DureeMoyenneSerie != null && SelectGenre != null)
+            if (NomSerie != null && DescriptionSerie != null && ProducteurSerie != null && DureeMoyenneSerie != null && SelectGenre != null && SourceImage != null)
             {
                 return true;
             }
