@@ -1,17 +1,15 @@
 ﻿using Projet.Entite.Class;
 using Projet.Presentation.Forms.Commands;
-using Projet.Presentation.Forms.Converters;
+using Projet.Presentation.Forms.Extension;
 using Projet.Service.Fonctions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
+using System.Windows;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
@@ -20,12 +18,11 @@ namespace Projet.Presentation.Forms.ViewModel
         #region private
         private string _currentPseudo;
         private string _currentDescription;
-        private string _selectedSerie;
         private string _titreEnFonctionDuNbDeSerie;
-        private List<Serie> _serieUtilisateur;
         private UserCourant _user = UserCourant.Instance();
         private object _selectedViewModel;
-        private BitmapImage _imageUserCourant;
+        private Serie _selectedSerie;
+        private UserCourant _user_courant = UserCourant.Instance();
         #endregion
 
         #region Public
@@ -50,7 +47,7 @@ namespace Projet.Presentation.Forms.ViewModel
             }
         }
 
-        public string SelectedSerie
+        public Serie SelectedSerie
         {
             get
             {
@@ -59,6 +56,7 @@ namespace Projet.Presentation.Forms.ViewModel
             set
             {
                 _selectedSerie = value;
+                EnleverSerieCommand.RaiseCanExecuteChanged();
                 NotifyPropertyChanged(nameof(SelectedSerie));
             }
         }
@@ -75,18 +73,7 @@ namespace Projet.Presentation.Forms.ViewModel
             }
         }
 
-        public List<Serie> SerieUtilisateur
-        {
-            get
-            {
-                return _serieUtilisateur;
-            }
-
-            set
-            {
-                _serieUtilisateur = value;
-            }
-        }
+        public ObservableCollection<Serie> SerieUtilisateur { get; set; }
 
         public object SelectedViewModel
         {
@@ -95,19 +82,6 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 _selectedViewModel = value;
                 NotifyPropertyChanged(nameof(SelectedViewModel));
-            }
-        }
-
-        public BitmapImage ImageUserCourant
-        {
-            get
-            {
-                return _imageUserCourant;
-            }
-            set
-            {
-                _imageUserCourant = value;
-                NotifyPropertyChanged(nameof(ImageUserCourant));
             }
         }
 
@@ -124,19 +98,26 @@ namespace Projet.Presentation.Forms.ViewModel
 
         #region Command
         public RelayCommand InfoSerieCommand { get; private set; }
+        public RelayCommand EnleverSerieCommand { get; private set; }
         #endregion
 
         public ViewProfilViewModel()
         {
+
+            EnleverSerieCommand = new RelayCommand(OnEnleverSerie, CanExecuteEnleverSerie);
+
             CurrentPseudo = _user.Pseudo;
             CurrentDescription = _user.Description;
-            //ImageUserCourant = _user.image;
-
-            ImageUserCourant = GestionBDD.ConvertImage(ResourceImage._base);
-
 
             //*****GESTION SÉRIE UTILISATEUR*****
-            SerieUtilisateur = _user.Serieadd;
+            SerieUtilisateur = _user.Serieadd.ToObservableCollection();
+            /*_listNom = GestionBDD.returnSerieUtilisateur(_user.Pseudo);
+            SerieUtilisateur = new List<Serie>();
+            for (int i = 0; i < _listNom.Count; i++)
+            {
+                Serie serie = GestionBDD.remplirSerie(_listNom[i]);
+                SerieUtilisateur.Add(serie);
+            }*/
 
             //*****GESTION DU MESSAGE EN FONCTION DU NOMBRE DE SÉRIE*****
             if (SerieUtilisateur.Count == 0) { TitreEnFonctionDuNbDeSerie = "Je n'ai pas de séries préférées..."; }
@@ -156,7 +137,23 @@ namespace Projet.Presentation.Forms.ViewModel
             return true;
         }
 
+        private void OnEnleverSerie(object obj)
+        {
+            if (SelectedSerie != null)
+            {
 
+                _user_courant.Serieadd.Remove(SelectedSerie);
+                GestionBDD.removeSerieUtilisateur(_user_courant.Pseudo, SelectedSerie.nom);
+                MessageBox.Show("Série enlevée des favoris !", "", MessageBoxButton.OK, MessageBoxImage.Information);
+                SerieUtilisateur.Remove(SelectedSerie);
+
+            }
+        }
+
+        private bool CanExecuteEnleverSerie(object obj)
+        {
+            return true;
+        }
 
 
         /*if (listSerieUser.Count == 0)

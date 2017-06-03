@@ -20,24 +20,19 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="Beige" Orientation="Horizontal">
-            <!--<StackPanel.Background>
-                <ImageBrush ImageSource="C:\Users\Thomas\Documents\_HTML\Portfolio\img\8-Horseshoe Bend.jpg" Stretch="UniformToFill" Opacity="0.9"></ImageBrush>
-            </StackPanel.Background>-->
-
-            <Image Source="{Binding ImageUserCourant}" Width="125" Height="125" Margin="80,0,20,0"/>
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="Bisque" Orientation="Horizontal">
+            <Image Width="100" Height="100" Margin="80,0,20,0"/>
             <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="{Binding CurrentPseudo}" FontSize="25" Foreground="White"></TextBlock>
-                <TextBlock Text="{Binding CurrentDescription}" Foreground="White"></TextBlock>
+                <TextBlock Text="{Binding CurrentPseudo}" FontSize="25"></TextBlock>
+                <TextBlock Text="{Binding CurrentDescription}"></TextBlock>
             </StackPanel>
-            
         </StackPanel>
 
         <TextBlock Text="{Binding TitreEnFonctionDuNbDeSerie}" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center"></TextBlock>
 
 
         <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto">
-            <ListBox ItemsSource="{Binding SerieUtilisateur}" SelectedItem="{Binding SelectedSerie}">
+            <ListBox ItemsSource="{Binding SerieUtilisateur, Mode=TwoWay}" SelectedItem="{Binding SelectedSerie}">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="3"></UniformGrid>
@@ -54,8 +49,9 @@
                     <DataTemplate>
 
                         <StackPanel Margin="30,0,30,0">
-                            <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40" Command="{Binding DataContext.InfoSerieCommand, RelativeSource={RelativeSource AncestorType=ListBox}}">Infos</Button>
-                            <Image Height="130" Width="90" Source="{Binding ImageSerie}"/>
+                            <Button FontSize="12" BorderBrush="Red" Margin="0,5,0,5" HorizontalAlignment="Stretch" Width="20" Command="{Binding DataContext.EnleverSerieCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" Content="x"/>
+                            <Button FontSize="12" BorderBrush="Blue" Margin="0,5,0,5" HorizontalAlignment="Stretch" Width="40" Command="{Binding DataContext.InfoSerieCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" Content="Infos"/>
+                            <Rectangle Height="130" Width="90" Fill="Brown"></Rectangle>
                             <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
                         </StackPanel>
 
