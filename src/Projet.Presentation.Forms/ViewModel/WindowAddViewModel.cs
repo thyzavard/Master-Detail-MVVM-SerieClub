@@ -5,6 +5,7 @@ using Projet.Service.Fonctions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,6 +38,14 @@ namespace Projet.Presentation.Forms.ViewModel
         private BitmapImage _imageSerieCourante;
         private BitmapImage _imageSerieModif;
         private Serie _seriemodif;
+
+        //Gestion image
+        private string _path;
+        private string _fileName;
+        private string _fileNameModif;
+        private string _sourceImageModif;
+        private string _sourceImage;
+
         #endregion
 
         #region Command
@@ -273,10 +282,43 @@ namespace Projet.Presentation.Forms.ViewModel
                 NotifyPropertyChanged(nameof(ImageSerieModif));
             }
         }
+
+        public string SourceImageModif
+        {
+            get
+            {
+                return SourceImage;
+            }
+
+            set
+            {
+                SourceImage = value;
+                ParcourirImageUpdateCommand.RaiseCanExecuteChanged();
+                NotifyPropertyChanged(nameof(SourceImageModif));
+            }
+        }
+
+        public string SourceImage
+        {
+            get
+            {
+                return _sourceImage;
+            }
+
+            set
+            {
+                _sourceImage = value;
+                ParcourirImageAddCommand.RaiseCanExecuteChanged();
+                NotifyPropertyChanged(nameof(SourceImage));
+            }
+        }
         #endregion
 
         public WindowAddViewModel()
         {
+            //Chemin du fichier ImagesSerie
+            _path = Path.Combine(Environment.CurrentDirectory, "ImagesSerie");
+
             Listserie = GestionBDD.returnTouteSerie();
             ListPseudo = GestionBDD.returnToutUtilisateur();
 
@@ -303,13 +345,16 @@ namespace Projet.Presentation.Forms.ViewModel
             _openFileModif.Filter = " Fichier JPG (*.jpg)|*.jpg";
             if (_openFileModif.ShowDialog() == true)
             {
-                ImageSerieModif = new BitmapImage(new Uri(_openFileModif.FileName));
+                //ImageSerieModif = new BitmapImage(new Uri(_openFileModif.FileName));
+                _fileNameModif = Path.GetFileName(_openFileModif.FileName);
+                //Aperçu de l'image
+                SourceImageModif = Path.GetFullPath(_openFileModif.FileName);
             }
         }
 
         private bool CanExecuteParcourirImageUpdate(object obj)
         {
-            if(SelectSerie == null)
+            if (SelectSerie == null)
             {
                 return false;
             }
@@ -326,7 +371,10 @@ namespace Projet.Presentation.Forms.ViewModel
             _openFile.Filter = " Fichier JPG (*.jpg)|*.jpg";
             if (_openFile.ShowDialog() == true)
             {
-                ImageSerieCourante = new BitmapImage(new Uri(_openFile.FileName));
+                //ImageSerieCourante = new BitmapImage(new Uri(_openFile.FileName));
+                _fileName = Path.GetFileName(_openFile.FileName);
+                //Aperçu de l'image
+                SourceImage = Path.GetFullPath(_openFile.FileName);
             }
         }
 
@@ -422,10 +470,10 @@ namespace Projet.Presentation.Forms.ViewModel
         private void OnModifierSerie(object obj)
         {
             GestionBDD.updateSerie(SelectSerie, Descriptionseriemodif, int.Parse(Dureemoyenneseriemodif), Producteurseriemodif, Selectgenremodif);
-            if(_seriemodif.ImageSerie != ImageSerieModif)
-            {
-                GestionBDD.updateImageSerie(_openFileModif.FileName, SelectSerie);
-            }
+            //if(_seriemodif.ImageSerie != ImageSerieModif)
+            //{
+            GestionBDD.updateImageSerie(_fileNameModif, SelectSerie);
+            //}
             MessageBox.Show("Modification enrgistrées");
         }
         private bool CanexecuteModifierSerie(object obj)
@@ -452,7 +500,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 if (int.TryParse(DureeMoyenneSerie, out _result) == true)
                 {
-                    GestionBDD.ajouter_Serie(NomSerie, DescriptionSerie, SelectGenre, ProducteurSerie, int.Parse(DureeMoyenneSerie), _openFile.FileName);
+                    GestionBDD.ajouter_Serie(NomSerie, DescriptionSerie, SelectGenre, ProducteurSerie, int.Parse(DureeMoyenneSerie), _fileName);
                     Listserie.Add(NomSerie);
                     MessageBox.Show("Inscription enregistrée", "Confirmation", MessageBoxButton.OK);
                     /*NomSerie = "";

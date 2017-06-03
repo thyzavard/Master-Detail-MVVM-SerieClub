@@ -60,8 +60,6 @@ namespace Projet.Presentation.Forms.ViewModel
             InscrireCommand = new RelayCommand(OnInscription, CanExecuteInscription);
             ConnexionCommand = new RelayCommand(OnLogin, CanExecuteLogin);
             QuitCommand = new RelayCommand(OnQuit, CanExecuteQuit);
-
-            _wInscription = new WindowInscription();
         }
 
         private void OnQuit(object obj)
@@ -104,6 +102,7 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private void OnInscription(object obj)
         {
+            _wInscription = new WindowInscription();
             _wInscription.Show();
             WindowClosedEvent.GetInstance().Handler += OnCloseWInscription;
         }

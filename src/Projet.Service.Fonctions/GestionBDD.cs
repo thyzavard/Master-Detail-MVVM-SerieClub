@@ -6,12 +6,17 @@ using System.Threading.Tasks;
 using Projet.Entite.Class;
 using System.Data.SqlClient;
 using System.Data;
+using System.Windows.Media.Imaging;
+using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Projet.Service.Fonctions
 {
     public class GestionBDD
     {
-        private static SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Utilisateur\Source\Repos\Projet\serie-club\src\Persistance\Serie-Club.mdf;Integrated Security=True;Connect Timeout=30");
+        private static UserCourant _user = UserCourant.Instance();
+        private static SqlConnection con = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Desktop\Programming software\C#\PROJECT\Projet_BDD\2015\Serie_club.mdf;Integrated Security = True; Connect Timeout = 30");
         public static Utilisateur remplirUser(String pseudo)
         {
             Utilisateur user = new Utilisateur();
@@ -81,7 +86,7 @@ namespace Projet.Service.Fonctions
 
         public static void inscription(String pseudo, String mdp)
         {
-            SqlDataAdapter sda2 = new SqlDataAdapter("Insert into Utilisateur (Pseudo, Password, Description, Sexe, DateDeNaissance, Modo) values('" + pseudo + "', '" + mdp + "' , '" + "Description..." + "', '" + "Pas spécifié..." + "', '" + "00/00/0000" + "', '" + "false" + "')", con);
+            SqlDataAdapter sda2 = new SqlDataAdapter("Insert into Utilisateur (Pseudo, Password, Description, Sexe, DateDeNaissance, Modo, PathProfil) values('" + pseudo + "', '" + mdp + "' , '" + "Description..." + "', '" + "Pas spécifié..." + "', '" + "00/00/0000" + "', '" + "false" + "', '" + "profil.jpg" + "')", con);
             DataTable dt2 = new DataTable();
             sda2.Fill(dt2);
         }
@@ -107,22 +112,9 @@ namespace Projet.Service.Fonctions
             sdasexe.Fill(dtsexe);
         }
 
-        public static Serie remplirSerieAction()
+        public static void ajouter_Serie(string nom, string desc, string genre, string producteur, int dureemoy, string path)
         {
-            Serie s = new Serie();
-            SqlCommand cmddesc = new SqlCommand("Select Nom From Utilisateur where Genre='" + "Action" + "' ", con);
-            SqlDataReader dr = cmddesc.ExecuteReader();
-            dr.Read();
-            string nom_serie = dr.GetString(0);
-            s.nom = nom_serie;
-            dr.Close();
-
-            return s;
-        }
-
-        public static void ajouter_Serie(string nom, string desc, string genre, string producteur, int dureemoy)
-        {
-            SqlDataAdapter sda = new SqlDataAdapter("Insert into Serie (Nom, Description, Genre, Note, Producteur, DureeMoyenne) values('" + nom + "', '" + desc + "', '" + genre + "','" + 0 + "','" + producteur + "','" + dureemoy + "') ", con);
+            SqlDataAdapter sda = new SqlDataAdapter("Insert into Serie (Nom, Description, Genre, Note, Producteur, DureeMoyenne, PhotoSerie) values('" + nom + "', '" + desc + "', '" + genre + "','" + 0 + "','" + producteur + "','" + dureemoy + "','" + path + "') ", con);
             DataTable dtserie = new DataTable();
             sda.Fill(dtserie);
         }
@@ -157,6 +149,70 @@ namespace Projet.Service.Fonctions
             }
             con.Close();
             return list;
+        }
+
+        public static void removeSerieUtilisateur(string pseudo, string nomSerie)
+        {
+            con.Open();
+            var cmd = new SqlCommand("Delete from UtilisateurSerie where IdSerie='" + nomSerie + "' and IdUtilisateur='" + pseudo + "' ", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+        public static List<Serie> returnTouteSerieFull()
+        {
+            List<string> list = new List<string>();
+            List<Serie> listSerie = new List<Serie>();
+            con.Open();
+            var command = new SqlCommand("Select Nom from Serie", con);
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    list.Add(reader.GetString(0));
+                }
+            }
+
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                Serie serie = new Serie();
+                serie.nom = list[i];
+                //Description
+                SqlCommand cmddesc = new SqlCommand("Select Description from Serie where Nom='" + list[i] + "'", con);
+                SqlDataReader dr = cmddesc.ExecuteReader();
+                dr.Read();
+                serie.description = dr.GetString(0);
+                dr.Close();
+                //Producteur
+                SqlCommand cmdprod = new SqlCommand("Select Producteur from Serie where Nom='" + list[i] + "'", con);
+                dr = cmdprod.ExecuteReader();
+                dr.Read();
+                serie.producteur = dr.GetString(0);
+                dr.Close();
+                //Durée Moyenne
+                SqlCommand cmddure = new SqlCommand("Select DureeMoyenne from Serie where Nom='" + list[i] + "'", con);
+                dr = cmddure.ExecuteReader();
+                dr.Read();
+                serie.dureeMoy = dr.GetInt32(0);
+                dr.Close();
+                //Genre
+                SqlCommand cmdgenre = new SqlCommand("Select Genre from Serie where Nom='" + list[i] + "'", con);
+                dr = cmdgenre.ExecuteReader();
+                dr.Read();
+                var recup = dr.GetString(0);
+                Genre genre = (Genre)Enum.Parse(typeof(Genre), recup);
+                serie.genre = genre;
+                dr.Close();
+                SqlCommand cmdImage = new SqlCommand("Select PhotoSerie from Serie where Nom='" + list[i] + "'", con);
+                dr = cmdImage.ExecuteReader();
+                dr.Read();
+                serie.ImageSerie = new BitmapImage(new Uri($"{AppDomain.CurrentDomain.BaseDirectory}/ImagesSerie/{dr.GetString(0)}"));
+                dr.Close();
+                listSerie.Add(serie);
+            }
+            con.Close();
+            return listSerie;
         }
 
         public static List<string> returnToutUtilisateur()
@@ -214,6 +270,12 @@ namespace Projet.Service.Fonctions
             var recup = dr.GetString(0);
             Genre genre = (Genre)Enum.Parse(typeof(Genre), recup);
             serie.genre = genre;
+            dr.Close();
+            //Image
+            SqlCommand cmdImage = new SqlCommand("Select PhotoSerie from Serie where Nom='" + nom + "'", con);
+            dr = cmdImage.ExecuteReader();
+            dr.Read();
+            serie.ImageSerie = new BitmapImage(new Uri($"{AppDomain.CurrentDomain.BaseDirectory}/ImagesSerie/{dr.GetString(0)}"));
             dr.Close();
             con.Close();
             return serie;
@@ -281,14 +343,6 @@ namespace Projet.Service.Fonctions
             con.Close();
         }
 
-        public static void removeSerieUtilisateur(string pseudo, string nomSerie)
-        {
-            con.Open();
-            var cmd = new SqlCommand("Delete from UtilisateurSerie where IdSerie='" + nomSerie + "' and IdUtilisateur='" + pseudo + "' ", con);
-            cmd.ExecuteNonQuery();
-            con.Close();
-        }
-
         public static List<string> returnSerieUtilisateur(string pseudo)
         {
             List<string> list = new List<string>();
@@ -349,6 +403,11 @@ namespace Projet.Service.Fonctions
                 Genre genre = (Genre)Enum.Parse(typeof(Genre), recup);
                 serie.genre = genre;
                 dr.Close();
+                SqlCommand cmdImage = new SqlCommand("Select PhotoSerie from Serie where Nom='" + list[i] + "'", con);
+                dr = cmdImage.ExecuteReader();
+                dr.Read();
+                serie.ImageSerie = new BitmapImage(new Uri($"{AppDomain.CurrentDomain.BaseDirectory}/ImagesSerie/{dr.GetString(0)}"));
+                dr.Close();
                 serieUser.Add(serie);
             }
             con.Close();
@@ -372,12 +431,37 @@ namespace Projet.Service.Fonctions
             }
         }
 
-        /*public static void enregisterPhotoProfil(string path, string pseudo)
+        public static void enregisterPhotoProfil(string path, string pseudo)
         {
             con.Open();
-            var command = new SqlCommand("Update Utilisateur set PathProfil='"+path+"' where Pseudo='"+pseudo+"'", con);
-            //command.ExecuteNonQuery();
+            var command = new SqlCommand("Update Utilisateur set PathProfil='" + path + "' where Pseudo='" + pseudo + "'", con);
+            command.ExecuteNonQuery();
             con.Close();
-        }*/
+        }
+
+        public static string loadPhotoProfil(string pseudo)
+        {
+            con.Open();
+            var command = new SqlCommand("Select PathProfil From Utilisateur where Pseudo='" + pseudo + "'", con);
+            SqlDataReader dr = command.ExecuteReader();
+            dr.Read();
+            string path = dr.GetString(0);
+            dr.Close();
+            con.Close();
+            return path;
+        }
+
+        public static void updateImageSerie(string path, string nomserie)
+        {
+            con.Open();
+            var command = new SqlCommand("Update Serie set PhotoSerie='" + path + "' where Nom='" + nomserie + "'", con);
+            command.ExecuteNonQuery();
+            con.Close();
+        }
+
+
+
+
+
     }
 }

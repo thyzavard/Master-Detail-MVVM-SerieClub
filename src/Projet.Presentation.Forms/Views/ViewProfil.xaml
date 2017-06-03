@@ -21,7 +21,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="Bisque" Orientation="Horizontal">
-            <Image Width="100" Height="100" Margin="80,0,20,0"/>
+            <Image Width="100" Height="100" Margin="80,0,20,0" Source="{Binding ImageUserCourant}"/>
             <StackPanel VerticalAlignment="Center">
                 <TextBlock Text="{Binding CurrentPseudo}" FontSize="25"></TextBlock>
                 <TextBlock Text="{Binding CurrentDescription}"></TextBlock>

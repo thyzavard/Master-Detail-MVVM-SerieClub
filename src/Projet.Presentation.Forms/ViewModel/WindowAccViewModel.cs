@@ -4,6 +4,7 @@ using Projet.Service.Fonctions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Resources;
 using System.Text;
@@ -112,8 +113,11 @@ namespace Projet.Presentation.Forms.ViewModel
 
             SelectedViewModel = new ViewAccueilViewModel();
             _user.Serieadd = GestionBDD.returnSerieUtilisateurFull(_user.Pseudo);
+
+            //Chargement de la photo de profil
             string path = GestionBDD.loadPhotoProfil(_user.Pseudo);
-            _user.image = new BitmapImage(new Uri(path));
+            _user.image = new BitmapImage(new Uri(($"{AppDomain.CurrentDomain.BaseDirectory}/Images/{path}")));
+
             Pseudo = _user.Pseudo;
         }
 
@@ -133,7 +137,6 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return false;
             }
-            //return true;
         }
 
         private void OnOuvrirAcceuil(object obj)
@@ -152,7 +155,6 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return false;
             }
-            //return true;
         }
 
         private void OnAdministration(object obj)

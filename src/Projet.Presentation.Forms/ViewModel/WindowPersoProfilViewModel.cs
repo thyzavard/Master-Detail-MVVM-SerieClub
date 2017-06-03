@@ -33,6 +33,11 @@ namespace Projet.Presentation.Forms.ViewModel
         private OpenFileDialog openFile = new OpenFileDialog();
         private UserCourant user_courant = UserCourant.Instance();
         private BitmapImage _imageCourant;
+
+        private string _path;
+        private string _fileName;
+        private string _sourceImage;
+        private bool _verif = false;
         #endregion
 
         #region Public
@@ -128,6 +133,19 @@ namespace Projet.Presentation.Forms.ViewModel
                 NotifyPropertyChanged(nameof(ImageCourant));
             }
         }
+        public string SourceImage
+        {
+            get
+            {
+                return _sourceImage;
+            }
+
+            set
+            {
+                _sourceImage = value;
+                NotifyPropertyChanged(nameof(SourceImage));
+            }
+        }
         #endregion
 
         #region Command
@@ -139,9 +157,10 @@ namespace Projet.Presentation.Forms.ViewModel
         {
             Description = user_courant.Description;
             SelectSexe = user_courant.Sexe;
-            ImageCourant = user.image;
-            //SourceImage = $"{_path}/{user_courant.Pseudo}.jpg";
-            //_path = Path.Combine(Environment.CurrentDirectory, "images_profil_user");
+
+            _path = Path.Combine(Environment.CurrentDirectory, "Images");
+            SourceImage = user_courant.image.ToString();
+
 
             //Remplissage de la combobox Sexe
             Listsexe = new List<string>();
@@ -192,14 +211,14 @@ namespace Projet.Presentation.Forms.ViewModel
             openFile.Title = "Selectionner une image";
             openFile.DefaultExt = "jpg";
             openFile.Filter = " Fichier JPG (*.jpg)|*.jpg";
-            if(openFile.ShowDialog() == true)
+            if (openFile.ShowDialog() == true)
             {
-                ImageCourant = new BitmapImage(new Uri(openFile.FileName));
+                //ImageCourant = new BitmapImage(new Uri(openFile.FileName));
+                _fileName = Path.GetFileName(openFile.FileName);
+                //Aperçu de l'image
+                SourceImage = Path.GetFullPath(openFile.FileName);
+                _verif = true;
             }
-
-            /*_fileName = Path.GetFileName(openFile.FileName);
-            //Aperçu de l'image
-            SourceImage = Path.GetFullPath(openFile.FileName);*/
         }
 
         private bool CanExecuteParcourirImage(object obj)
@@ -228,25 +247,26 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 MessageBox.Show("Veuillez rentrer une date correct", "Erreur Date", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            MessageBox.Show("Modification enregistrée");
 
             //GESTION SAUVEGARDE IMAGE
-            if(user.image != ImageCourant)
+            if (_verif)
             {
-                user.image = ImageCourant;
-                GestionBDD.enregisterPhotoProfil(openFile.FileName, user.Pseudo);
+                if (!File.Exists($@"{_path}\{_fileName}"))
+                {
+                    File.Copy(openFile.FileName, Path.Combine(_path, _fileName));
+                    GestionBDD.enregisterPhotoProfil(_fileName, user.Pseudo);
+                    user.image = new BitmapImage(new Uri($@"{_path}\{_fileName}"));
+                }
+                else
+                {
+                    GestionBDD.enregisterPhotoProfil(_fileName, user.Pseudo);
+                    user.image = new BitmapImage(new Uri($@"{_path}\{_fileName}"));
+                }
+                //File.Move($@"Images\{_fileName}", $@"Images\{user.Pseudo}.jpg");
             }
-            
-
-            //user.image = ImageCourant;
-            //GESTION SAUVEGARDE IMAGE
-            /*File.Create("test.txt").Close();
-            File.Delete($@"images_profil_user\{user.Pseudo}.jpg");
-            File.Copy(openFile.FileName, Path.Combine(_path, _fileName));
-            File.Move($@"images_profil_user\{_fileName}", $@"images_profil_user\{user.Pseudo}.jpg");*/
-            //GestionBDD.enregisterPhotoProfil(_path, user.Pseudo);      
+            MessageBox.Show("Modification enregistrée");
         }
-    private bool CanExecuteSauverModifProfil(object obj)
+        private bool CanExecuteSauverModifProfil(object obj)
         {
             return true;
         }

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
@@ -23,6 +24,7 @@ namespace Projet.Presentation.Forms.ViewModel
         private object _selectedViewModel;
         private Serie _selectedSerie;
         private UserCourant _user_courant = UserCourant.Instance();
+        private BitmapImage _imageUserCourant;
         #endregion
 
         #region Public
@@ -85,6 +87,20 @@ namespace Projet.Presentation.Forms.ViewModel
             }
         }
 
+
+        public BitmapImage ImageUserCourant
+        {
+            get
+            {
+                return _imageUserCourant;
+            }
+            set
+            {
+                _imageUserCourant = value;
+                NotifyPropertyChanged(nameof(ImageUserCourant));
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void NotifyPropertyChanged(String info)
@@ -103,28 +119,20 @@ namespace Projet.Presentation.Forms.ViewModel
 
         public ViewProfilViewModel()
         {
-
             EnleverSerieCommand = new RelayCommand(OnEnleverSerie, CanExecuteEnleverSerie);
+            InfoSerieCommand = new RelayCommand(OnInfoSerie, CanExecuteInfoSerie);
 
             CurrentPseudo = _user.Pseudo;
             CurrentDescription = _user.Description;
+            ImageUserCourant = _user.image;
 
             //*****GESTION SÉRIE UTILISATEUR*****
             SerieUtilisateur = _user.Serieadd.ToObservableCollection();
-            /*_listNom = GestionBDD.returnSerieUtilisateur(_user.Pseudo);
-            SerieUtilisateur = new List<Serie>();
-            for (int i = 0; i < _listNom.Count; i++)
-            {
-                Serie serie = GestionBDD.remplirSerie(_listNom[i]);
-                SerieUtilisateur.Add(serie);
-            }*/
 
             //*****GESTION DU MESSAGE EN FONCTION DU NOMBRE DE SÉRIE*****
             if (SerieUtilisateur.Count == 0) { TitreEnFonctionDuNbDeSerie = "Je n'ai pas de séries préférées..."; }
             else if (SerieUtilisateur.Count == 1) { TitreEnFonctionDuNbDeSerie = "Ma série préférée"; }
-            else { TitreEnFonctionDuNbDeSerie = "Mes séries préférées"; }
-
-            InfoSerieCommand = new RelayCommand(OnInfoSerie, CanExecuteInfoSerie);
+            else { TitreEnFonctionDuNbDeSerie = "Mes séries préférées"; }   
         }
 
         private void OnInfoSerie(object obj)
@@ -141,7 +149,6 @@ namespace Projet.Presentation.Forms.ViewModel
         {
             if (SelectedSerie != null)
             {
-
                 _user_courant.Serieadd.Remove(SelectedSerie);
                 GestionBDD.removeSerieUtilisateur(_user_courant.Pseudo, SelectedSerie.nom);
                 MessageBox.Show("Série enlevée des favoris !", "", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -154,19 +161,5 @@ namespace Projet.Presentation.Forms.ViewModel
         {
             return true;
         }
-
-
-        /*if (listSerieUser.Count == 0)
-            {
-                l_seriefav.Content = "Aucune série ajoutée en favoris...";
-            }
-            else if (listSerieUser.Count == 1)
-            {
-                l_seriefav.Content = "Série en favoris";
-            }
-            else
-            {
-                l_seriefav.Content = "Séries en favoris";
-            }*/
     }
 }
