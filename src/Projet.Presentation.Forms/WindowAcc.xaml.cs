@@ -30,54 +30,11 @@ namespace Projet.Presentation.Forms
             _vm = new WindowAccViewModel();
 
             DataContext = _vm;
-            /*
-            l_user.Content = user.pseudo;
-
-            utilisateur = user;
-
-            List<string> listnbSerie = new List<string>();
-            List<Serie> listSerie = new List<Serie>();
-            listnbSerie = GestionBDD.returnSerieUtilisateur(user.pseudo);
-
-            for (int i = 0; i < listnbSerie.Count; i++)
-            {
-                Serie serie = GestionBDD.remplirSerie(listnbSerie[i]);
-                listSerie.Add(serie);
-            }
-            utilisateur.serieadd = listSerie;
-
-            if (user.modo)
-            {
-                btn_admin.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                btn_admin.Visibility = Visibility.Hidden;
-            }
-            DataContext = new ViewAcceuil(utilisateur);*/
         }
-
-        /* private void Acceuil_Click(object sender, RoutedEventArgs e)
-         {
-             DataContext = new ViewAcceuil(utilisateur);
-             btn_Profil.IsEnabled = true;
-             btn_Acc.IsEnabled = false;
-             textBox_search.Visibility = Visibility.Visible;
-         }*/
-
-        /*private void Profil_Click(object sender, RoutedEventArgs e)
-        {
-            DataContext = new ViewProfil(utilisateur);
-            btn_Acc.IsEnabled = true;
-            btn_Profil.IsEnabled = false;
-            textBox_search.Visibility = Visibility.Hidden;
-        }*/
 
         private void btnDeco_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow m = new MainWindow();
             Close();
-            m.Show();
         }
     }
 }

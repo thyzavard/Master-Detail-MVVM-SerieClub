@@ -1,4 +1,5 @@
 ﻿using Projet.Presentation.Forms.Commands;
+using Projet.Presentation.Forms.Events;
 using Projet.Service.Fonctions;
 using System;
 using System.Collections.Generic;
@@ -149,7 +150,7 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private void OnQuit(object obj)
         {
-
+            WindowClosedEvent.GetInstance().OnWindowClosedHandler(EventArgs.Empty);
         }
 
         private bool CanExecuteQuit(object obj)

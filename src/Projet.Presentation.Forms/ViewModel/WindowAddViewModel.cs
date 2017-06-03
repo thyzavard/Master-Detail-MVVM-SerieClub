@@ -1,4 +1,5 @@
-﻿using Projet.Entite.Class;
+﻿using Microsoft.Win32;
+using Projet.Entite.Class;
 using Projet.Presentation.Forms.Commands;
 using Projet.Service.Fonctions;
 using System;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
@@ -30,7 +32,11 @@ namespace Projet.Presentation.Forms.ViewModel
         private List<string> _listpseudo;
         private string _selectseriesuppr;
         private string _selectpseudo;
-
+        private OpenFileDialog _openFile = new OpenFileDialog();
+        private OpenFileDialog _openFileModif = new OpenFileDialog();
+        private BitmapImage _imageSerieCourante;
+        private BitmapImage _imageSerieModif;
+        private Serie _seriemodif;
         #endregion
 
         #region Command
@@ -39,6 +45,8 @@ namespace Projet.Presentation.Forms.ViewModel
         public RelayCommand SupprimerSerieCommand { get; private set; }
         public RelayCommand downAdminCommand { get; private set; }
         public RelayCommand upAdminCommand { get; private set; }
+        public RelayCommand ParcourirImageAddCommand { get; private set; }
+        public RelayCommand ParcourirImageUpdateCommand { get; private set; }
         #endregion
 
         #region Public
@@ -147,12 +155,14 @@ namespace Projet.Presentation.Forms.ViewModel
             set
             {
                 _selectserie = value;
+                ParcourirImageUpdateCommand.RaiseCanExecuteChanged();
                 NotifyPropertyChanged(nameof(SelectSerie));
-                Serie seriemodif = GestionBDD.remplirSerie(SelectSerie);
-                Descriptionseriemodif = seriemodif.description;
-                Producteurseriemodif = seriemodif.producteur;
-                Dureemoyenneseriemodif = seriemodif.dureeMoy.ToString();
-                Selectgenremodif = seriemodif.genre.ToString();
+                _seriemodif = GestionBDD.remplirSerie(SelectSerie);
+                Descriptionseriemodif = _seriemodif.description;
+                Producteurseriemodif = _seriemodif.producteur;
+                Dureemoyenneseriemodif = _seriemodif.dureeMoy.ToString();
+                Selectgenremodif = _seriemodif.genre.ToString();
+                ImageSerieModif = _seriemodif.ImageSerie;
             }
         }
 
@@ -237,6 +247,32 @@ namespace Projet.Presentation.Forms.ViewModel
             }
 
         }
+
+        public BitmapImage ImageSerieCourante
+        {
+            get
+            {
+                return _imageSerieCourante;
+            }
+            set
+            {
+                _imageSerieCourante = value;
+                NotifyPropertyChanged(nameof(ImageSerieCourante));
+            }
+        }
+
+        public BitmapImage ImageSerieModif
+        {
+            get
+            {
+                return _imageSerieModif;
+            }
+            set
+            {
+                _imageSerieModif = value;
+                NotifyPropertyChanged(nameof(ImageSerieModif));
+            }
+        }
         #endregion
 
         public WindowAddViewModel()
@@ -256,8 +292,48 @@ namespace Projet.Presentation.Forms.ViewModel
             SupprimerSerieCommand = new RelayCommand(OnSupprmierSerie, CanexecuteSupprimerSerie);
             downAdminCommand = new RelayCommand(OnDownAdmin, CanexecuteDownAdmin);
             upAdminCommand = new RelayCommand(OnUpAdmin, CanexecuteUpAdmin);
+            ParcourirImageAddCommand = new RelayCommand(OnParcourirImageAdd, CanExecuteParcourirImageAdd);
+            ParcourirImageUpdateCommand = new RelayCommand(OnParcourirImageUpdate, CanExecuteParcourirImageUpdate);
         }
 
+        private void OnParcourirImageUpdate(object obj)
+        {
+            _openFileModif.Title = "Selectionner une image";
+            _openFileModif.DefaultExt = "jpg";
+            _openFileModif.Filter = " Fichier JPG (*.jpg)|*.jpg";
+            if (_openFileModif.ShowDialog() == true)
+            {
+                ImageSerieModif = new BitmapImage(new Uri(_openFileModif.FileName));
+            }
+        }
+
+        private bool CanExecuteParcourirImageUpdate(object obj)
+        {
+            if(SelectSerie == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private void OnParcourirImageAdd(object obj)
+        {
+            _openFile.Title = "Selectionner une image";
+            _openFile.DefaultExt = "jpg";
+            _openFile.Filter = " Fichier JPG (*.jpg)|*.jpg";
+            if (_openFile.ShowDialog() == true)
+            {
+                ImageSerieCourante = new BitmapImage(new Uri(_openFile.FileName));
+            }
+        }
+
+        private bool CanExecuteParcourirImageAdd(object obj)
+        {
+            return true;
+        }
 
         private void OnDownAdmin(object obj)
         {
@@ -346,6 +422,10 @@ namespace Projet.Presentation.Forms.ViewModel
         private void OnModifierSerie(object obj)
         {
             GestionBDD.updateSerie(SelectSerie, Descriptionseriemodif, int.Parse(Dureemoyenneseriemodif), Producteurseriemodif, Selectgenremodif);
+            if(_seriemodif.ImageSerie != ImageSerieModif)
+            {
+                GestionBDD.updateImageSerie(_openFileModif.FileName, SelectSerie);
+            }
             MessageBox.Show("Modification enrgistrées");
         }
         private bool CanexecuteModifierSerie(object obj)
@@ -372,7 +452,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 if (int.TryParse(DureeMoyenneSerie, out _result) == true)
                 {
-                    GestionBDD.ajouter_Serie(NomSerie, DescriptionSerie, SelectGenre, ProducteurSerie, int.Parse(DureeMoyenneSerie));
+                    GestionBDD.ajouter_Serie(NomSerie, DescriptionSerie, SelectGenre, ProducteurSerie, int.Parse(DureeMoyenneSerie), _openFile.FileName);
                     Listserie.Add(NomSerie);
                     MessageBox.Show("Inscription enregistrée", "Confirmation", MessageBoxButton.OK);
                     /*NomSerie = "";

@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Projet.Presentation.Forms"
         mc:Ignorable="d"
-        Title="Panneau de configuration" Height="500" Width="310" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Panneau de configuration" Height="510" Width="310" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <TabControl>
             <TabItem Header="Ajouter">
-                <StackPanel Margin="0,10,0,0">
+                <StackPanel>
                     <Label HorizontalAlignment="Center">Image de la série</Label>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Image Height="75" Width="75"></Image>
-                        <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10">Parcourir...</Button>
+                        <Image Height="100" Width="75" Source="{Binding ImageSerieCourante}"></Image>
+                        <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageAddCommand}">Parcourir...</Button>
                     </StackPanel>
                     <Label HorizontalAlignment="Center">Nom de la série</Label>
                     <TextBox x:Name="textbox_NomSerie" Width="120" MaxLength="80" Text="{Binding NomSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
@@ -45,8 +45,8 @@
 
                         <Label x:Name="l_img" HorizontalAlignment="Center" Margin="0,15,0,0">Image de la série</Label>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Image x:Name="imgmodif" Height="75" Width="75"></Image>
-                            <Button x:Name="btnmodif_parcourir" Width="75" Height="25" VerticalAlignment="Bottom" Margin="10">Parcourir...</Button>
+                            <Image x:Name="imgmodif" Height="100" Width="75" Source="{Binding ImageSerieModif, Mode=TwoWay}"></Image>
+                            <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageUpdateCommand}">Parcourir...</Button>
                         </StackPanel>
                         <Label HorizontalAlignment="Center">Description</Label>
                         <TextBox Width="200" Height="50" MaxLength="500" Text="{Binding Descriptionseriemodif, UpdateSourceTrigger=PropertyChanged}"></TextBox>

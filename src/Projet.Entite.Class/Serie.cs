@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace Projet.Entite.Class
 {
@@ -17,6 +18,7 @@ namespace Projet.Entite.Class
         public string producteur { get; set; }
         public int dureeMoy { get; set; }
         public int nbSaison { get; set; }
+        public BitmapImage ImageSerie { get; set; }
 
         public Serie(string nom, string description, Genre genre, int dureeMoy, string producteur, int nbSaison)
         {
