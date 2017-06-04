@@ -29,11 +29,6 @@ namespace Projet.Presentation.Forms
             _vm = new WindowAddViewModel();
             DataContext = _vm;
         }
-
-        private void Retour_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
     }
 }
 

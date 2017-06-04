@@ -86,13 +86,14 @@ namespace Projet.Service.Fonctions
 
         public static void inscription(String pseudo, String mdp)
         {
-            SqlDataAdapter sda2 = new SqlDataAdapter("Insert into Utilisateur (Pseudo, Password, Description, Sexe, DateDeNaissance, Modo, PathProfil) values('" + pseudo + "', '" + mdp + "' , '" + "Description..." + "', '" + "Pas spécifié..." + "', '" + "00/00/0000" + "', '" + "false" + "', '" + "profil.jpg" + "')", con);
+            SqlDataAdapter sda2 = new SqlDataAdapter("Insert into Utilisateur (Pseudo, Password, Description, Sexe, DateDeNaissance, Modo, PathProfil) values('" + pseudo + "', '" + mdp + "' , '" + "Description..." + "', '" + "Pas spécifié..." + "', '" + "01/01/0001 00:00:00" + "', '" + "false" + "', '" + "profil.jpg" + "')", con);
             DataTable dt2 = new DataTable();
             sda2.Fill(dt2);
         }
 
         public static void updateDescription(String desc, String pseudo)
         {
+            desc = desc.Replace("'", "''");
             SqlDataAdapter sda = new SqlDataAdapter("Update Utilisateur set Description =' " + desc + "' where Pseudo='" + pseudo + "'", con);
             DataTable dt = new DataTable();
             sda.Fill(dt);
@@ -114,9 +115,11 @@ namespace Projet.Service.Fonctions
 
         public static void ajouter_Serie(string nom, string desc, string genre, string producteur, int dureemoy, string path)
         {
-            SqlDataAdapter sda = new SqlDataAdapter("Insert into Serie (Nom, Description, Genre, Note, Producteur, DureeMoyenne, PhotoSerie) values('" + nom + "', '" + desc + "', '" + genre + "','" + 0 + "','" + producteur + "','" + dureemoy + "','" + path + "') ", con);
-            DataTable dtserie = new DataTable();
-            sda.Fill(dtserie);
+            desc = desc.Replace("'", "''");
+            con.Open();
+            var command = new SqlCommand("Insert into Serie (Nom, Description, Genre, Note, Producteur, DureeMoyenne, PhotoSerie) values('" + nom + "', '" + desc + "', '" + genre + "','" + 0 + "','" + producteur + "','" + dureemoy + "','" + path + "') ", con);
+            command.ExecuteNonQuery();
+            con.Close();
         }
 
         public static Boolean verifSerie(string nom)
@@ -283,6 +286,7 @@ namespace Projet.Service.Fonctions
 
         public static void updateSerie(string nom, string desc, int dureMoy, string producteur, string genre, string path)
         {
+            desc = desc.Replace("'", "''");
             con.Open();
             SqlCommand cmd = new SqlCommand("Update Serie set Description ='" + desc + "', Producteur ='" + producteur + "', Genre ='" + genre + "', DureeMoyenne ='" + dureMoy + "', PhotoSerie='"+path+"' where Nom='" + nom + "'", con);
             cmd.ExecuteNonQuery();
@@ -290,6 +294,7 @@ namespace Projet.Service.Fonctions
         }
         public static void updateSeriesansImage(string nom, string desc, int dureMoy, string producteur, string genre)
         {
+            desc = desc.Replace("'", "''");
             con.Open();
             SqlCommand cmd = new SqlCommand("Update Serie set Description ='" + desc + "', Producteur ='" + producteur + "', Genre ='" + genre + "', DureeMoyenne ='" + dureMoy + "' where Nom='" + nom + "'", con);
             cmd.ExecuteNonQuery();

@@ -18,13 +18,13 @@ namespace Projet.Entite.Class
         public string Password { get; set; }
         public string Description { get; set; }
         public String Sexe { get; set; }
-        public string DateDeNaissance { get; set; }
+        public DateTime DateDeNaissance { get; set; }
         public List<Serie> Serieadd { get; set; }
         public bool Modo { get; set; }
         public BitmapImage image { get; set; }
         public BitmapImage couverture { get; set; }
 
-        public static void Connect(string pseudo, string mdp, string desc, string sexe, string ddn, bool modo)
+        public static void Connect(string pseudo, string mdp, string desc, string sexe, DateTime ddn, bool modo)
         {
             lock (myLock)
             {
@@ -33,7 +33,7 @@ namespace Projet.Entite.Class
             }
         }
 
-        private UserCourant(string pseudo, string mdp, string desc, string sexe, string ddn, bool modo)
+        private UserCourant(string pseudo, string mdp, string desc, string sexe, DateTime ddn, bool modo)
         {
             Pseudo = pseudo;
             Password = mdp;

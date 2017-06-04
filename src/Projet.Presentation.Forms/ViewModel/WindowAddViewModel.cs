@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using Projet.Entite.Class;
 using Projet.Presentation.Forms.Commands;
+using Projet.Presentation.Forms.Events;
 using Projet.Service.Fonctions;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,7 @@ namespace Projet.Presentation.Forms.ViewModel
         public RelayCommand upAdminCommand { get; private set; }
         public RelayCommand ParcourirImageAddCommand { get; private set; }
         public RelayCommand ParcourirImageUpdateCommand { get; private set; }
+        public RelayCommand QuitCommand { get; private set; }
         #endregion
 
         #region Public
@@ -337,6 +339,17 @@ namespace Projet.Presentation.Forms.ViewModel
             upAdminCommand = new RelayCommand(OnUpAdmin, CanexecuteUpAdmin);
             ParcourirImageAddCommand = new RelayCommand(OnParcourirImageAdd, CanExecuteParcourirImageAdd);
             ParcourirImageUpdateCommand = new RelayCommand(OnParcourirImageUpdate, CanExecuteParcourirImageUpdate);
+            QuitCommand = new RelayCommand(OnQuit, CanExecuteQuit);
+        }
+
+        private void OnQuit(object obj)
+        {
+            WindowClosedEvent.GetInstance().OnWindowClosedHandler(EventArgs.Empty);
+        }
+
+        private bool CanExecuteQuit(object obj)
+        {
+            return true;
         }
 
         private void OnParcourirImageUpdate(object obj)

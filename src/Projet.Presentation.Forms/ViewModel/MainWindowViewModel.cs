@@ -82,17 +82,23 @@ namespace Projet.Presentation.Forms.ViewModel
         {
             if(GestionBDD.verifLoginMdp(Identifiant, Password))
             {
-                
                 Utilisateur user = GestionBDD.remplirUser(Identifiant);
                 UserCourant.SetNull();
-                UserCourant.Connect(user.pseudo, user.password, user.description, user.sexe, user.dateDeNaissance, user.modo);
+                DateTime ddn = Convert.ToDateTime(user.dateDeNaissance);
+                UserCourant.Connect(user.pseudo, user.password, user.description, user.sexe, ddn, user.modo);
                 _wAcceuil = new WindowAcc();
                 _wAcceuil.Show();
+               // WindowClosedEvent.GetInstance().Handler += OnCloseWindowAcceuil;
             }
             else
             {
                 MessageBox.Show("Les informations transmises n'ont pas permis de vous authentifier", "Erreur d'identification", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+        private void OnCloseWindowAcceuil(object sender, EventArgs e)
+        {
+            _wAcceuil.Close();
+            WindowClosedEvent.GetInstance().Handler -= OnCloseWindowAcceuil;
         }
 
         private bool CanExecuteInscription(object obj)

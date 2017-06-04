@@ -34,10 +34,5 @@ namespace Projet.Presentation.Forms
 
             DataContext = _vm;
         }
-
-        private void Retour_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
     }
 }

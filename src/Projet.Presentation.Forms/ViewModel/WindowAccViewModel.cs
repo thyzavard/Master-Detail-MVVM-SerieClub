@@ -1,5 +1,6 @@
 ﻿using Projet.Entite.Class;
 using Projet.Presentation.Forms.Commands;
+using Projet.Presentation.Forms.Events;
 using Projet.Service.Fonctions;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,10 @@ namespace Projet.Presentation.Forms.ViewModel
         private string _imageSelect;
         private bool _isVisible = true;
         private bool _isVisibleAdmin;
+
+        //Window
+        private WindowPersoProfil _wPersoProfil;
+        private WindowAdd _wAdd;
         #endregion
 
         #region Command
@@ -29,6 +34,7 @@ namespace Projet.Presentation.Forms.ViewModel
         public RelayCommand AdministrationCommand { get; private set; }
         public RelayCommand OuvrirAcceuilCommand { get; private set; }
         public RelayCommand OuvrirProfilCommand { get; private set; }
+        public RelayCommand QuitCommand { get; private set; }
         #endregion
 
         #region Public
@@ -110,6 +116,7 @@ namespace Projet.Presentation.Forms.ViewModel
             AdministrationCommand = new RelayCommand(OnAdministration, CanExecuteAdministration);
             OuvrirAcceuilCommand = new RelayCommand(OnOuvrirAcceuil, CanExecuteOuvrirAcceuil);
             OuvrirProfilCommand = new RelayCommand(OnOuvrirProfil, CanExecuteOuvrirProfil);
+            QuitCommand = new RelayCommand(OnQuit, CanExecuteQuit);
 
             SelectedViewModel = new ViewAccueilViewModel();
             _user.Serieadd = GestionBDD.returnSerieUtilisateurFull(_user.Pseudo);
@@ -122,6 +129,16 @@ namespace Projet.Presentation.Forms.ViewModel
 
 
             Pseudo = _user.Pseudo;
+        }
+
+        private void OnQuit(object obj)
+        {
+            WindowClosedEvent.GetInstance().OnWindowClosedHandler(EventArgs.Empty);
+        }
+
+        private bool CanExecuteQuit(object obj)
+        {
+            return true;
         }
 
         private void OnOuvrirProfil(object obj)
@@ -162,10 +179,16 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private void OnAdministration(object obj)
         {
-            WindowAdd wp = new WindowAdd();
-            wp.ShowDialog();
+            _wAdd = new WindowAdd();
+            _wAdd.Show();
+            WindowClosedEvent.GetInstance().Handler += OnCloseWindowAdd;
+            
         }
-
+        private void OnCloseWindowAdd(object sender, EventArgs e)
+        {
+            _wAdd.Close();
+            WindowClosedEvent.GetInstance().Handler -= OnCloseWindowAdd;
+        }
         private bool CanExecuteAdministration(object obj)
         {
             IsVisibleAdmin = _user.Modo;
@@ -174,10 +197,16 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private void OnPersoProfil(object obj)
         {
-            WindowPersoProfil w = new WindowPersoProfil();
-            w.ShowDialog();
+            _wPersoProfil = new WindowPersoProfil();
+            _wPersoProfil.Show();
+            WindowClosedEvent.GetInstance().Handler += OnCloseWindowPersoProfil;
+            
         }
-
+        private void OnCloseWindowPersoProfil(object sender, EventArgs e)
+        {
+            _wPersoProfil.Close();
+            WindowClosedEvent.GetInstance().Handler -= OnCloseWindowPersoProfil;
+        }
         private bool CanExecutePersoProfil(object obj)
         {
             return true;

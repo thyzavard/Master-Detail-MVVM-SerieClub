@@ -28,7 +28,7 @@
 
                     <Grid>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
-                            <Button Margin="5" BorderBrush="Red" Width="75" Click="Retour_Click">Retour</Button>
+                            <Button Margin="5" BorderBrush="Red" Width="75" Command="{Binding QuitCommand}">Retour</Button>
                         </StackPanel>
                         <StackPanel HorizontalAlignment="Right" Margin="10">
                             <Button Margin="5" BorderBrush="Green" Width="75" Command="{Binding AjouterSerieCommand}">Ajouter</Button>
@@ -60,7 +60,7 @@
 
                         <Grid>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
-                                <Button Margin="5" BorderBrush="Red" Width="75" Click="Retour_Click">Retour</Button>
+                                <Button Margin="5" BorderBrush="Red" Width="75" Command="{Binding QuitCommand}">Retour</Button>
                             </StackPanel>
                             <StackPanel HorizontalAlignment="Right" Margin="10">
                                 <Button Margin="5" BorderBrush="Green" Width="75" Command="{Binding ModifierSerieCommand}" >Modifier</Button>
@@ -78,7 +78,7 @@
 
                     <Grid Margin="0,140,0,0">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
-                            <Button Margin="5" BorderBrush="Green" Width="75" Click="Retour_Click">Retour</Button>
+                            <Button Margin="5" BorderBrush="Green" Width="75" Command="{Binding QuitCommand}">Retour</Button>
                         </StackPanel>
                         <StackPanel HorizontalAlignment="Right" Margin="10">
                             <Button Margin="5" BorderBrush="Red" Width="75" Command="{Binding SupprimerSerieCommand}">Supprimer</Button>
@@ -100,7 +100,7 @@
                             <Button Margin="5" BorderBrush="Green" Width="75" Command="{Binding upAdminCommand}" >Promouvoir</Button>
                         </StackPanel>
                     </Grid>
-                    <Button Width="75" Margin="0,140,0,0" BorderBrush="Red" Click="Retour_Click">Retour</Button>
+                    <Button Width="75" Margin="0,140,0,0" BorderBrush="Red" Command="{Binding QuitCommand}">Retour</Button>
                 </StackPanel>
             </TabItem>
         </TabControl>

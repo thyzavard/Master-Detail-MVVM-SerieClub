@@ -2,6 +2,7 @@
 using Projet.Entite.Class;
 using Projet.Presentation.Forms.Commands;
 using Projet.Presentation.Forms.Converters;
+using Projet.Presentation.Forms.Events;
 using Projet.Service.Fonctions;
 using System;
 using System.Collections.Generic;
@@ -23,12 +24,7 @@ namespace Projet.Presentation.Forms.ViewModel
         private string _description;
         private string _selectSexe;
         private List<string> _listsexe;
-        private List<string> _listJour;
-        private List<string> _listMois;
-        private List<string> _listAnne;
-        private string _selectedJour;
-        private string _selectedMois;
-        private string _selectedAnne;
+        private DateTime _selectDate;
         private UserCourant user = UserCourant.Instance();
         private OpenFileDialog openFile = new OpenFileDialog();
         private OpenFileDialog _openFileCouverture = new OpenFileDialog();
@@ -84,47 +80,20 @@ namespace Projet.Presentation.Forms.ViewModel
         }
 
         public List<string> Listsexe { get { return _listsexe; } set { _listsexe = value; } }
-        public List<string> ListJour { get { return _listJour; } set { _listJour = value; } }
-        public List<string> ListMois { get { return _listMois; } set { _listMois = value; } }
-        public List<string> ListAnne { get { return _listAnne; } set { _listAnne = value; } }
 
+        public DateTime SelectDate
+        {
+            get
+            {
+                return _selectDate;
+            }
+            set
+            {
+                _selectDate = value;
+                NotifyPropertyChanged(nameof(SelectDate));
+            }
+        }
 
-        public string SelectedJour
-        {
-            get
-            {
-                return _selectedJour;
-            }
-            set
-            {
-                _selectedJour = value;
-                SauverModifProfilCommand.RaiseCanExecuteChanged();
-            }
-        }
-        public string SelectedMois
-        {
-            get
-            {
-                return _selectedMois;
-            }
-            set
-            {
-                _selectedMois = value;
-                SauverModifProfilCommand.RaiseCanExecuteChanged();
-            }
-        }
-        public string SelectedAnne
-        {
-            get
-            {
-                return _selectedAnne;
-            }
-            set
-            {
-                _selectedAnne = value;
-                SauverModifProfilCommand.RaiseCanExecuteChanged();
-            }
-        }
         public BitmapImage ImageCourant
         {
             get
@@ -169,6 +138,7 @@ namespace Projet.Presentation.Forms.ViewModel
         public RelayCommand SauverModifProfilCommand { get; private set; }
         public RelayCommand ParcourirImageCommand { get; private set; }
         public RelayCommand ParcourirImageCouvertureCommand { get; private set; }
+        public RelayCommand QuitCommand { get; private set; }
         #endregion
 
         public WindowPersoProfilViewModel()
@@ -186,43 +156,27 @@ namespace Projet.Presentation.Forms.ViewModel
             Listsexe.Add("Féminin");
             Listsexe.Add("Masculin");
 
-            //Remplissage combobox Date de naissance 
-            ListMois = new List<string>();
-            ListJour = new List<string>();
-            ListAnne = new List<string>();
-            if (user_courant.DateDeNaissance == "00/00/0000")
-            {
-                ListMois.Add("-");
-                ListMois.Add("01");
-                ListMois.Add("02");
-                ListMois.Add("03");
-                ListMois.Add("04");
-                ListMois.Add("05");
-                ListMois.Add("06");
-                ListMois.Add("07");
-                ListMois.Add("08");
-                ListMois.Add("09");
-                ListMois.Add("10");
-                ListMois.Add("11");
-                ListMois.Add("12");
-
-                ListJour.Add("-");
-                ListAnne.Add("-");
-
-                for (int i = 1; i < 32; i++)
-                {
-                    ListJour.Add(i.ToString());
-                }
-                for (int i = 1950; i < 2018; i++)
-                {
-                    ListAnne.Add(i.ToString());
-                }
-            }
+            //Date de naissance
+            DateTime dBase = new DateTime(0001, 01, 01);
+            int result = DateTime.Compare(dBase, user_courant.DateDeNaissance);
+            if(result == 0) { SelectDate = DateTime.Now; }
+            else { SelectDate = user.DateDeNaissance; }
 
             //COMMANDE
             SauverModifProfilCommand = new RelayCommand(OnSauverModifProfil, CanExecuteSauverModifProfil);
             ParcourirImageCommand = new RelayCommand(OnParcourirImage, CanExecuteParcourirImage);
             ParcourirImageCouvertureCommand = new RelayCommand(OnParcourirImageCouverture, CanExecuteParcourirImageCouverture);
+            QuitCommand = new RelayCommand(OnQuit, CanExecuteQuit);
+        }
+
+        private void OnQuit(object obj)
+        {
+            WindowClosedEvent.GetInstance().OnWindowClosedHandler(EventArgs.Empty);
+        }
+
+        private bool CanExecuteQuit(object obj)
+        {
+            return true;
         }
 
         private void OnParcourirImageCouverture(object obj)
@@ -273,16 +227,11 @@ namespace Projet.Presentation.Forms.ViewModel
                 user_courant.Sexe = SelectSexe;
                 GestionBDD.updateSexe(SelectSexe, user_courant.Pseudo);
             }
-
-            if (SelectedJour != "-" || SelectedMois != "-" || SelectedAnne != "-")
+           
+            if(SelectDate != user_courant.DateDeNaissance)
             {
-                string ddn = $"{SelectedJour}/{SelectedMois}/{SelectedAnne}";
-                user_courant.DateDeNaissance = ddn;
-                GestionBDD.updateDdn(ddn, user_courant.Pseudo);
-            }
-            else
-            {
-                MessageBox.Show("Veuillez rentrer une date correct", "Erreur Date", MessageBoxButton.OK, MessageBoxImage.Warning);
+                user_courant.DateDeNaissance = SelectDate;
+                GestionBDD.updateDdn(SelectDate.ToString(), user_courant.Pseudo);
             }
 
             //GESTION SAUVEGARDE IMAGE
@@ -300,14 +249,12 @@ namespace Projet.Presentation.Forms.ViewModel
                         File.Copy(openFile.FileName, Path.Combine(_path, _fileName));
                         GestionBDD.enregisterPhotoProfil(_fileName, user.Pseudo);
                         user.image = new BitmapImage(new Uri($@"{_path}\{_fileName}"));
-                        MessageBox.Show("Modification enregistrée");
                     }
                 }
                 else
                 {
                     GestionBDD.enregisterPhotoProfil(_fileName, user.Pseudo);
                     user.image = new BitmapImage(new Uri($@"{_path}\{_fileName}"));
-                    MessageBox.Show("Modification enregistrée");
                 }
             }
 
@@ -325,17 +272,16 @@ namespace Projet.Presentation.Forms.ViewModel
                         File.Copy(_openFileCouverture.FileName, Path.Combine(_path, _fileNameCouverture));
                         GestionBDD.enregisterPhotoCouverture(_fileNameCouverture, user.Pseudo);
                         user.couverture = new BitmapImage(new Uri($@"{_path}\{_fileNameCouverture}"));
-                        MessageBox.Show("Modification enregistrée");
                     }
                 }
                 else
                 {
                     GestionBDD.enregisterPhotoCouverture(_fileNameCouverture, user.Pseudo);
                     user.couverture = new BitmapImage(new Uri($@"{_path}\{_fileNameCouverture}"));
-                    MessageBox.Show("Modification enregistrée");
                 }
             }
-            
+            MessageBox.Show("Modification enregistrée");
+
         }
         private bool CanExecuteSauverModifProfil(object obj)
         {

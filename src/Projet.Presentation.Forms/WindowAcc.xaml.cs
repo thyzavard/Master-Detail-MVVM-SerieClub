@@ -31,10 +31,5 @@ namespace Projet.Presentation.Forms
 
             DataContext = _vm;
         }
-
-        private void btnDeco_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
     }
 }
