@@ -127,6 +127,9 @@ namespace Projet.Presentation.Forms.ViewModel
             _user.couverture = new BitmapImage(new Uri(($"{AppDomain.CurrentDomain.BaseDirectory}/Images/{pathCouverture}")));
             _user.image = new BitmapImage(new Uri(($"{AppDomain.CurrentDomain.BaseDirectory}/Images/{path}")));
 
+            //Trie des photos non utilisé
+            GestionFichierImage.triImageUser();
+            GestionFichierImage.triImageSerie();
 
             Pseudo = _user.Pseudo;
         }

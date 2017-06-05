@@ -86,7 +86,7 @@ namespace Projet.Service.Fonctions
 
         public static void inscription(String pseudo, String mdp)
         {
-            SqlDataAdapter sda2 = new SqlDataAdapter("Insert into Utilisateur (Pseudo, Password, Description, Sexe, DateDeNaissance, Modo, PathProfil) values('" + pseudo + "', '" + mdp + "' , '" + "Description..." + "', '" + "Pas spécifié..." + "', '" + "01/01/0001 00:00:00" + "', '" + "false" + "', '" + "profil.jpg" + "')", con);
+            SqlDataAdapter sda2 = new SqlDataAdapter("Insert into Utilisateur (Pseudo, Password, Description, Sexe, DateDeNaissance, Modo, PathProfil, PathCouverture) values('" + pseudo + "', '" + mdp + "' , '" + "Description..." + "', '" + "Pas spécifié..." + "', '" + "01/01/0001 00:00:00" + "', '" + "false" + "', '" + "profil.jpg" + "', '"+ "couverture.jpg"+"')", con);
             DataTable dt2 = new DataTable();
             sda2.Fill(dt2);
         }
@@ -482,8 +482,48 @@ namespace Projet.Service.Fonctions
             return path;
         }
 
+        public static List<string> returnImageUser()
+        {
+            string path = Path.Combine(Environment.CurrentDirectory, "Images");
+            List<string> ficUser = new List<string>();
+            con.Open();
+            var command = new SqlCommand("Select PathProfil From Utilisateur", con);
+            var cmd = new SqlCommand("Select PathCouverture From Utilisateur", con);
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    ficUser.Add($@"{path}\{reader.GetString(0)}");
+                }
+            }
 
+            using(var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    ficUser.Add($@"{path}\{reader.GetString(0)}");
+                }
+            }
+            con.Close();
+            return ficUser;
+        }
 
+        public static List<string> returnImageSerie()
+        {
+            string path = Path.Combine(Environment.CurrentDirectory, "ImagesSerie");
+            List<string> ficSerie = new List<string>();
+            con.Open();
+            var command = new SqlCommand("Select PhotoSerie From Serie", con);
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    ficSerie.Add($@"{path}\{reader.GetString(0)}");
+                }
+            }
+            con.Close();
+            return ficSerie;
+        }
 
 
     }
