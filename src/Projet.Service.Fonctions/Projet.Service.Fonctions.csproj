@@ -46,6 +46,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseViewModel.cs" />
     <Compile Include="GestionBDD.cs" />
     <Compile Include="GestionFichierImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,6 +59,12 @@
       <Project>{7c50da2d-6fb7-4ff1-a30e-52f33999f773}</Project>
       <Name>Projet.Entite.Class</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\profil.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\couverture.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -139,6 +139,7 @@ namespace Projet.Presentation.Forms.ViewModel
                         GestionBDD.updateSexe(SelectSexe, Pseudo);
                     }
                     MessageBox.Show("Inscription enregistrée", "Confirmation", MessageBoxButton.OK);
+                    WindowClosedEvent.GetInstance().OnWindowClosedHandler(EventArgs.Empty);
                 }
                 else
                 {

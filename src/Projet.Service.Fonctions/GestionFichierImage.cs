@@ -65,6 +65,24 @@ namespace Projet.Service.Fonctions
                 File.Delete(Path.Combine(path, fichierASuppr[o]));
             }
         }
+
+        public static void creerFichierImages()
+        {
+            string pathUser = Path.Combine(Environment.CurrentDirectory, "Images");
+            string pathSerie = Path.Combine(Environment.CurrentDirectory, "ImagesSerie");
+
+            if (!Directory.Exists(pathUser))
+            {
+                Directory.CreateDirectory(pathUser);
+                File.Copy(@"Images\profil.jpg", Path.Combine(pathUser, "profil.jpg"));
+                File.Copy(@"Images\couverture.jpg", Path.Combine(pathUser, "couverture.jpg"));
+            }
+
+            if (!Directory.Exists(pathSerie))
+            {
+                Directory.CreateDirectory(pathSerie);
+            }
+        }
     }
 }
 

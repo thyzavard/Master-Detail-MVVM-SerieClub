@@ -111,6 +111,7 @@
                 <Button Margin="20" Command="{Binding OuvrirProfilCommand}">Profil</Button>
                 <Button Margin="20" FontSize="15" Command="{Binding PersoProfilCommand}">Personnaliser le profil</Button>
                 <Button Margin="20" BorderBrush="red" Command="{Binding QuitCommand}">Se déconnecter</Button>
+                <Button Command="{Binding TestCommand}">test</Button>
             </StackPanel>
         </DockPanel>
 

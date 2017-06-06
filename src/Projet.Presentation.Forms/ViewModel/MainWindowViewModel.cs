@@ -60,6 +60,12 @@ namespace Projet.Presentation.Forms.ViewModel
             InscrireCommand = new RelayCommand(OnInscription, CanExecuteInscription);
             ConnexionCommand = new RelayCommand(OnLogin, CanExecuteLogin);
             QuitCommand = new RelayCommand(OnQuit, CanExecuteQuit);
+
+            //Trie des photos non utilisé par les utilisateurs et séries
+            GestionFichierImage.triImageUser();
+            GestionFichierImage.triImageSerie();
+
+            GestionFichierImage.creerFichierImages();
         }
 
         private void OnQuit(object obj)

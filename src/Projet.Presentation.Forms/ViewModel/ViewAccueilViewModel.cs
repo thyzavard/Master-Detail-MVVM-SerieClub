@@ -14,7 +14,7 @@ using System.Collections.ObjectModel;
 namespace Projet.Presentation.Forms.ViewModel
 {
 
-    public class ViewAccueilViewModel : INotifyPropertyChanged
+    public class ViewAccueilViewModel : BaseViewModel
     {
         #region private
         private List<Serie> _listSerie;
@@ -30,16 +30,6 @@ namespace Projet.Presentation.Forms.ViewModel
         #endregion
 
         #region Public
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void NotifyPropertyChanged(String info)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
-            }
-        }
-
         public List<Serie> ListserieAction
         {
             get { return _listserieAction; }

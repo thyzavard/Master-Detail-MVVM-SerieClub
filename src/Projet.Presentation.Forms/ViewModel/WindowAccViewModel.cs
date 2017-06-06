@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
-    public class WindowAccViewModel : INotifyPropertyChanged
+    public class WindowAccViewModel : BaseViewModel
     {
         #region private
         private UserCourant _user = UserCourant.Instance();
@@ -35,19 +35,11 @@ namespace Projet.Presentation.Forms.ViewModel
         public RelayCommand OuvrirAcceuilCommand { get; private set; }
         public RelayCommand OuvrirProfilCommand { get; private set; }
         public RelayCommand QuitCommand { get; private set; }
+
+        public RelayCommand TestCommand { get; private set; }
         #endregion
 
         #region Public
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void NotifyPropertyChanged(String info)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
-            }
-        }
-
         public string Pseudo
         {
             get
@@ -118,6 +110,10 @@ namespace Projet.Presentation.Forms.ViewModel
             OuvrirProfilCommand = new RelayCommand(OnOuvrirProfil, CanExecuteOuvrirProfil);
             QuitCommand = new RelayCommand(OnQuit, CanExecuteQuit);
 
+            //******************
+            TestCommand = new RelayCommand(OnTest, CanExecuteTest);
+            //******************
+
             SelectedViewModel = new ViewAccueilViewModel();
             _user.Serieadd = GestionBDD.returnSerieUtilisateurFull(_user.Pseudo);
 
@@ -127,11 +123,17 @@ namespace Projet.Presentation.Forms.ViewModel
             _user.couverture = new BitmapImage(new Uri(($"{AppDomain.CurrentDomain.BaseDirectory}/Images/{pathCouverture}")));
             _user.image = new BitmapImage(new Uri(($"{AppDomain.CurrentDomain.BaseDirectory}/Images/{path}")));
 
-            //Trie des photos non utilisé
-            GestionFichierImage.triImageUser();
-            GestionFichierImage.triImageSerie();
-
             Pseudo = _user.Pseudo;
+        }
+
+        private void OnTest(object obj)
+        {
+            SelectedViewModel = new ViewSerieViewModel();
+        }
+
+        private bool CanExecuteTest(object obj)
+        {
+            return true;
         }
 
         private void OnQuit(object obj)

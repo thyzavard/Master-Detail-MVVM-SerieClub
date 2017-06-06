@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
-    public class ViewProfilViewModel : INotifyPropertyChanged
+    public class ViewProfilViewModel : BaseViewModel
     {
         #region private
         private string _currentPseudo;
@@ -115,17 +115,6 @@ namespace Projet.Presentation.Forms.ViewModel
                 NotifyPropertyChanged(nameof(SourceImageCouverture));
             }
         }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void NotifyPropertyChanged(String info)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
-            }
-        }
         #endregion
 
         #region Command
@@ -139,7 +128,10 @@ namespace Projet.Presentation.Forms.ViewModel
             InfoSerieCommand = new RelayCommand(OnInfoSerie, CanExecuteInfoSerie);
 
             CurrentPseudo = _user.Pseudo;
-            CurrentDescription = _user.Description;
+            if(_user.Description != "Description...")
+            {
+                CurrentDescription = _user.Description;
+            }
             ImageUserCourant = _user.image;
             SourceImageCouverture = _user.couverture;
 

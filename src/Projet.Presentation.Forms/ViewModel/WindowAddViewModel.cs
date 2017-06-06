@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
-    public class WindowAddViewModel : INotifyPropertyChanged
+    public class WindowAddViewModel : BaseViewModel
     {
         #region private
         private List<string> _genresource;
@@ -62,16 +62,6 @@ namespace Projet.Presentation.Forms.ViewModel
         #endregion
 
         #region Public
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void NotifyPropertyChanged(String info)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
-            }
-        }
-
         public List<string> GenreSource
         {
             get

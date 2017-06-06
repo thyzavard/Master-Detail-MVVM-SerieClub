@@ -17,7 +17,7 @@ using System.Windows.Media.Imaging;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
-    public class WindowPersoProfilViewModel : INotifyPropertyChanged
+    public class WindowPersoProfilViewModel : BaseViewModel
     {
 
         #region private
@@ -41,16 +41,6 @@ namespace Projet.Presentation.Forms.ViewModel
         #endregion
 
         #region Public
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void NotifyPropertyChanged(String info)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
-            }
-        }
-
         public string Description
         {
             get
@@ -281,7 +271,7 @@ namespace Projet.Presentation.Forms.ViewModel
                 }
             }
             MessageBox.Show("Modification enregistrée");
-
+            WindowClosedEvent.GetInstance().OnWindowClosedHandler(EventArgs.Empty);
         }
         private bool CanExecuteSauverModifProfil(object obj)
         {
