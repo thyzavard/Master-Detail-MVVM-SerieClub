@@ -9,32 +9,36 @@
     <Grid>
         <TabControl>
             <TabItem Header="Ajouter">
-                <StackPanel>
-                    <Label HorizontalAlignment="Center">Image de la série</Label>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Image Height="100" Width="75" Source="{Binding SourceImage}"></Image>
-                        <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageAddCommand}">Parcourir...</Button>
-                    </StackPanel>
-                    <Label HorizontalAlignment="Center">Nom de la série</Label>
-                    <TextBox x:Name="textbox_NomSerie" Width="120" MaxLength="80" Text="{Binding NomSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                    <Label HorizontalAlignment="Center">Description</Label>
-                    <TextBox x:Name="textbox_DescSerie"  Width="200" Height="50" MaxLength="500" Text="{Binding DescriptionSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" TextWrapping="Wrap"/>
-                    <Label HorizontalAlignment="Center">Genre</Label>
-                    <ComboBox Width="120" ItemsSource="{Binding GenreSource}" SelectedItem="{Binding SelectGenre, Mode=TwoWay}"></ComboBox>
-                    <Label HorizontalAlignment="Center">Producteur</Label>
-                    <TextBox x:Name="textbox_Producteur" Width="120" MaxLength="80" Text="{Binding ProducteurSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
-                    <Label HorizontalAlignment="Center">Durée moyenne des épisodes</Label>
-                    <TextBox x:Name="textbox_dureep" Width="120" MaxLength="80" Text="{Binding DureeMoyenneSerie, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <Label HorizontalAlignment="Center">Image de la série</Label>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Image Height="100" Width="75" Source="{Binding SourceImage, Mode=TwoWay}"></Image>
+                            <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageAddCommand}">Parcourir...</Button>
+                        </StackPanel>
+                        <Label HorizontalAlignment="Center">Nom de la série</Label>
+                        <TextBox Width="120" MaxLength="80" Text="{Binding NomSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <Label HorizontalAlignment="Center">Description</Label>
+                        <TextBox  Width="200" Height="50" MaxLength="500" Text="{Binding DescriptionSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" TextWrapping="Wrap"/>
+                        <Label HorizontalAlignment="Center">Genre</Label>
+                        <ComboBox Width="120" ItemsSource="{Binding GenreSource}" SelectedItem="{Binding SelectGenre, Mode=TwoWay}"/>
+                        <Label HorizontalContentAlignment="Center">Nombre de saisons</Label>
+                        <TextBox Width="120" MaxLength="10" Text="{Binding NbSaison, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <Label HorizontalAlignment="Center">Producteur</Label>
+                        <TextBox Width="120" MaxLength="80" Text="{Binding ProducteurSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+                        <Label HorizontalAlignment="Center">Durée moyenne des épisodes</Label>
+                        <TextBox Width="120" MaxLength="80" Text="{Binding DureeMoyenneSerie, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
-                    <Grid>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
-                            <Button Margin="5" BorderBrush="Red" Width="75" Command="{Binding QuitCommand}">Retour</Button>
-                        </StackPanel>
-                        <StackPanel HorizontalAlignment="Right" Margin="10">
-                            <Button Margin="5" BorderBrush="Green" Width="75" Command="{Binding AjouterSerieCommand}">Ajouter</Button>
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
+                                <Button Margin="5" BorderBrush="Red" Width="75" Command="{Binding QuitCommand}">Retour</Button>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Right" Margin="10">
+                                <Button Margin="5" BorderBrush="Green" Width="75" Command="{Binding AjouterSerieCommand}">Ajouter</Button>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
 
             <TabItem Header="Modifier">
@@ -45,13 +49,16 @@
 
                         <Label x:Name="l_img" HorizontalAlignment="Center" Margin="0,15,0,0">Image de la série</Label>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Image x:Name="imgmodif" Height="100" Width="75" Source="{Binding SourceImageModif, Mode=TwoWay}"></Image>
+                            <Image Height="100" Width="75" Source="{Binding SourceImageModif, Mode=TwoWay}"></Image>
                             <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageUpdateCommand}">Parcourir...</Button>
                         </StackPanel>
                         <Label HorizontalAlignment="Center">Description</Label>
                         <TextBox Width="200" Height="50" MaxLength="1000" Text="{Binding Descriptionseriemodif, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"/>
                         <Label HorizontalAlignment="Center">Genre</Label>
                         <ComboBox Width="120" ItemsSource="{Binding GenreSource}" SelectedItem="{Binding Selectgenremodif}" ></ComboBox>
+                        <Label HorizontalContentAlignment="Center">Nombre de saisons
+                        </Label>
+                        <TextBox Width="120" MaxLength="10" Text="{Binding NbSaisonModif, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label HorizontalAlignment="Center">Producteur</Label>
                         <TextBox Width="120" MaxLength="80" Text="{Binding Producteurseriemodif, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                         <Label HorizontalAlignment="Center" >Durée moyenne des épisodes</Label>

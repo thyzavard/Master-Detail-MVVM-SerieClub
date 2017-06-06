@@ -14,7 +14,7 @@ namespace Projet.Entite.Class
         public Genre genre { get; set; }
         public Dictionary<int, List<Episode>> saison { get; set; }
         public float note { get; set; }
-        public List<String> commentaire { get; set; }
+        public List<Commentaire> commentaire { get; set; }
         public string producteur { get; set; }
         public int dureeMoy { get; set; }
         public int nbSaison { get; set; }
@@ -29,7 +29,8 @@ namespace Projet.Entite.Class
             note = 0;
             this.producteur = producteur;
             this.nbSaison = nbSaison;
-            commentaire = new List<string>();
+            commentaire = new List<Commentaire>();
+
             saison = new Dictionary<int, List<Episode>>();
         }
 

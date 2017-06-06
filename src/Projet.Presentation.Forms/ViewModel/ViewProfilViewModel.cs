@@ -128,7 +128,7 @@ namespace Projet.Presentation.Forms.ViewModel
             InfoSerieCommand = new RelayCommand(OnInfoSerie, CanExecuteInfoSerie);
 
             CurrentPseudo = _user.Pseudo;
-            if(_user.Description != "Description...")
+            if (_user.Description != "Description...")
             {
                 CurrentDescription = _user.Description;
             }
@@ -138,15 +138,20 @@ namespace Projet.Presentation.Forms.ViewModel
             //*****GESTION SÉRIE UTILISATEUR*****
             SerieUtilisateur = _user.Serieadd.ToObservableCollection();
 
+            updateMessage();
+        }
+
+        public void updateMessage()
+        {
             //*****GESTION DU MESSAGE EN FONCTION DU NOMBRE DE SÉRIE*****
             if (SerieUtilisateur.Count == 0) { TitreEnFonctionDuNbDeSerie = "Je n'ai pas de séries préférées..."; }
             else if (SerieUtilisateur.Count == 1) { TitreEnFonctionDuNbDeSerie = "Ma série préférée"; }
-            else { TitreEnFonctionDuNbDeSerie = "Mes séries préférées"; }   
+            else { TitreEnFonctionDuNbDeSerie = "Mes séries préférées"; }
         }
 
         private void OnInfoSerie(object obj)
         {
-
+            
         }
 
         private bool CanExecuteInfoSerie(object obj)
@@ -162,6 +167,7 @@ namespace Projet.Presentation.Forms.ViewModel
                 GestionBDD.removeSerieUtilisateur(_user_courant.Pseudo, SelectedSerie.nom);
                 MessageBox.Show("Série enlevée des favoris !", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 SerieUtilisateur.Remove(SelectedSerie);
+                updateMessage();
             }
         }
 
