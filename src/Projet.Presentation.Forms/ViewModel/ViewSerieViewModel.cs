@@ -27,7 +27,7 @@ namespace Projet.Presentation.Forms.ViewModel
         private string _dureeMoyenne;
         private int _note;
 
-        private Serie serie = GestionBDD.remplirSerie("Action");
+        private Serie serieglobal;
         #endregion
 
         #region Public 
@@ -160,24 +160,32 @@ namespace Projet.Presentation.Forms.ViewModel
 
         public void test()
         {
+           /* NomSerie = serie.nom;
+            NoteSerie = $"Note : {serie.note}";
+            DescriptionSerie = serie.description;
+            NbSaison = $"Nombre de saisons : {serie.nbSaison.ToString()}\n";
+            Producteur = $"Producteur : {serie.producteur}\n";
+            DureeMoyenne = $"Durée moyenne des épisodes : {serie.dureeMoy.ToString()} minutes\n";
+            */
+            
+            
+        }
+
+        public ViewSerieViewModel(Serie serie)
+        {
+            serieglobal = serie;
+            AjouterSerieCommand = new RelayCommand(OnAjouterSerie, CanExecuteAjouterSerie);
+            EnvoyerCommentaireCommand = new RelayCommand(OnEnvoyerCommentaire, CanExecuteEnvoyerCommentaire);
+            NoterSerieCommand = new RelayCommand(OnNoterSerie, CanExecuteNoterSerie);
+
+
+            //***********
             NomSerie = serie.nom;
             NoteSerie = $"Note : {serie.note}";
             DescriptionSerie = serie.description;
             NbSaison = $"Nombre de saisons : {serie.nbSaison.ToString()}\n";
             Producteur = $"Producteur : {serie.producteur}\n";
             DureeMoyenne = $"Durée moyenne des épisodes : {serie.dureeMoy.ToString()} minutes\n";
-
-            
-            
-        }
-
-        public ViewSerieViewModel()
-        {
-            AjouterSerieCommand = new RelayCommand(OnAjouterSerie, CanExecuteAjouterSerie);
-            EnvoyerCommentaireCommand = new RelayCommand(OnEnvoyerCommentaire, CanExecuteEnvoyerCommentaire);
-            NoterSerieCommand = new RelayCommand(OnNoterSerie, CanExecuteNoterSerie);
-
-            test();
 
             //Chargement des commentaires de la série
             ListCommentaireSerie = serie.commentaire.ToObservableCollection();
@@ -190,14 +198,14 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private void OnNoterSerie(object obj)
         {
-            GestionBDD.ajouterNoteSerie(serie.nom, Note,_user.Pseudo);
-            GestionBDD.updateNoteSerie(serie.nom);
+            GestionBDD.ajouterNoteSerie(serieglobal.nom, Note,_user.Pseudo);
+            GestionBDD.updateNoteSerie(serieglobal.nom);
             NoterSerieCommand.RaiseCanExecuteChanged();
         }
 
         private bool CanExecuteNoterSerie(object obj)
         {
-            if (GestionBDD.checkSiDejaNoter(serie.nom, _user.Pseudo))
+            if (GestionBDD.checkSiDejaNoter(serieglobal.nom, _user.Pseudo))
             {
                 return true;
             }
@@ -207,38 +215,18 @@ namespace Projet.Presentation.Forms.ViewModel
             }
         }
 
-        private void OnPouceRouge(object obj)
-        {
-            
-        }
-
-        private bool CanExecutePouceRouge(object obj)
-        {
-            return true;
-        }
-
-        private void OnPouceVert(object obj)
-        {
-            MessageBox.Show("Pouce vert !");
-        }
-
-        private bool CanExecutePourceVert(object obj)
-        {
-            return true;
-        }
-
         private void OnAjouterSerie(object obj)
         {
             if (AjoutOuSupprFav == "Ajouter au favoris")
             {
-                _user.Serieadd.Add(serie);
-                GestionBDD.addSerieUtilisateur(_user.Pseudo, serie.nom);
+                _user.Serieadd.Add(serieglobal);
+                GestionBDD.addSerieUtilisateur(_user.Pseudo, serieglobal.nom);
                 AjoutOuSupprFav = "Supprimer des favoris";
             }
             else
             {
-                _user.Serieadd.Remove(serie);
-                GestionBDD.removeSerieUtilisateur(_user.Pseudo, serie.nom);
+                _user.Serieadd.Remove(serieglobal);
+                GestionBDD.removeSerieUtilisateur(_user.Pseudo, serieglobal.nom);
                 MessageBox.Show("Serie suppr");
                 AjoutOuSupprFav = "Ajouter au favoris";
             }
@@ -251,8 +239,8 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private void OnEnvoyerCommentaire(object obj)
         {
-            Commentaire com = new Commentaire(CommentaireSerie, _user.Pseudo, serie.nom);
-            serie.commentaire.Add(com);
+            Commentaire com = new Commentaire(CommentaireSerie, _user.Pseudo, serieglobal.nom);
+            serieglobal.commentaire.Add(com);
             GestionBDD.ajouterCommentaireSerie(com);
             ListCommentaireSerie.Add(com);
             MessageBox.Show("Commentaire enregistré !");

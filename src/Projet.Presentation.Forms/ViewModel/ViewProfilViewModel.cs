@@ -1,5 +1,6 @@
 ﻿using Projet.Entite.Class;
 using Projet.Presentation.Forms.Commands;
+using Projet.Presentation.Forms.Events;
 using Projet.Presentation.Forms.Extension;
 using Projet.Service.Fonctions;
 using System;
@@ -151,7 +152,7 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private void OnInfoSerie(object obj)
         {
-            
+            OpenInfoSerieEvent.GetInstance().OnOpenInfoSerieHandler(new SerieEventArgs() { Serie = SelectedSerie });
         }
 
         private bool CanExecuteInfoSerie(object obj)

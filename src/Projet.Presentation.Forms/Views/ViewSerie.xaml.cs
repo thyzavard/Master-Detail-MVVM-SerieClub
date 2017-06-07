@@ -26,7 +26,7 @@ namespace Projet.Presentation.Forms
         public ViewSerie()
         {
             InitializeComponent();
-            _vm = new ViewSerieViewModel();
+            _vm = new ViewSerieViewModel(new Entite.Class.Serie());
 
             DataContext = _vm;
         }

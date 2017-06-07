@@ -128,7 +128,7 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private void OnTest(object obj)
         {
-            SelectedViewModel = new ViewSerieViewModel();
+        //    SelectedViewModel = new ViewSerieViewModel();
         }
 
         private bool CanExecuteTest(object obj)
@@ -150,6 +150,18 @@ namespace Projet.Presentation.Forms.ViewModel
         {
             IsVisible = false;
             SelectedViewModel = new ViewProfilViewModel();
+            OpenInfoSerieEvent.GetInstance().Handler += OnOpenInfoSerie;
+        }
+
+        private void OnOpenInfoSerie(object sender, EventArgs e)
+        {
+            var args = e as SerieEventArgs;
+            if (args != null)
+            {
+                var serie = args.Serie;
+                SelectedViewModel = new ViewSerieViewModel(serie);
+                OpenInfoSerieEvent.GetInstance().Handler -= OnOpenInfoSerie;
+            }
         }
 
         private bool CanExecuteOuvrirProfil(object obj)

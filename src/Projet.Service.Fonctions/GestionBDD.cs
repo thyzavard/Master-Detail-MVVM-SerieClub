@@ -10,13 +10,14 @@ using System.Windows.Media.Imaging;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Configuration;
 
 namespace Projet.Service.Fonctions
 {
     public class GestionBDD
     {
         private static UserCourant _user = UserCourant.Instance();
-        private static SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=U:\1ère_année\C#\Projet_Git\serie-club\src\Persistance\SerieClub.mdf;Integrated Security=True");
+        private static SqlConnection con = new SqlConnection($@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={ConfigurationManager.AppSettings["BDDPAth"]};Integrated Security=True");
 
         #region Utilisateur
         public static Utilisateur remplirUser(String pseudo)

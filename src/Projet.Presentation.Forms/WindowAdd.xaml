@@ -19,7 +19,7 @@
                         <Label HorizontalAlignment="Center">Nom de la série</Label>
                         <TextBox Width="120" MaxLength="80" Text="{Binding NomSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                         <Label HorizontalAlignment="Center">Description</Label>
-                        <TextBox  Width="200" Height="50" MaxLength="500" Text="{Binding DescriptionSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" TextWrapping="Wrap"/>
+                        <TextBox  Width="200" Height="50" MaxLength="1000" Text="{Binding DescriptionSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" TextWrapping="Wrap"/>
                         <Label HorizontalAlignment="Center">Genre</Label>
                         <ComboBox Width="120" ItemsSource="{Binding GenreSource}" SelectedItem="{Binding SelectGenre, Mode=TwoWay}"/>
                         <Label HorizontalContentAlignment="Center">Nombre de saisons</Label>

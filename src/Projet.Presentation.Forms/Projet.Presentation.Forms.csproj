@@ -59,6 +59,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Events\OpenInfoSerieEvent.cs" />
+    <Compile Include="Events\SerieEventArgs.cs" />
     <Compile Include="Events\WindowClosedEvent.cs" />
     <Compile Include="Extension\ObservableExtension.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
