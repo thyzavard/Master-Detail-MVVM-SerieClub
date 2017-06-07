@@ -21,14 +21,14 @@ namespace Projet.Presentation.Forms
     /// </summary>
     public partial class ViewSerie : UserControl
     {
-        ViewSerieViewModel _vm;
+        //ViewSerieViewModel _vm;
 
         public ViewSerie()
         {
             InitializeComponent();
-            _vm = new ViewSerieViewModel(new Entite.Class.Serie());
+            //_vm = new ViewSerieViewModel();
 
-            DataContext = _vm;
+            //DataContext = _vm;
         }
     }
 }

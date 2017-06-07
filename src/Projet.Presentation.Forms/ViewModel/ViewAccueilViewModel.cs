@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Collections.ObjectModel;
+using Projet.Presentation.Forms.Events;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
@@ -130,13 +131,15 @@ namespace Projet.Presentation.Forms.ViewModel
 
         #region Command
         public RelayCommand AjouterSerieCommand { get; private set; }
-
+        public RelayCommand InfoSerieCommand { get; private set; }
 
         #endregion
 
         public ViewAccueilViewModel()
         {
             AjouterSerieCommand = new RelayCommand(OnAjouterSerie, CanExecuteAjouterSerie);
+            InfoSerieCommand = new RelayCommand(OnInfoSerie, CanExecuteInfoSerie);
+
             SelectedSerie = new Serie();
             ListserieAction = new List<Serie>();
             ListserieFantastique = new List<Serie>();
@@ -169,6 +172,16 @@ namespace Projet.Presentation.Forms.ViewModel
                     ListserieDrame.Add(_listSerie[i]);
                 }
             }
+        }
+
+        private void OnInfoSerie(object obj)
+        {
+            OpenInfoSerieEvent.GetInstance().OnOpenInfoSerieHandler(new SerieEventArgs() { Serie = SelectedSerie });
+        }
+
+        private bool CanExecuteInfoSerie(object obj)
+        {
+            return true;
         }
 
         private void OnAjouterSerie(object obj)

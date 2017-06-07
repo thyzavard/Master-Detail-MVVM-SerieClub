@@ -642,6 +642,24 @@ namespace Projet.Service.Fonctions
             command.ExecuteNonQuery();
             con.Close();
         }
+        public static void updateNote(string nomSerie, int note, string pseudo)
+        {
+            var command = new SqlCommand("Update NoteSerie set Note = '" + note + "' where NomUser='" + pseudo + "' and NomSerie='" + nomSerie + "'", con);
+            con.Open();
+            command.ExecuteNonQuery();
+            con.Close();
+        }
+        public static int returnNoteUserSerie(string nomSerie, string pseudo)
+        {
+            var command = new SqlCommand("Select Note from NoteSerie where NomUser='" + pseudo + "' and NomSerie='" + nomSerie + "'", con);
+            con.Open();
+            var reader = command.ExecuteReader();
+            reader.Read();
+            int note = reader.GetInt32(0);
+           
+            con.Close();
+            return note;
+        }
         public static void updateNoteSerie(string nomSerie)
         {
             var command = new SqlCommand("Select count(*) from NoteSerie where NomSerie='" + nomSerie + "'", con);

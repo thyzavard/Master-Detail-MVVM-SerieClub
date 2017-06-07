@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Projet.Presentation.Forms"
         mc:Ignorable="d"
-        Title="Personnaliser son profil" Height="380" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False">
+        Title="Personnaliser son profil" Height="380" Width="300" Icon="Images/logoSerieClub.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False">
     <Grid>
         <ScrollViewer>
             <StackPanel>

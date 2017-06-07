@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Projet.Presentation.Forms"
+             xmlns:viewmodel="clr-namespace:Projet.Presentation.Forms.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="569" d:DesignWidth="742" FontSize="16">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -17,10 +19,16 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-
+        
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="Bisque">
-            <TextBlock Text="{Binding NomSerie}" HorizontalAlignment="Center" Margin="0,40,0,0" FontSize="26"></TextBlock>
-            <TextBlock Text="{Binding NoteSerie}" HorizontalAlignment="Center" Margin="0,0,0,10"></TextBlock>
+            <Image Margin="10,10,0,0"  Height="50" Width="50" Source="C:\Users\Thomas\Desktop\C#\Projet_Tutore\serie-club\src\Projet.Presentation.Forms\Images\flecheretour.png" HorizontalAlignment="Left" Cursor="Hand">
+                <Image.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding RetourArriereCommand}"/>
+                </Image.InputBindings>
+            </Image>
+
+            <TextBlock Text="{Binding NomSerie}" HorizontalAlignment="Center"  FontSize="26"/>
+            <TextBlock Text="{Binding NoteSerie}" HorizontalAlignment="Center" Margin="0,0,0,10"/>
             <Button Width="200" Height="35" FontSize="16" Command="{Binding AjouterSerieCommand}" Content="{Binding AjoutOuSupprFav}"/>
         </StackPanel>
 

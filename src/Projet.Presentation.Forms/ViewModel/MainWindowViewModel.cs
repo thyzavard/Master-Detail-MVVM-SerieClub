@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel : BaseViewModel
     {
         #region private
         private string _password;
@@ -36,6 +36,7 @@ namespace Projet.Presentation.Forms.ViewModel
             set
             {
                 _identifiant = value;
+                NotifyPropertyChanged(nameof(Identifiant));
                 InscrireCommand.RaiseCanExecuteChanged();
             }
         }
@@ -50,6 +51,7 @@ namespace Projet.Presentation.Forms.ViewModel
             set
             {
                 _password = value;
+                NotifyPropertyChanged(nameof(Password));
                 ConnexionCommand.RaiseCanExecuteChanged();
             }
         }
@@ -94,7 +96,9 @@ namespace Projet.Presentation.Forms.ViewModel
                 UserCourant.Connect(user.pseudo, user.password, user.description, user.sexe, ddn, user.modo);
                 _wAcceuil = new WindowAcc();
                 _wAcceuil.Show();
-               // WindowClosedEvent.GetInstance().Handler += OnCloseWindowAcceuil;
+                Identifiant = null;
+                Password = null;
+                WindowAccClosedEvent.GetInstance().Handler += OnCloseWindowAcceuil;
             }
             else
             {
@@ -104,7 +108,7 @@ namespace Projet.Presentation.Forms.ViewModel
         private void OnCloseWindowAcceuil(object sender, EventArgs e)
         {
             _wAcceuil.Close();
-            WindowClosedEvent.GetInstance().Handler -= OnCloseWindowAcceuil;
+            WindowAccClosedEvent.GetInstance().Handler -= OnCloseWindowAcceuil;
         }
 
         private bool CanExecuteInscription(object obj)

@@ -35,8 +35,6 @@ namespace Projet.Presentation.Forms.ViewModel
         public RelayCommand OuvrirAcceuilCommand { get; private set; }
         public RelayCommand OuvrirProfilCommand { get; private set; }
         public RelayCommand QuitCommand { get; private set; }
-
-        public RelayCommand TestCommand { get; private set; }
         #endregion
 
         #region Public
@@ -110,11 +108,9 @@ namespace Projet.Presentation.Forms.ViewModel
             OuvrirProfilCommand = new RelayCommand(OnOuvrirProfil, CanExecuteOuvrirProfil);
             QuitCommand = new RelayCommand(OnQuit, CanExecuteQuit);
 
-            //******************
-            TestCommand = new RelayCommand(OnTest, CanExecuteTest);
-            //******************
-
             SelectedViewModel = new ViewAccueilViewModel();
+            OpenInfoSerieEvent.GetInstance().Handler += OnOpenInfoSerie;
+
             _user.Serieadd = GestionBDD.returnSerieUtilisateurFull(_user.Pseudo);
 
             //Chargement de la photo de profil
@@ -126,19 +122,11 @@ namespace Projet.Presentation.Forms.ViewModel
             Pseudo = _user.Pseudo;
         }
 
-        private void OnTest(object obj)
-        {
-        //    SelectedViewModel = new ViewSerieViewModel();
-        }
-
-        private bool CanExecuteTest(object obj)
-        {
-            return true;
-        }
+       
 
         private void OnQuit(object obj)
         {
-            WindowClosedEvent.GetInstance().OnWindowClosedHandler(EventArgs.Empty);
+            WindowAccClosedEvent.GetInstance().OnWindowAccClosedHandler(EventArgs.Empty);
         }
 
         private bool CanExecuteQuit(object obj)
@@ -161,7 +149,14 @@ namespace Projet.Presentation.Forms.ViewModel
                 var serie = args.Serie;
                 SelectedViewModel = new ViewSerieViewModel(serie);
                 OpenInfoSerieEvent.GetInstance().Handler -= OnOpenInfoSerie;
+                RetourWindowAccueilEvent.GetInstance().Handler += OnRetourAccueil;
             }
+        }
+        private void OnRetourAccueil(object sender, EventArgs e)
+        {
+            SelectedViewModel = new ViewAccueilViewModel();
+            RetourWindowAccueilEvent.GetInstance().Handler -= OnRetourAccueil;
+            OpenInfoSerieEvent.GetInstance().Handler += OnOpenInfoSerie;
         }
 
         private bool CanExecuteOuvrirProfil(object obj)
@@ -180,6 +175,7 @@ namespace Projet.Presentation.Forms.ViewModel
         {
             IsVisible = true;
             SelectedViewModel = new ViewAccueilViewModel();
+            OpenInfoSerieEvent.GetInstance().Handler += OnOpenInfoSerie;
         }
 
         private bool CanExecuteOuvrirAcceuil(object obj)

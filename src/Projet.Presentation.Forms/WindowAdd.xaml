@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Projet.Presentation.Forms"
         mc:Ignorable="d"
-        Title="Panneau de configuration" Height="510" Width="310" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Panneau de configuration" Height="510" Width="310" Icon="Images/logoSerieClub.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <TabControl>
             <TabItem Header="Ajouter">

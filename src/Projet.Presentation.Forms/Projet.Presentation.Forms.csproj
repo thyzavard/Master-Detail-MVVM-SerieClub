@@ -60,8 +60,10 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Events\OpenInfoSerieEvent.cs" />
+    <Compile Include="Events\RetourWindowAccueilEvent.cs" />
     <Compile Include="Events\SerieEventArgs.cs" />
     <Compile Include="Events\WindowClosedEvent.cs" />
+    <Compile Include="Events\WindowAccClosedEvent.cs" />
     <Compile Include="Extension\ObservableExtension.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewSerieViewModel.cs" />
@@ -170,6 +172,12 @@
       <Project>{4efb1e29-26bb-4af8-9ba2-4d4e8235edcd}</Project>
       <Name>Projet.Service.Fonctions</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\flecheretour.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\logoSerieClub.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,5 +1,6 @@
 ﻿using Projet.Entite.Class;
 using Projet.Presentation.Forms.Commands;
+using Projet.Presentation.Forms.Events;
 using Projet.Presentation.Forms.Extension;
 using Projet.Service.Fonctions;
 using System;
@@ -40,6 +41,7 @@ namespace Projet.Presentation.Forms.ViewModel
             set
             {
                 _noteSerie = value;
+                NotifyPropertyChanged(nameof(NoteSerie));
             }
         }
         public string NomSerie
@@ -51,6 +53,7 @@ namespace Projet.Presentation.Forms.ViewModel
             set
             {
                 _nomSerie = value;
+                NotifyPropertyChanged(nameof(NomSerie));
             }
         }
 
@@ -63,6 +66,7 @@ namespace Projet.Presentation.Forms.ViewModel
             set
             {
                 _descriptionSerie = value;
+                NotifyPropertyChanged(nameof(DescriptionSerie));
             }
         }
 
@@ -114,6 +118,7 @@ namespace Projet.Presentation.Forms.ViewModel
             set
             {
                 _nbSaison = value;
+                NotifyPropertyChanged(nameof(NbSaison));
             }
         }
         public string Producteur
@@ -125,6 +130,7 @@ namespace Projet.Presentation.Forms.ViewModel
             set
             {
                 _producteur = value;
+                NotifyPropertyChanged(nameof(Producteur));
             }
         }
         public string DureeMoyenne
@@ -136,6 +142,7 @@ namespace Projet.Presentation.Forms.ViewModel
             set
             {
                 _dureeMoyenne = value;
+                NotifyPropertyChanged(nameof(DureeMoyenne));
             }
         }
         public int Note
@@ -156,20 +163,8 @@ namespace Projet.Presentation.Forms.ViewModel
         public RelayCommand AjouterSerieCommand { get; private set; }
         public RelayCommand EnvoyerCommentaireCommand { get; private set; }
         public RelayCommand NoterSerieCommand { get; private set; }
+        public RelayCommand RetourArriereCommand { get; private set; }
         #endregion
-
-        public void test()
-        {
-           /* NomSerie = serie.nom;
-            NoteSerie = $"Note : {serie.note}";
-            DescriptionSerie = serie.description;
-            NbSaison = $"Nombre de saisons : {serie.nbSaison.ToString()}\n";
-            Producteur = $"Producteur : {serie.producteur}\n";
-            DureeMoyenne = $"Durée moyenne des épisodes : {serie.dureeMoy.ToString()} minutes\n";
-            */
-            
-            
-        }
 
         public ViewSerieViewModel(Serie serie)
         {
@@ -177,9 +172,12 @@ namespace Projet.Presentation.Forms.ViewModel
             AjouterSerieCommand = new RelayCommand(OnAjouterSerie, CanExecuteAjouterSerie);
             EnvoyerCommentaireCommand = new RelayCommand(OnEnvoyerCommentaire, CanExecuteEnvoyerCommentaire);
             NoterSerieCommand = new RelayCommand(OnNoterSerie, CanExecuteNoterSerie);
+            RetourArriereCommand = new RelayCommand(OnRetourArriere, CanExecuteRetourArriere);
 
+            if (!GestionBDD.checkSiDejaNoter(serieglobal.nom, _user.Pseudo)) { Note = GestionBDD.returnNoteUserSerie(serie.nom, _user.Pseudo); }
+            else { Note = 0; }
 
-            //***********
+                
             NomSerie = serie.nom;
             NoteSerie = $"Note : {serie.note}";
             DescriptionSerie = serie.description;
@@ -196,23 +194,34 @@ namespace Projet.Presentation.Forms.ViewModel
 
         }
 
+        private void OnRetourArriere(object obj)
+        {
+            RetourWindowAccueilEvent.GetInstance().OnRetourWindowAccueilHandler(EventArgs.Empty);
+        }
+
+        private bool CanExecuteRetourArriere(object obj)
+        {
+            return true;
+        }
+
         private void OnNoterSerie(object obj)
         {
-            GestionBDD.ajouterNoteSerie(serieglobal.nom, Note,_user.Pseudo);
-            GestionBDD.updateNoteSerie(serieglobal.nom);
-            NoterSerieCommand.RaiseCanExecuteChanged();
+            if (GestionBDD.checkSiDejaNoter(serieglobal.nom, _user.Pseudo))
+            {
+                GestionBDD.ajouterNoteSerie(serieglobal.nom, Note, _user.Pseudo);
+                GestionBDD.updateNoteSerie(serieglobal.nom);
+            }
+            else
+            {
+                GestionBDD.updateNote(serieglobal.nom, Note, _user.Pseudo);
+                GestionBDD.updateNoteSerie(serieglobal.nom);
+            }
+            
         }
 
         private bool CanExecuteNoterSerie(object obj)
         {
-            if (GestionBDD.checkSiDejaNoter(serieglobal.nom, _user.Pseudo))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return true;
         }
 
         private void OnAjouterSerie(object obj)
