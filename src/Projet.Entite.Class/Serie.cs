@@ -19,6 +19,7 @@ namespace Projet.Entite.Class
         public int dureeMoy { get; set; }
         public int nbSaison { get; set; }
         public BitmapImage ImageSerie { get; set; }
+        public int nbPersonVote { get; set; }
 
         public Serie(string nom, string description, Genre genre, int dureeMoy, string producteur, int nbSaison)
         {
@@ -36,6 +37,7 @@ namespace Projet.Entite.Class
 
         public Serie()
         {
+            commentaire = new List<Commentaire>();
         }
 
         public Serie(string nom)

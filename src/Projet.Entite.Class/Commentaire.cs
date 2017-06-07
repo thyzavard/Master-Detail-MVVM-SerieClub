@@ -18,5 +18,9 @@ namespace Projet.Entite.Class
             nomUtilisateur = nomUser;
             this.nomSerie = nomSerie;
         }
+
+        public Commentaire()
+        {
+        }
     }
 }

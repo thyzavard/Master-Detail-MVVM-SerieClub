@@ -4,6 +4,7 @@ using Projet.Presentation.Forms.Extension;
 using Projet.Service.Fonctions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,11 +21,11 @@ namespace Projet.Presentation.Forms.ViewModel
         private string _descriptionSerie;
         private string _commentaireSerie;
         private string _selectedSaison;
-        private List<Commentaire> _listCommentaireSerie;
         private string _ajoutOuSupprFav;
         private string _nbSaison;
         private string _producteur;
         private string _dureeMoyenne;
+        private int _note;
 
         private Serie serie = GestionBDD.remplirSerie("Action");
         #endregion
@@ -102,21 +103,9 @@ namespace Projet.Presentation.Forms.ViewModel
             }
         }
 
-        public List<Commentaire> ListCommentaireSerie
-        {
-            get
-            {
-                return _listCommentaireSerie;
-            }
+    public ObservableCollection<Commentaire> ListCommentaireSerie { get; set; }
 
-            set
-            {
-                _listCommentaireSerie = value;
-                EnvoyerCommentaireCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(ListCommentaireSerie));
-            }
-        }
-        public string NbSaison
+    public string NbSaison
         {
             get
             {
@@ -149,17 +138,28 @@ namespace Projet.Presentation.Forms.ViewModel
                 _dureeMoyenne = value;
             }
         }
+        public int Note
+        {
+            get
+            {
+                return _note;
+            }
+            set
+            {
+                _note = value;
+                NotifyPropertyChanged(nameof(Note));
+            }
+        }
         #endregion
 
         #region Command
-        public RelayCommand AjouterSerieCommand { get; set; }
-        public RelayCommand EnvoyerCommentaireCommand { get; set; }
+        public RelayCommand AjouterSerieCommand { get; private set; }
+        public RelayCommand EnvoyerCommentaireCommand { get; private set; }
+        public RelayCommand NoterSerieCommand { get; private set; }
         #endregion
 
         public void test()
         {
-
-            serie.commentaire = new List<Commentaire>();
             NomSerie = serie.nom;
             NoteSerie = $"Note : {serie.note}";
             DescriptionSerie = serie.description;
@@ -167,26 +167,64 @@ namespace Projet.Presentation.Forms.ViewModel
             Producteur = $"Producteur : {serie.producteur}\n";
             DureeMoyenne = $"Durée moyenne des épisodes : {serie.dureeMoy.ToString()} minutes\n";
 
-
-            ListCommentaireSerie = new List<Commentaire>();
-            ListCommentaireSerie.ToObservableCollection();
-            Commentaire c = new Commentaire("Super série !", "az","Action");
-            Commentaire c1 = new Commentaire("Superf lgngpdrgmgrgrfg série !", "az", "Action");
-            ListCommentaireSerie.Add(c);
-            ListCommentaireSerie.Add(c1);
+            
+            
         }
 
         public ViewSerieViewModel()
         {
             AjouterSerieCommand = new RelayCommand(OnAjouterSerie, CanExecuteAjouterSerie);
             EnvoyerCommentaireCommand = new RelayCommand(OnEnvoyerCommentaire, CanExecuteEnvoyerCommentaire);
+            NoterSerieCommand = new RelayCommand(OnNoterSerie, CanExecuteNoterSerie);
 
             test();
+
+            //Chargement des commentaires de la série
+            ListCommentaireSerie = serie.commentaire.ToObservableCollection();
 
             //Gestion bouton ajout ou supprimer
             if (GestionBDD.checkSiSerieAjouter(_user.Pseudo, serie.nom)) { AjoutOuSupprFav = "Ajouter au favoris"; }
             else { AjoutOuSupprFav = "Supprimer des favoris"; }
 
+        }
+
+        private void OnNoterSerie(object obj)
+        {
+            GestionBDD.ajouterNoteSerie(serie.nom, Note,_user.Pseudo);
+            GestionBDD.updateNoteSerie(serie.nom);
+            NoterSerieCommand.RaiseCanExecuteChanged();
+        }
+
+        private bool CanExecuteNoterSerie(object obj)
+        {
+            if (GestionBDD.checkSiDejaNoter(serie.nom, _user.Pseudo))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void OnPouceRouge(object obj)
+        {
+            
+        }
+
+        private bool CanExecutePouceRouge(object obj)
+        {
+            return true;
+        }
+
+        private void OnPouceVert(object obj)
+        {
+            MessageBox.Show("Pouce vert !");
+        }
+
+        private bool CanExecutePourceVert(object obj)
+        {
+            return true;
         }
 
         private void OnAjouterSerie(object obj)
@@ -218,6 +256,7 @@ namespace Projet.Presentation.Forms.ViewModel
             GestionBDD.ajouterCommentaireSerie(com);
             ListCommentaireSerie.Add(com);
             MessageBox.Show("Commentaire enregistré !");
+            CommentaireSerie = null;
         }
 
         private bool CanExecuteEnvoyerCommentaire(object obj)
