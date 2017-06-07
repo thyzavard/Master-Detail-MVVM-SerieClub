@@ -71,12 +71,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Serie-Club.mdf">
+    <Content Include="SerieClub.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Serie-Club_log.ldf">
+    <Content Include="SerieClub_log.ldf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>Serie-Club.mdf</DependentUpon>
+      <DependentUpon>SerieClub.mdf</DependentUpon>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

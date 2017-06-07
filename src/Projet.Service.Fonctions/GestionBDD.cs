@@ -16,7 +16,7 @@ namespace Projet.Service.Fonctions
     public class GestionBDD
     {
         private static UserCourant _user = UserCourant.Instance();
-        private static SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Thomas\Documents\SerieClubClf.mdf;Integrated Security=True;Connect Timeout=30");
+        private static SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=U:\1ère_année\C#\Projet_Git\serie-club\src\Persistance\SerieClub.mdf;Integrated Security=True");
 
         #region Utilisateur
         public static Utilisateur remplirUser(String pseudo)
