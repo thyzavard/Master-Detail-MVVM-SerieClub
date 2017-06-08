@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -66,22 +67,31 @@ namespace Projet.Service.Fonctions
             }
         }
 
-        public static void creerFichierImages()
+        public static bool creerFichierImages()
         {
+            bool retour = false;
             string pathUser = Path.Combine(Environment.CurrentDirectory, "Images");
             string pathSerie = Path.Combine(Environment.CurrentDirectory, "ImagesSerie");
+
+            
 
             if (!Directory.Exists(pathUser))
             {
                 Directory.CreateDirectory(pathUser);
-                File.Copy(@"Images\profil.jpg", Path.Combine(pathUser, "profil.jpg"));
-                File.Copy(@"Images\couverture.jpg", Path.Combine(pathUser, "couverture.jpg"));
+                File.Copy($@"{ConfigurationManager.AppSettings["ImagesPath"]}\profil.jpg", Path.Combine(pathUser, "profil.jpg"));
+                File.Copy($@"{ConfigurationManager.AppSettings["ImagesPath"]}\couverture.jpg" , Path.Combine(pathUser, "couverture.jpg"));
+                retour = true;
             }
+            else { retour = false; }
 
             if (!Directory.Exists(pathSerie))
             {
                 Directory.CreateDirectory(pathSerie);
+                retour = true;
             }
+            else { retour = false; }
+
+            return retour;
         }
     }
 }

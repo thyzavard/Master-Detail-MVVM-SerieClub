@@ -31,5 +31,6 @@ namespace Projet.Presentation.Forms
 
             DataContext = _vm;
         }
+        
     }
 }

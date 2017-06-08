@@ -139,8 +139,7 @@ namespace Projet.Presentation.Forms.ViewModel
         {
             AjouterSerieCommand = new RelayCommand(OnAjouterSerie, CanExecuteAjouterSerie);
             InfoSerieCommand = new RelayCommand(OnInfoSerie, CanExecuteInfoSerie);
-
-            SelectedSerie = new Serie();
+            
             ListserieAction = new List<Serie>();
             ListserieFantastique = new List<Serie>();
             ListserieHorreur = new List<Serie>();
@@ -176,7 +175,10 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private void OnInfoSerie(object obj)
         {
-            OpenInfoSerieEvent.GetInstance().OnOpenInfoSerieHandler(new SerieEventArgs() { Serie = SelectedSerie });
+            if(SelectedSerie != null)
+            {
+                OpenInfoSerieEvent.GetInstance().OnOpenInfoSerieHandler(new SerieEventArgs() { Serie = SelectedSerie });
+            }
         }
 
         private bool CanExecuteInfoSerie(object obj)
@@ -186,28 +188,22 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private void OnAjouterSerie(object obj)
         {
-            if (GestionBDD.checkSiSerieAjouter(_user_courant.Pseudo, SelectedSerie.nom))
+            if(SelectedSerie != null)
             {
-                _user_courant.Serieadd.Add(SelectedSerie);
-                GestionBDD.addSerieUtilisateur(_user_courant.Pseudo, SelectedSerie.nom);
+                if (GestionBDD.checkSiSerieAjouter(_user_courant.Pseudo, SelectedSerie.nom))
+                {
+                    _user_courant.Serieadd.Add(SelectedSerie);
+                    GestionBDD.addSerieUtilisateur(_user_courant.Pseudo, SelectedSerie.nom);
+                }
+                else
+                {
+                    MessageBox.Show("Série déjà ajoutée en favoris !", "Déjà ajouté !", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
-            else
-            {
-                MessageBox.Show("Série déjà ajoutée en favoris !", "Déjà ajouté !", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-
         }
 
         private bool CanExecuteAjouterSerie(object obj)
         {
-            /*if(GestionBDD.checkSiSerieAjouter(_user_courant.Pseudo, SelectedSerie.nom))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }*/
             return true;
         }
     }

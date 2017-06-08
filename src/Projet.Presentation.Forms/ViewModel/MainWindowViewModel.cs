@@ -4,10 +4,12 @@ using Projet.Presentation.Forms.Events;
 using Projet.Service.Fonctions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
@@ -53,9 +55,24 @@ namespace Projet.Presentation.Forms.ViewModel
                 _password = value;
                 NotifyPropertyChanged(nameof(Password));
                 ConnexionCommand.RaiseCanExecuteChanged();
+
+                //KeyPressEvent.GetInstance().Handler += OnKeyPressed;
+                //KeyPressEvent.GetInstance().OnOKeyPressHandler(new KeyEnter() { key = Key.Enter });
+                //penInfoSerieEvent.GetInstance().OnOpenInfoSerieHandler(new SerieEventArgs() { Serie = SelectedSerie });
             }
         }
+
+        /*private void OnKeyPressed(object sender, EventArgs e)
+        {
+            var args = e as KeyEventArgs;
+            if (args.Key == Key.Enter)
+            {
+                MessageBox.Show("ENTER !");
+            }
+        }*/
         #endregion
+
+
 
         public MainWindowViewModel()
         {
@@ -63,12 +80,21 @@ namespace Projet.Presentation.Forms.ViewModel
             ConnexionCommand = new RelayCommand(OnLogin, CanExecuteLogin);
             QuitCommand = new RelayCommand(OnQuit, CanExecuteQuit);
 
-            //Trie des photos non utilisé par les utilisateurs et séries
-            GestionFichierImage.triImageUser();
-            GestionFichierImage.triImageSerie();
 
-            GestionFichierImage.creerFichierImages();
+            //Trie des photos non utilisé par les utilisateurs et séries
+            string pathUser = Path.Combine(Environment.CurrentDirectory, "Images");
+            string pathSerie = Path.Combine(Environment.CurrentDirectory, "ImagesSerie");
+
+            if (!GestionFichierImage.creerFichierImages())
+            {
+                GestionFichierImage.triImageUser();
+                GestionFichierImage.triImageSerie();
+            }
+
+
+
         }
+        
 
         private void OnQuit(object obj)
         {
@@ -118,9 +144,10 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private void OnInscription(object obj)
         {
-            _wInscription = new WindowInscription();
-            _wInscription.Show();
             WindowClosedEvent.GetInstance().Handler += OnCloseWInscription;
+            _wInscription = new WindowInscription();
+            _wInscription.ShowDialog();
+            
         }
         private void OnCloseWInscription(object sender, EventArgs e)
         {

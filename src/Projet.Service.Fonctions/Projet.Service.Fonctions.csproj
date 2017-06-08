@@ -62,10 +62,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\profil.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\couverture.jpg" />
+    <Content Include="Images\couverture.jpg" />
+    <Content Include="Images\profil.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

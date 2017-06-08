@@ -152,7 +152,10 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private void OnInfoSerie(object obj)
         {
-            OpenInfoSerieEvent.GetInstance().OnOpenInfoSerieHandler(new SerieEventArgs() { Serie = SelectedSerie });
+            if(SelectedSerie != null)
+            {
+                OpenInfoSerieEvent.GetInstance().OnOpenInfoSerieHandler(new SerieEventArgs() { Serie = SelectedSerie });
+            }
         }
 
         private bool CanExecuteInfoSerie(object obj)

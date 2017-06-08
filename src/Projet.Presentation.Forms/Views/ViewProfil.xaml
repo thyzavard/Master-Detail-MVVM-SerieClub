@@ -28,16 +28,19 @@
 
                 <Image Width="150" Height="150" Margin="80,0,20,0" Source="{Binding ImageUserCourant}"/>
             <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="{Binding CurrentPseudo}" FontSize="25"></TextBlock>
+                <TextBlock Text="{Binding CurrentPseudo}" FontSize="30" FontWeight="UltraBlack"></TextBlock>
                 <TextBlock Text="{Binding CurrentDescription}"></TextBlock>
             </StackPanel>
         </StackPanel>
 
-        <TextBlock Text="{Binding TitreEnFonctionDuNbDeSerie}" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center"></TextBlock>
+        <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Background="#5d5f6a">
+            <TextBlock Text="{Binding TitreEnFonctionDuNbDeSerie}" HorizontalAlignment="Center"></TextBlock>
+        </StackPanel>
+        
 
 
         <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto">
-            <ListBox ItemsSource="{Binding SerieUtilisateur, Mode=TwoWay}" SelectedItem="{Binding SelectedSerie}">
+            <ListBox ItemsSource="{Binding SerieUtilisateur, Mode=TwoWay}" SelectedItem="{Binding SelectedSerie}" Background="#b1b0b8">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="3"></UniformGrid>

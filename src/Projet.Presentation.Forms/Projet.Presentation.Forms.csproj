@@ -174,10 +174,27 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\flecheretour.png" />
+    <Resource Include="Images\flecheretour.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\logoSerieClub.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\logoSerieClub.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\administrateur.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\quit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\profil.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\couverture.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

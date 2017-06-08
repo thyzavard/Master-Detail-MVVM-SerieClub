@@ -192,10 +192,9 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private void OnAdministration(object obj)
         {
-            _wAdd = new WindowAdd();
-            _wAdd.Show();
             WindowClosedEvent.GetInstance().Handler += OnCloseWindowAdd;
-            
+            _wAdd = new WindowAdd();
+            _wAdd.ShowDialog();
         }
         private void OnCloseWindowAdd(object sender, EventArgs e)
         {
@@ -210,10 +209,9 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private void OnPersoProfil(object obj)
         {
-            _wPersoProfil = new WindowPersoProfil();
-            _wPersoProfil.Show();
             WindowClosedEvent.GetInstance().Handler += OnCloseWindowPersoProfil;
-            
+            _wPersoProfil = new WindowPersoProfil();
+            _wPersoProfil.ShowDialog();
         }
         private void OnCloseWindowPersoProfil(object sender, EventArgs e)
         {

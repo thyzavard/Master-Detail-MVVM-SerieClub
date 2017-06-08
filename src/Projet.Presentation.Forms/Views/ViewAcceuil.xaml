@@ -27,8 +27,8 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Grid.ColumnSpan="3" Background="Wheat">Action</Label>
-            <ListBox Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding ListserieAction}" SelectedItem="{Binding SelectedSerie}" Background="Cornsilk">
+            <Label Grid.Row="0" Grid.ColumnSpan="3" Background="#dd403c">Action</Label>
+            <ListBox Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding ListserieAction}" SelectedItem="{Binding SelectedSerie}" Background="#b1b0b8">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
@@ -56,8 +56,8 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <Label Grid.Row="2" Grid.ColumnSpan="3" Background="Beige">Horreur</Label>
-            <ListBox Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding ListserieHorreur}" SelectedItem="{Binding SelectedSerie}" Background="Cornsilk">
+            <Label Grid.Row="2" Grid.ColumnSpan="3" Background="#dd403c">Horreur</Label>
+            <ListBox Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding ListserieHorreur}" SelectedItem="{Binding SelectedSerie}" Background="#b1b0b8">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
@@ -85,8 +85,8 @@
             </ListBox>
 
 
-            <Label Grid.Row="4" Grid.ColumnSpan="3" Background="Beige">Fantastique</Label>
-            <ListBox Grid.Row="5" Grid.ColumnSpan="3" ItemsSource="{Binding ListserieFantastique}" SelectedItem="{Binding SelectedSerie}" Background="Cornsilk">
+            <Label Grid.Row="4" Grid.ColumnSpan="3" Background="#dd403c">Fantastique</Label>
+            <ListBox Grid.Row="5" Grid.ColumnSpan="3" ItemsSource="{Binding ListserieFantastique}" SelectedItem="{Binding SelectedSerie}" Background="#b1b0b8">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
@@ -114,8 +114,8 @@
             </ListBox>
 
 
-            <Label Grid.Row="6" Grid.ColumnSpan="3" Background="Beige">Comédie</Label>
-            <ListBox Grid.Row="7" Grid.ColumnSpan="3" ItemsSource="{Binding ListserieComedie}" SelectedItem="{Binding SelectedSerie}" Background="Cornsilk">
+            <Label Grid.Row="6" Grid.ColumnSpan="3" Background="#dd403c">Comédie</Label>
+            <ListBox Grid.Row="7" Grid.ColumnSpan="3" ItemsSource="{Binding ListserieComedie}" SelectedItem="{Binding SelectedSerie}" Background="#b1b0b8">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
@@ -142,8 +142,8 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <Label Grid.Row="8" Grid.ColumnSpan="3" Background="Beige">Drame</Label>
-            <ListBox Grid.Row="9" Grid.ColumnSpan="3" ItemsSource="{Binding ListserieDrame}" SelectedItem="{Binding SelectedSerie}" Background="Cornsilk">
+            <Label Grid.Row="8" Grid.ColumnSpan="3" Background="#dd403c">Drame</Label>
+            <ListBox Grid.Row="9" Grid.ColumnSpan="3" ItemsSource="{Binding ListserieDrame}" SelectedItem="{Binding SelectedSerie}" Background="#b1b0b8">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>

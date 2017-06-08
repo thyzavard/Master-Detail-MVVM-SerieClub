@@ -236,7 +236,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 _user.Serieadd.Remove(serieglobal);
                 GestionBDD.removeSerieUtilisateur(_user.Pseudo, serieglobal.nom);
-                MessageBox.Show("Serie suppr");
+                MessageBox.Show("Série enlevée des favoris !", "", MessageBoxButton.OK, MessageBoxImage.Information);
                 AjoutOuSupprFav = "Ajouter au favoris";
             }
         }
