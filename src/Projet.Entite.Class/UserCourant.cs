@@ -15,7 +15,6 @@ namespace Projet.Entite.Class
         private static readonly object myLock = new object();
 
         public string Pseudo { get; set; }
-        public string Password { get; set; }
         public string Description { get; set; }
         public String Sexe { get; set; }
         public DateTime DateDeNaissance { get; set; }
@@ -24,24 +23,25 @@ namespace Projet.Entite.Class
         public BitmapImage image { get; set; }
         public BitmapImage couverture { get; set; }
 
-        public static void Connect(string pseudo, string mdp, string desc, string sexe, DateTime ddn, bool modo)
+        public static void Connect(string pseudo, string desc, string sexe, DateTime ddn, bool modo, BitmapImage profil, BitmapImage couverture)
         {
             lock (myLock)
             {
                 if (instance != null) throw new InvalidOperationException();
-                instance = new UserCourant(pseudo, mdp, desc, sexe, ddn, modo);
+                instance = new UserCourant(pseudo, desc, sexe, ddn, modo, profil, couverture);
             }
         }
 
-        private UserCourant(string pseudo, string mdp, string desc, string sexe, DateTime ddn, bool modo)
+        private UserCourant(string pseudo, string desc, string sexe, DateTime ddn, bool modo, BitmapImage profil, BitmapImage couverture)
         {
             Pseudo = pseudo;
-            Password = mdp;
             Description = desc;
             Sexe = sexe;
             DateDeNaissance = ddn;
             Modo = modo;
             Serieadd = new List<Serie>();
+            image = profil;
+            this.couverture = couverture;
         }
 
         public static UserCourant Instance()

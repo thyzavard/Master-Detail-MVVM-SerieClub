@@ -40,7 +40,11 @@
 
         <DockPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" Background="#5d5f6a">
             <StackPanel VerticalAlignment="Center" >
-                <Image Height="50" Width="50" Source="Images/logoSerieClub.png"></Image>
+                <Image Height="50" Width="50" Source="Images/logoSerieClub.png" Cursor="Hand">
+                    <Image.InputBindings>
+                        <MouseBinding Gesture="LeftClick" Command="{Binding OuvrirAcceuilCommand}"/>
+                    </Image.InputBindings>
+                </Image>
                 <Button Margin="20" Command="{Binding AdministrationCommand}" Visibility="{Binding IsVisibleAdmin, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
@@ -51,6 +55,11 @@
                 </Button>
 
                 <TextBox Visibility="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding Recherche, UpdateSourceTrigger=PropertyChanged}" Margin="30,0,30,50">
+
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding RechercherCommand}" Key="Enter"/>
+                    </TextBox.InputBindings>
+
                     <TextBox.Style>
                         <Style TargetType="TextBox">
                             <Style.Resources>

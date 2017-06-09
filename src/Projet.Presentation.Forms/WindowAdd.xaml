@@ -16,6 +16,11 @@
                             <Image Height="100" Width="75" Source="{Binding SourceImage, Mode=TwoWay}"></Image>
                             <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageAddCommand}">Parcourir...</Button>
                         </StackPanel>
+                        <Label HorizontalAlignment="Center">Bannière de la série</Label>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Image Height="75" Width="120" Source="{Binding SourceImageBanniere, Mode=TwoWay}"></Image>
+                            <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageBanniereAddCommand}">Parcourir...</Button>
+                        </StackPanel>
                         <Label HorizontalAlignment="Center">Nom de la série</Label>
                         <TextBox Width="120" MaxLength="80" Text="{Binding NomSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                         <Label HorizontalAlignment="Center">Description</Label>
@@ -51,6 +56,11 @@
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Image Height="100" Width="75" Source="{Binding SourceImageModif, Mode=TwoWay}"></Image>
                             <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageUpdateCommand}">Parcourir...</Button>
+                        </StackPanel>
+                        <Label HorizontalAlignment="Center">Bannière de la série</Label>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Image Height="75" Width="120" Source="{Binding SourceImageModifBanniere, Mode=TwoWay}"></Image>
+                            <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageBanniereUpdateCommand}">Parcourir...</Button>
                         </StackPanel>
                         <Label HorizontalAlignment="Center">Description</Label>
                         <TextBox Width="200" Height="50" MaxLength="1000" Text="{Binding Descriptionseriemodif, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"/>

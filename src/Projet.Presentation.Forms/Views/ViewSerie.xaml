@@ -11,6 +11,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
+            <RowDefinition Height="0.1*"/>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -20,19 +21,28 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         
-        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="Bisque">
-            <Image Margin="10,10,0,0"  Height="50" Width="50" Source="C:\Users\Thomas\Desktop\C#\Projet_Tutore\serie-club\src\Projet.Presentation.Forms\Images\flecheretour.png" HorizontalAlignment="Left" Cursor="Hand">
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            
+            <StackPanel.Background>
+                <ImageBrush ImageSource="{Binding SourceImageCouverture}" Stretch="UniformToFill" Opacity="0.9"></ImageBrush>
+            </StackPanel.Background>
+
+            <Image Margin="10,10,0,0"  Height="50" Width="50" Source="/Images/flecheretour.png" HorizontalAlignment="Left" Cursor="Hand">
                 <Image.InputBindings>
                     <MouseBinding Gesture="LeftClick" Command="{Binding RetourArriereCommand}"/>
                 </Image.InputBindings>
             </Image>
 
-            <TextBlock Text="{Binding NomSerie}" HorizontalAlignment="Center"  FontSize="26"/>
-            <TextBlock Text="{Binding NoteSerie}" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-            <Button Width="200" Height="35" FontSize="16" Command="{Binding AjouterSerieCommand}" Content="{Binding AjoutOuSupprFav}"/>
+            <TextBlock Text="{Binding NomSerie}" HorizontalAlignment="Center"  FontSize="26" Foreground="#dd403c">
+                
+            </TextBlock>
+            <TextBlock Text="{Binding NoteSerie}" HorizontalAlignment="Center" Margin="0,0,0,10" Foreground="#dd403c"/>
+            <Button Width="200" Height="35" FontSize="16" Command="{Binding AjouterSerieCommand}" Content="{Binding AjoutOuSupprFav}" Foreground="#dd403c"/>
         </StackPanel>
 
-        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2" VerticalScrollBarVisibility="Auto">
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Background="#dd403c"/>
+
+        <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2" VerticalScrollBarVisibility="Auto" Background="#b1b0b8">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -49,7 +59,7 @@
 
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Height="250">
                     <StackPanel>
-                        <Label HorizontalAlignment="Center" FontWeight="UltraBlack">DESCRIPTION</Label>
+                        <TextBlock TextDecorations="Underline" HorizontalAlignment="Center" FontWeight="UltraBlack">DESCRIPTION</TextBlock>
                         <TextBlock Text="{Binding DescriptionSerie}" HorizontalAlignment="Center" Width="210" FontSize="12" TextWrapping="Wrap" TextAlignment="Justify"/>
                     </StackPanel>
                 </ScrollViewer>
@@ -58,28 +68,51 @@
 
                 <StackPanel  Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Center">
 
-                    <TextBlock Text="{Binding NbSaison}" HorizontalAlignment="Center"/>
-                    <TextBlock Text="{Binding Producteur}" HorizontalAlignment="Center"/>
-                    <TextBlock Text="{Binding DureeMoyenne}" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Nombres de saisons : " TextDecorations="Underline"/>
+                        <TextBlock Text="{Binding NbSaison}" FontWeight="Bold" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Producteur : " TextDecorations="Underline"/>
+                        <TextBlock Text="{Binding Producteur}" FontWeight="Bold"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Durée moyenne des épisodes : " TextDecorations="Underline"/>
+                        <TextBlock Text="{Binding DureeMoyenne}" FontWeight="Bold"/>
+                    </StackPanel>
+                    <TextBlock Text="minutes" HorizontalAlignment="Center"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                     
-                    <TextBlock Text="{Binding Note}" HorizontalAlignment="Center"/>
-                    <Slider Maximum="10" Width="150" Value="{Binding Note, Mode=TwoWay}"/>
+                    <!--<TextBlock Text="{Binding Note}" HorizontalAlignment="Center"/>-->
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source1}"/>
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source2}"/>
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source3}"/>
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source4}"/>
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source5}"/>
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source6}"/>
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source7}"/>
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source8}"/>
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source9}"/>
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source10}"/>
+                    </StackPanel>
+
+                    <Slider Maximum="10" Width="160" Value="{Binding Note, Mode=TwoWay}" ToolTip="Il faut avoir la série en favoris afin de pouvoir voter."/>
                     <Button Width="120" Margin="0,10,0,0" Content="Noter" Command="{Binding NoterSerieCommand}"/>
 
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center">
-                    <TextBox Margin="0,25,0,0" Width="400" Height="50" Text="{Binding CommentaireSerie, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap">
+                    <TextBox Margin="0,25,0,0" Width="400" Height="50" Text="{Binding CommentaireSerie, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" ToolTip="Il faut avoir la série en favoris afin de pouvoir donner son avis sur celle-ci.">
                         <TextBox.Style>
                             <Style TargetType="TextBox">
                                 <Style.Resources>
                                     <VisualBrush x:Key="FaintSearch" AlignmentX="Left" AlignmentY="Center" Stretch="None">
                                         <VisualBrush.Visual>
-                                            <Label Content="Entrer votre commentaire ici..." Foreground="LightGray"  />
+                                            <Label Content="Entrer votre commentaire ici..." Foreground="#dd403c"/>
                                         </VisualBrush.Visual>
                                     </VisualBrush>
                                 </Style.Resources>
@@ -98,7 +131,7 @@
                 </StackPanel>
 
 
-                <Label FontWeight="UltraBlack" Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0,20,0,0">COMMENTAIRE</Label>
+                <TextBlock FontWeight="UltraBlack" Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0,20,0,0" Text="{Binding Entetecommentaire}" TextDecorations="Underline"></TextBlock>
 
                 <ListView Grid.Row="4" Grid.ColumnSpan="3" Background="Transparent" BorderBrush="Transparent" ItemsSource="{Binding ListCommentaireSerie}" HorizontalAlignment="Center">
                     <ListView.ItemsPanel>

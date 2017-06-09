@@ -73,7 +73,7 @@ namespace Projet.Presentation.Forms.ViewModel
         #endregion
 
 
-
+       
         public MainWindowViewModel()
         {
             InscrireCommand = new RelayCommand(OnInscription, CanExecuteInscription);
@@ -81,21 +81,16 @@ namespace Projet.Presentation.Forms.ViewModel
             QuitCommand = new RelayCommand(OnQuit, CanExecuteQuit);
 
 
-            //Trie des photos non utilisé par les utilisateurs et séries
-            string pathUser = Path.Combine(Environment.CurrentDirectory, "Images");
-            string pathSerie = Path.Combine(Environment.CurrentDirectory, "ImagesSerie");
-
+            //Si les dossiers "Images" et "ImagesSerie" n'existent pas, ils sont créer et rempli avec les images de base
             if (!GestionFichierImage.creerFichierImages())
             {
                 GestionFichierImage.triImageUser();
                 GestionFichierImage.triImageSerie();
             }
-
-
+            
 
         }
         
-
         private void OnQuit(object obj)
         {
             Application.Current.Shutdown();
@@ -112,19 +107,21 @@ namespace Projet.Presentation.Forms.ViewModel
             //return Identifiant?.Length > 5;
         }
 
+        /// <summary>
+        /// Vérifie les identifiants rentrés par l'utilisateur, si ils sont correct, la classe UserCourant est instancié et le fenêtre WindowAcc est ouverte
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnLogin(object obj)
         {
             if(GestionBDD.verifLoginMdp(Identifiant, Password))
             {
-                Utilisateur user = GestionBDD.remplirUser(Identifiant);
-                UserCourant.SetNull();
-                DateTime ddn = Convert.ToDateTime(user.dateDeNaissance);
-                UserCourant.Connect(user.pseudo, user.password, user.description, user.sexe, ddn, user.modo);
+                WindowAccClosedEvent.GetInstance().Handler += OnCloseWindowAcceuil;
+                GestionBDD.remplirUserCourant(Identifiant);
+
                 _wAcceuil = new WindowAcc();
-                _wAcceuil.Show();
                 Identifiant = null;
                 Password = null;
-                WindowAccClosedEvent.GetInstance().Handler += OnCloseWindowAcceuil;
+                _wAcceuil.ShowDialog();
             }
             else
             {
@@ -142,6 +139,10 @@ namespace Projet.Presentation.Forms.ViewModel
             return true;
         }
 
+        /// <summary>
+        /// Ouvre la fenêtre d'inscription, tout en s'abonnant à l'événement pour sa fermeture
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnInscription(object obj)
         {
             WindowClosedEvent.GetInstance().Handler += OnCloseWInscription;

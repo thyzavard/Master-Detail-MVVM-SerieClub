@@ -39,6 +39,8 @@ namespace Projet.Presentation.Forms.ViewModel
         private string _selectpseudo;
         private OpenFileDialog _openFile = new OpenFileDialog();
         private OpenFileDialog _openFileModif = new OpenFileDialog();
+        private OpenFileDialog _openFileBanniere = new OpenFileDialog();
+        private OpenFileDialog _openFileBanniereModif = new OpenFileDialog();
         private BitmapImage _imageSerieCourante;
         private BitmapImage _imageSerieModif;
         private Serie _seriemodif;
@@ -47,8 +49,12 @@ namespace Projet.Presentation.Forms.ViewModel
         private string _path;
         private string _fileName;
         private string _fileNameModif;
+        private string _fileNameBanniere;
+        private string _fileNameBanniereModif;
         private string _sourceImageModif;
+        private string _sourceImageModifBanniere;
         private string _sourceImage;
+        private string _sourceImageBanniere;
         private bool _verif = false;
 
         #endregion
@@ -62,6 +68,8 @@ namespace Projet.Presentation.Forms.ViewModel
         public RelayCommand ParcourirImageAddCommand { get; private set; }
         public RelayCommand ParcourirImageUpdateCommand { get; private set; }
         public RelayCommand QuitCommand { get; private set; }
+        public RelayCommand ParcourirImageBanniereAddCommand { get; private set; }
+        public RelayCommand ParcourirImageBanniereUpdateCommand { get; private set; }
         #endregion
 
         #region Public
@@ -340,6 +348,29 @@ namespace Projet.Presentation.Forms.ViewModel
                 NotifyPropertyChanged(nameof(NbSaisonModif));
             }
         }
+
+        public string SourceImageBanniere
+        {
+            get { return _sourceImageBanniere; }
+            set
+            {
+                _sourceImageBanniere = value;
+                AjouterSerieCommand.RaiseCanExecuteChanged();
+                ParcourirImageBanniereAddCommand.RaiseCanExecuteChanged();
+                NotifyPropertyChanged(nameof(SourceImageBanniere));
+            }
+        }
+        public string SourceImageModifBanniere
+        {
+            get { return _sourceImageModifBanniere; }
+            set
+            {
+                _sourceImageModifBanniere = value;
+                AjouterSerieCommand.RaiseCanExecuteChanged();
+                ParcourirImageBanniereUpdateCommand.RaiseCanExecuteChanged();
+                NotifyPropertyChanged(nameof(SourceImageModifBanniere));
+            }
+        }
         #endregion
 
         public WindowAddViewModel()
@@ -364,7 +395,47 @@ namespace Projet.Presentation.Forms.ViewModel
             upAdminCommand = new RelayCommand(OnUpAdmin, CanexecuteUpAdmin);
             ParcourirImageAddCommand = new RelayCommand(OnParcourirImageAdd, CanExecuteParcourirImageAdd);
             ParcourirImageUpdateCommand = new RelayCommand(OnParcourirImageUpdate, CanExecuteParcourirImageUpdate);
+            ParcourirImageBanniereAddCommand = new RelayCommand(OnParcourirImageBanniereAdd, CanExecuteParcourirImageBanniereAdd);
+            ParcourirImageBanniereUpdateCommand = new RelayCommand(OnParcourirImageBanniereUpdate, CanExecuteParcourirImageBanniereUpdate);
             QuitCommand = new RelayCommand(OnQuit, CanExecuteQuit);
+        }
+
+        private void OnParcourirImageBanniereUpdate(object obj)
+        {
+            _openFileBanniereModif.Title = "Selectionner une image";
+            _openFileBanniereModif.DefaultExt = "jpg";
+            _openFileBanniereModif.Filter = " Fichier JPG (*.jpg)|*.jpg";
+            if (_openFileBanniereModif.ShowDialog() == true)
+            {
+                //ImageSerieCourante = new BitmapImage(new Uri(_openFile.FileName));
+                _fileNameBanniereModif = Path.GetFileName(_openFileBanniereModif.FileName);
+                //Aperçu de l'image
+                SourceImageModifBanniere = Path.GetFullPath(_openFileBanniereModif.FileName);
+            }
+        }
+
+        private bool CanExecuteParcourirImageBanniereUpdate(object obj)
+        {
+            return true;
+        }
+
+        private void OnParcourirImageBanniereAdd(object obj)
+        {
+            _openFileBanniere.Title = "Selectionner une image";
+            _openFileBanniere.DefaultExt = "jpg";
+            _openFileBanniere.Filter = " Fichier JPG (*.jpg)|*.jpg";
+            if (_openFileBanniere.ShowDialog() == true)
+            {
+                //ImageSerieCourante = new BitmapImage(new Uri(_openFile.FileName));
+                _fileNameBanniere = Path.GetFileName(_openFileBanniere.FileName);
+                //Aperçu de l'image
+                SourceImageBanniere = Path.GetFullPath(_openFileBanniere.FileName);
+            }
+        }
+
+        private bool CanExecuteParcourirImageBanniereAdd(object obj)
+        {
+            return true;
         }
 
         //Fonctions utilitaires
@@ -391,6 +462,7 @@ namespace Projet.Presentation.Forms.ViewModel
             Producteurseriemodif = null;
             NbSaisonModif = null;
             Dureemoyenneseriemodif = null;
+            SourceImageModifBanniere = null;
         }
         public void remplirSerieModif()
         {
@@ -401,6 +473,7 @@ namespace Projet.Presentation.Forms.ViewModel
             Selectgenremodif = _seriemodif.genre.ToString();
             NbSaisonModif = _seriemodif.nbSaison.ToString();
             SourceImageModif = _seriemodif.ImageSerie.ToString();
+            SourceImageModifBanniere = _seriemodif.Banniereserie.ToString();
         }
 
         //Fonctions Commandes
@@ -562,7 +635,8 @@ namespace Projet.Presentation.Forms.ViewModel
                             else
                             {
                                 File.Copy(_openFileModif.FileName, Path.Combine(_path, _fileNameModif));
-                                GestionBDD.updateSerie(SelectSerie, Descriptionseriemodif, int.Parse(Dureemoyenneseriemodif), Producteurseriemodif, Selectgenremodif, _fileNameModif, int.Parse(NbSaisonModif));
+                                File.Copy(_openFileBanniereModif.FileName, Path.Combine(_path, _fileNameBanniereModif));
+                                GestionBDD.updateSerie(SelectSerie, Descriptionseriemodif, int.Parse(Dureemoyenneseriemodif), Producteurseriemodif, Selectgenremodif, _fileNameModif, int.Parse(NbSaisonModif), _fileNameBanniereModif);
                                 MessageBox.Show("Modification enrgistrée");
                                 setChampModifNull();
                             }
@@ -621,7 +695,8 @@ namespace Projet.Presentation.Forms.ViewModel
                             else
                             {
                                 File.Copy(_openFile.FileName, Path.Combine(_path, _fileName));
-                                GestionBDD.ajouter_Serie(NomSerie, DescriptionSerie, SelectGenre, ProducteurSerie, int.Parse(DureeMoyenneSerie), int.Parse(NbSaison), _fileName);
+                                File.Copy(_openFileBanniere.FileName, Path.Combine(_path, _fileNameBanniere));
+                                GestionBDD.ajouter_Serie(NomSerie, DescriptionSerie, SelectGenre, ProducteurSerie, int.Parse(DureeMoyenneSerie), int.Parse(NbSaison), _fileName, _fileNameBanniere);
                                 Listserie.Add(NomSerie);
                                 chargerListSerie();
                                 MessageBox.Show("Ajout enregistrée", "Confirmation", MessageBoxButton.OK);
@@ -630,7 +705,7 @@ namespace Projet.Presentation.Forms.ViewModel
                         }
                         else
                         {
-                            GestionBDD.ajouter_Serie(NomSerie, DescriptionSerie, SelectGenre, ProducteurSerie, int.Parse(DureeMoyenneSerie), int.Parse(NbSaison), _fileName);
+                            GestionBDD.ajouter_Serie(NomSerie, DescriptionSerie, SelectGenre, ProducteurSerie, int.Parse(DureeMoyenneSerie), int.Parse(NbSaison), _fileName, _fileNameBanniere);
                             Listserie.Add(NomSerie);
                             chargerListSerie();
                             MessageBox.Show("Ajout enregistrée", "Confirmation", MessageBoxButton.OK);

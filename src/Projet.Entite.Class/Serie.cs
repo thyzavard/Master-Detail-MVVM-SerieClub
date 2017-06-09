@@ -12,13 +12,13 @@ namespace Projet.Entite.Class
         public string nom { get; set; }
         public string description { get; set; }
         public Genre genre { get; set; }
-        public Dictionary<int, List<Episode>> saison { get; set; }
         public float note { get; set; }
         public List<Commentaire> commentaire { get; set; }
         public string producteur { get; set; }
         public int dureeMoy { get; set; }
         public int nbSaison { get; set; }
         public BitmapImage ImageSerie { get; set; }
+        public BitmapImage Banniereserie { get; set; }
         public int nbPersonVote { get; set; }
 
         public Serie(string nom, string description, Genre genre, int dureeMoy, string producteur, int nbSaison)
@@ -31,8 +31,6 @@ namespace Projet.Entite.Class
             this.producteur = producteur;
             this.nbSaison = nbSaison;
             commentaire = new List<Commentaire>();
-
-            saison = new Dictionary<int, List<Episode>>();
         }
 
         public Serie()

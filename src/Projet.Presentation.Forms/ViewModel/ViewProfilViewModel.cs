@@ -123,6 +123,7 @@ namespace Projet.Presentation.Forms.ViewModel
         public RelayCommand EnleverSerieCommand { get; private set; }
         #endregion
 
+        
         public ViewProfilViewModel()
         {
             EnleverSerieCommand = new RelayCommand(OnEnleverSerie, CanExecuteEnleverSerie);
@@ -150,6 +151,10 @@ namespace Projet.Presentation.Forms.ViewModel
             else { TitreEnFonctionDuNbDeSerie = "Mes séries préférées"; }
         }
 
+        /// <summary>
+        /// Affiche le UserControl qui affiche les informations d'une série
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnInfoSerie(object obj)
         {
             if(SelectedSerie != null)
@@ -163,6 +168,10 @@ namespace Projet.Presentation.Forms.ViewModel
             return true;
         }
 
+        /// <summary>
+        /// Retire une série des favoris d'un utilisateur
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnEnleverSerie(object obj)
         {
             if (SelectedSerie != null)

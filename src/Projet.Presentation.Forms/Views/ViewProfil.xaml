@@ -33,7 +33,7 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Background="#5d5f6a">
+        <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Background="#dd403c">
             <TextBlock Text="{Binding TitreEnFonctionDuNbDeSerie}" HorizontalAlignment="Center"></TextBlock>
         </StackPanel>
         
@@ -46,12 +46,6 @@
                         <UniformGrid Columns="3"></UniformGrid>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
-
-                <!--<ListBox.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListBoxItem}">
-                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                    </Style>
-                </ListBox.ItemContainerStyle>-->
 
                 <ListBox.ItemTemplate>
                     <DataTemplate>

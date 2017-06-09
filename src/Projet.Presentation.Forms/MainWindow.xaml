@@ -4,14 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Projet.Presentation.Forms"
+        xmlns:converter="clr-namespace:Projet.Presentation.Forms.Converters"
         mc:Ignorable="d"
-        Title="Série Club" Height="240" Width="300" Icon="Images/logoSerieClub.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Série Club" Height="240" Width="300" Icon="Images/logoSerieClub.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FocusManager.FocusedElement="{Binding ElementName=textboxFocus}">
     <Grid>
         <StackPanel>
             <Label HorizontalAlignment="Center">Identifiant</Label>
-            <TextBox Width="120" MaxLength="15" Text="{Binding Identifiant,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox x:Name="textboxFocus" Width="120" MaxLength="15" Text="{Binding Identifiant,UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Label HorizontalAlignment="Center">Mot de passe</Label>
-            <TextBox Name="text" Width="120" MaxLength="20" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Name="text" Width="120" MaxLength="20" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding ConnexionCommand}" Key="Enter"/>
+                </TextBox.InputBindings>
+            </TextBox>
             <Button Margin="10" Width="75" BorderBrush="Green" Command="{Binding ConnexionCommand}">Confirmer</Button>
             <Grid>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20">

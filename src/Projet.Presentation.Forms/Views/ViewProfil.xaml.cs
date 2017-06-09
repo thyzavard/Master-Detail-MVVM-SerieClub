@@ -33,9 +33,5 @@ namespace Projet.Presentation.Forms
 
             DataContext = _vm;
         }
-
-        //CHARGER IMAGE PROFIL
-        /*string path = Path.Combine(Environment.CurrentDirectory, "images_profil_user");
-        ImageSelect = $"{path}/{user_courant.Pseudo}.jpg";*/
     }
 }

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace Projet.Presentation.Forms.ViewModel
@@ -23,8 +24,8 @@ namespace Projet.Presentation.Forms.ViewModel
         private string _imageSelect;
         private bool _isVisible = true;
         private bool _isVisibleAdmin;
-
-        //Window
+        private string _recherche;
+        //Windows
         private WindowPersoProfil _wPersoProfil;
         private WindowAdd _wAdd;
         #endregion
@@ -35,6 +36,7 @@ namespace Projet.Presentation.Forms.ViewModel
         public RelayCommand OuvrirAcceuilCommand { get; private set; }
         public RelayCommand OuvrirProfilCommand { get; private set; }
         public RelayCommand QuitCommand { get; private set; }
+        public RelayCommand RechercherCommand { get; private set; }
         #endregion
 
         #region Public
@@ -98,6 +100,20 @@ namespace Projet.Presentation.Forms.ViewModel
                 NotifyPropertyChanged(nameof(IsVisibleAdmin));
             }
         }
+
+        public string Recherche
+        {
+            get
+            {
+                return _recherche;
+            }
+            set
+            {
+                _recherche = value;
+                NotifyPropertyChanged(nameof(Recherche));
+            }
+        }
+
         #endregion
 
         public WindowAccViewModel()
@@ -107,23 +123,46 @@ namespace Projet.Presentation.Forms.ViewModel
             OuvrirAcceuilCommand = new RelayCommand(OnOuvrirAcceuil, CanExecuteOuvrirAcceuil);
             OuvrirProfilCommand = new RelayCommand(OnOuvrirProfil, CanExecuteOuvrirProfil);
             QuitCommand = new RelayCommand(OnQuit, CanExecuteQuit);
+            RechercherCommand = new RelayCommand(OnRechercher, CanExecuteRechercher);
 
             SelectedViewModel = new ViewAccueilViewModel();
             OpenInfoSerieEvent.GetInstance().Handler += OnOpenInfoSerie;
 
             _user.Serieadd = GestionBDD.returnSerieUtilisateurFull(_user.Pseudo);
 
-            //Chargement de la photo de profil
-            string path = GestionBDD.loadPhotoProfil(_user.Pseudo);
-            string pathCouverture = GestionBDD.loadPhotoCouverture(_user.Pseudo);
-            _user.couverture = new BitmapImage(new Uri(($"{AppDomain.CurrentDomain.BaseDirectory}/Images/{pathCouverture}")));
-            _user.image = new BitmapImage(new Uri(($"{AppDomain.CurrentDomain.BaseDirectory}/Images/{path}")));
-
             Pseudo = _user.Pseudo;
+
         }
 
-       
+        /// <summary>
+        /// Récupère le texte taper dans la textbox de recherche et va remplir une liste de toutes les séries existantes et va chercher si la série taper par l'utilisateur, si elle exite, l'utilisateur est redirigé vers la page d'informations de cette série. Sinon il y a un message d'avertissement
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnRechercher(object obj)
+        {
+            if (GestionBDD.verifSerie(Recherche))
+            {
 
+                Serie seriesearch = GestionBDD.remplirSerie(Recherche);
+                SelectedViewModel = new ViewSerieViewModel(seriesearch);
+                RetourWindowAccueilEvent.GetInstance().Handler += OnRetourAccueil;
+                Recherche = null;
+            }
+            else
+            {
+                MessageBox.Show("Cette série n'existe pas !", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
+        }
+        private bool CanExecuteRechercher(object obj)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Déclenche un événement permettant de fermer la fenêtre principale
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnQuit(object obj)
         {
             WindowAccClosedEvent.GetInstance().OnWindowAccClosedHandler(EventArgs.Empty);
@@ -134,6 +173,10 @@ namespace Projet.Presentation.Forms.ViewModel
             return true;
         }
 
+        /// <summary>
+        /// Affiche le usercontrol Profil
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnOuvrirProfil(object obj)
         {
             IsVisible = false;
@@ -141,6 +184,11 @@ namespace Projet.Presentation.Forms.ViewModel
             OpenInfoSerieEvent.GetInstance().Handler += OnOpenInfoSerie;
         }
 
+        /// <summary>
+        /// Affiche le UserControl qui affiche les informations d'une série
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">Argument de l'évenement, contient une série</param>
         private void OnOpenInfoSerie(object sender, EventArgs e)
         {
             var args = e as SerieEventArgs;
@@ -152,6 +200,11 @@ namespace Projet.Presentation.Forms.ViewModel
                 RetourWindowAccueilEvent.GetInstance().Handler += OnRetourAccueil;
             }
         }
+        /// <summary>
+        /// Déclencher lors d'un événement et permet d'affichier le usercontrol d'accueil
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnRetourAccueil(object sender, EventArgs e)
         {
             SelectedViewModel = new ViewAccueilViewModel();
@@ -190,6 +243,10 @@ namespace Projet.Presentation.Forms.ViewModel
             }
         }
 
+        /// <summary>
+        /// Ouvre la fenêtre d'administration
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnAdministration(object obj)
         {
             WindowClosedEvent.GetInstance().Handler += OnCloseWindowAdd;
@@ -207,6 +264,10 @@ namespace Projet.Presentation.Forms.ViewModel
             return true;
         }
 
+        /// <summary>
+        /// Ouvre la fenêtre de personnalisation de profil 
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnPersoProfil(object obj)
         {
             WindowClosedEvent.GetInstance().Handler += OnCloseWindowPersoProfil;

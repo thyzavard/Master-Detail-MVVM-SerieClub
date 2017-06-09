@@ -45,12 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commentaire.cs" />
-    <Compile Include="Episode.cs" />
     <Compile Include="Genre.cs" />
     <Compile Include="Serie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserCourant.cs" />
-    <Compile Include="Utilisateur.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

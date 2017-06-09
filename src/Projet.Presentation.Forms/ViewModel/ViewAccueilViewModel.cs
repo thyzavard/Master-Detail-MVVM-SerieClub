@@ -132,9 +132,11 @@ namespace Projet.Presentation.Forms.ViewModel
         #region Command
         public RelayCommand AjouterSerieCommand { get; private set; }
         public RelayCommand InfoSerieCommand { get; private set; }
-
         #endregion
 
+        /// <summary>
+        /// Récupère une liste de toutes les séries existantes et celle-ci sont triées dans des listes en fonction de leurs genre
+        /// </summary>
         public ViewAccueilViewModel()
         {
             AjouterSerieCommand = new RelayCommand(OnAjouterSerie, CanExecuteAjouterSerie);
@@ -173,6 +175,10 @@ namespace Projet.Presentation.Forms.ViewModel
             }
         }
 
+        /// <summary>
+        /// Affiche le UserControl qui affiche les informations d'une série
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnInfoSerie(object obj)
         {
             if(SelectedSerie != null)
@@ -186,6 +192,10 @@ namespace Projet.Presentation.Forms.ViewModel
             return true;
         }
 
+        /// <summary>
+        /// Ajoute une série selectionné dans la BDD et dans la liste de série de l'utilisateur
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnAjouterSerie(object obj)
         {
             if(SelectedSerie != null)
