@@ -48,7 +48,7 @@
                                 </Grid>
                                 
                                 <Image Height="130" Width="90" Source="{Binding ImageSerie}"/>
-                                <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"/>
+                                <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"  TextWrapping="Wrap" Width="100"/>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
@@ -76,7 +76,7 @@
                                     </StackPanel>
                                 </Grid>
                                 <Image Height="130" Width="90" Source="{Binding ImageSerie}"/>
-                                <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
+                                <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"  TextWrapping="Wrap" Width="100"></TextBlock>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
@@ -105,7 +105,7 @@
                                     </StackPanel>
                                 </Grid>
                                 <Image Height="130" Width="90" Source="{Binding ImageSerie}"/>
-                                <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
+                                <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"  TextWrapping="Wrap" Width="100"></TextBlock>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
@@ -134,7 +134,7 @@
                                     </StackPanel>
                                 </Grid>
                                 <Image Height="130" Width="90" Source="{Binding ImageSerie}"/>
-                                <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
+                                <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold" TextWrapping="Wrap" Width="100"></TextBlock>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
@@ -162,7 +162,7 @@
                                     </StackPanel>
                                 </Grid>
                                 <Image Height="130" Width="90" Source="{Binding ImageSerie}"/>
-                                <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"></TextBlock>
+                                <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"  TextWrapping="Wrap" Width="100"/>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>

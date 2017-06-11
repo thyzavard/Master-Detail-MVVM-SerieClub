@@ -446,6 +446,7 @@ namespace Projet.Presentation.Forms.ViewModel
         public void setChampNullAjouter()
         {
             SourceImage = null;
+            SourceImageBanniere = null;
             NomSerie = null;
             DescriptionSerie = null;
             SelectGenre = null;

@@ -19,40 +19,6 @@ namespace Projet.Service.Fonctions
         private static SqlConnection con = new SqlConnection($@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={ConfigurationManager.AppSettings["BDDPAth"]};Integrated Security=True");
 
         #region Utilisateur
-        public static Utilisateur remplirUser(String pseudo)
-        {
-            Utilisateur user = new Utilisateur();
-            con.Open();
-            user.pseudo = pseudo;
-            //*****Récupération de la description de l'utilisateur courant*****
-            SqlCommand cmddesc = new SqlCommand("Select Description From Utilisateur where Pseudo='" + pseudo + "' ", con);
-            SqlDataReader dr = cmddesc.ExecuteReader();
-            dr.Read();
-            user.description = dr.GetString(0);
-            dr.Close();
-            //*****Récupération du sexe de l'utilisateur*****
-            SqlCommand cmdsexe = new SqlCommand("Select Sexe From Utilisateur where Pseudo='" + pseudo + "' ", con);
-            dr = cmdsexe.ExecuteReader();
-            dr.Read();
-            user.sexe = dr.GetString(0);
-            dr.Close();
-            //*****Récupération de la date de naissance de l'utilisateur*****
-            SqlCommand cmdddn = new SqlCommand("Select DateDeNaissance From Utilisateur where Pseudo='" + pseudo + "' ", con);
-            dr = cmdddn.ExecuteReader();
-            dr.Read();
-            user.dateDeNaissance = dr.GetString(0);
-            dr.Close();
-            //*****Récupération de l'autoristation modérateur*****
-            SqlCommand cmdmodo = new SqlCommand("Select Modo From Utilisateur where Pseudo='" + pseudo + "'", con);
-            dr = cmdmodo.ExecuteReader();
-            dr.Read();
-            var recup = dr.GetString(0);
-            user.modo = Convert.ToBoolean(recup);
-            dr.Close();
-            con.Close();
-
-            return user;
-        }
         /// <summary>
         /// Cette fonction va se servir du pseudo de l'utilisateur qui est une clé primaire dans la BDD afin de remplir toutes les caractéristiques du l'utilisateur
         /// </summary>

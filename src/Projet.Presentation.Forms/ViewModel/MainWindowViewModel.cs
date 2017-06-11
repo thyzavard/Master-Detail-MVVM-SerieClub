@@ -116,6 +116,7 @@ namespace Projet.Presentation.Forms.ViewModel
             if(GestionBDD.verifLoginMdp(Identifiant, Password))
             {
                 WindowAccClosedEvent.GetInstance().Handler += OnCloseWindowAcceuil;
+                UserCourant.SetNull();
                 GestionBDD.remplirUserCourant(Identifiant);
 
                 _wAcceuil = new WindowAcc();

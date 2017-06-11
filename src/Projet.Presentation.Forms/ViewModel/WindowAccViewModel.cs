@@ -11,6 +11,7 @@ using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Media.Imaging;
 
 namespace Projet.Presentation.Forms.ViewModel
@@ -111,6 +112,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 _recherche = value;
                 NotifyPropertyChanged(nameof(Recherche));
+                OnRechercher(new object());
             }
         }
 
@@ -131,14 +133,19 @@ namespace Projet.Presentation.Forms.ViewModel
             _user.Serieadd = GestionBDD.returnSerieUtilisateurFull(_user.Pseudo);
 
             Pseudo = _user.Pseudo;
+            
+        }
 
+        private bool CanExecutetestCommand(object obj)
+        {
+            return true;
         }
 
         /// <summary>
         /// Récupère le texte taper dans la textbox de recherche et va remplir une liste de toutes les séries existantes et va chercher si la série taper par l'utilisateur, si elle exite, l'utilisateur est redirigé vers la page d'informations de cette série. Sinon il y a un message d'avertissement
         /// </summary>
         /// <param name="obj"></param>
-        private void OnRechercher(object obj)
+        /*private void OnRechercher(object obj)
         {
             if (GestionBDD.verifSerie(Recherche))
             {
@@ -153,7 +160,28 @@ namespace Projet.Presentation.Forms.ViewModel
                 MessageBox.Show("Cette série n'existe pas !", "", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
+        }*/
+
+        private void OnRechercher(object obj)
+        {
+            if (Recherche == "")
+            {
+                SelectedViewModel = new ViewAccueilViewModel();
+                OpenInfoSerieEvent.GetInstance().Handler += OnOpenInfoSerie;
+            }
+            else
+            {
+                List<Serie> listSerie = GestionBDD.returnTouteSerieFull();
+
+                var resRecherche = listSerie.Where(h => h.nom.ToLower().StartsWith(Recherche.ToLower()));
+
+
+                SelectedViewModel = new ViewRechercheViewModel(resRecherche, Recherche);
+                RetourWindowAccueilEvent.GetInstance().Handler += OnRetourAccueil;
+                OpenInfoSerieEvent.GetInstance().Handler += OnOpenInfoSerie;
+            }
         }
+
         private bool CanExecuteRechercher(object obj)
         {
             return true;
@@ -182,6 +210,7 @@ namespace Projet.Presentation.Forms.ViewModel
             IsVisible = false;
             SelectedViewModel = new ViewProfilViewModel();
             OpenInfoSerieEvent.GetInstance().Handler += OnOpenInfoSerie;
+            
         }
 
         /// <summary>
@@ -210,6 +239,7 @@ namespace Projet.Presentation.Forms.ViewModel
             SelectedViewModel = new ViewAccueilViewModel();
             RetourWindowAccueilEvent.GetInstance().Handler -= OnRetourAccueil;
             OpenInfoSerieEvent.GetInstance().Handler += OnOpenInfoSerie;
+            Recherche = "";
         }
 
         private bool CanExecuteOuvrirProfil(object obj)

@@ -20,6 +20,9 @@
         <DataTemplate DataType="{x:Type viewmodels:ViewSerieViewModel}">
             <views:ViewSerie/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:ViewRechercheViewModel}">
+            <views:ViewRecherche/>
+        </DataTemplate>
 
         <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
@@ -54,11 +57,12 @@
                     </Button.Content>
                 </Button>
 
-                <TextBox Visibility="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding Recherche, UpdateSourceTrigger=PropertyChanged}" Margin="30,0,30,50">
+                <TextBox Visibility="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding Recherche, UpdateSourceTrigger=PropertyChanged}" Margin="30,0,30,50" MaxLength="30">
 
                     <TextBox.InputBindings>
-                        <KeyBinding Command="{Binding RechercherCommand}" Key="Enter"/>
+                        <KeyBinding Command="{Binding RechercherCommand}" Key="Capital"/>
                     </TextBox.InputBindings>
+                    
 
                     <TextBox.Style>
                         <Style TargetType="TextBox">
