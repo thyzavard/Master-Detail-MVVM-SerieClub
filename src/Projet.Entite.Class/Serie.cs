@@ -21,7 +21,7 @@ namespace Projet.Entite.Class
         public BitmapImage Banniereserie { get; set; }
         public int nbPersonVote { get; set; }
 
-        public Serie(string nom, string description, Genre genre, int dureeMoy, string producteur, int nbSaison)
+        public Serie(string nom, string description, Genre genre, int dureeMoy, string producteur, int nbSaison, string pathImage, string pathBanniere)
         {
             this.nom = nom;
             this.description = description;
@@ -31,6 +31,8 @@ namespace Projet.Entite.Class
             this.producteur = producteur;
             this.nbSaison = nbSaison;
             commentaire = new List<Commentaire>();
+            ImageSerie = new BitmapImage(new Uri($"{AppDomain.CurrentDomain.BaseDirectory}/ImagesSerie/{pathImage}"));
+            Banniereserie = new BitmapImage(new Uri($"{AppDomain.CurrentDomain.BaseDirectory}/ImagesSerie/{pathBanniere}"));
         }
 
         public Serie()

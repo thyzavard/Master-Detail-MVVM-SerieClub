@@ -141,27 +141,6 @@ namespace Projet.Presentation.Forms.ViewModel
             return true;
         }
 
-        /// <summary>
-        /// Récupère le texte taper dans la textbox de recherche et va remplir une liste de toutes les séries existantes et va chercher si la série taper par l'utilisateur, si elle exite, l'utilisateur est redirigé vers la page d'informations de cette série. Sinon il y a un message d'avertissement
-        /// </summary>
-        /// <param name="obj"></param>
-        /*private void OnRechercher(object obj)
-        {
-            if (GestionBDD.verifSerie(Recherche))
-            {
-
-                Serie seriesearch = GestionBDD.remplirSerie(Recherche);
-                SelectedViewModel = new ViewSerieViewModel(seriesearch);
-                RetourWindowAccueilEvent.GetInstance().Handler += OnRetourAccueil;
-                Recherche = null;
-            }
-            else
-            {
-                MessageBox.Show("Cette série n'existe pas !", "", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-
-        }*/
-
         private void OnRechercher(object obj)
         {
             if (Recherche == "")
@@ -280,9 +259,19 @@ namespace Projet.Presentation.Forms.ViewModel
         private void OnAdministration(object obj)
         {
             WindowClosedEvent.GetInstance().Handler += OnCloseWindowAdd;
+
+            RefreshAcceuilEvent.GetInstance().Handler += OnRefresh;
             _wAdd = new WindowAdd();
             _wAdd.ShowDialog();
         }
+
+        private void OnRefresh(object sender, EventArgs e)
+        {
+            SelectedViewModel = new ViewAccueilViewModel();
+            OpenInfoSerieEvent.GetInstance().Handler += OnOpenInfoSerie;
+            RetourWindowAccueilEvent.GetInstance().Handler += OnRetourAccueil;
+        }
+
         private void OnCloseWindowAdd(object sender, EventArgs e)
         {
             _wAdd.Close();

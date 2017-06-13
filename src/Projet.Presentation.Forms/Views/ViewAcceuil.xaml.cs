@@ -30,11 +30,7 @@ namespace Projet.Presentation.Forms
         public ViewAcceuil()
         {
             InitializeComponent();
-            _vm = new ViewAccueilViewModel();
-
-            DataContext = _vm;
         }
-
-        //private void StackPanel_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+       
     }
 }

@@ -600,8 +600,11 @@ namespace Projet.Presentation.Forms.ViewModel
                         Listserie.RemoveAt(i);
                     }
                 }
+                RefreshAcceuilEvent.GetInstance().OnRefreshAcceuilHandler(EventArgs.Empty);
                 chargerListSerie();
                 MessageBox.Show("Série supprimé");
+
+                
             }
         }
 
@@ -639,6 +642,7 @@ namespace Projet.Presentation.Forms.ViewModel
                                 File.Copy(_openFileBanniereModif.FileName, Path.Combine(_path, _fileNameBanniereModif));
                                 GestionBDD.updateSerie(SelectSerie, Descriptionseriemodif, int.Parse(Dureemoyenneseriemodif), Producteurseriemodif, Selectgenremodif, _fileNameModif, int.Parse(NbSaisonModif), _fileNameBanniereModif);
                                 MessageBox.Show("Modification enrgistrée");
+                                RefreshAcceuilEvent.GetInstance().OnRefreshAcceuilHandler(EventArgs.Empty);
                                 setChampModifNull();
                             }
                         }
@@ -647,6 +651,7 @@ namespace Projet.Presentation.Forms.ViewModel
                     {
                         GestionBDD.updateSeriesansImage(SelectSerie, Descriptionseriemodif, int.Parse(Dureemoyenneseriemodif), Producteurseriemodif, Selectgenremodif, int.Parse(NbSaisonModif));
                         MessageBox.Show("Modification enrgistrée");
+                        RefreshAcceuilEvent.GetInstance().OnRefreshAcceuilHandler(EventArgs.Empty);
                         setChampModifNull();
                     }
                 }
@@ -662,7 +667,7 @@ namespace Projet.Presentation.Forms.ViewModel
         }
         private bool CanexecuteModifierSerie(object obj)
         {
-            if (SelectSerie != null)
+            if (SelectSerie != null && NbSaisonModif != null && Descriptionseriemodif != null && Producteurseriemodif != null && Dureemoyenneseriemodif != null)
             {
                 return true;
             }
@@ -672,6 +677,20 @@ namespace Projet.Presentation.Forms.ViewModel
             }
         }
 
+        private void CheckImageSerie()
+        {
+            if (!File.Exists($@"{_path}\{_fileName}"))
+            {
+                File.Copy(_openFile.FileName, Path.Combine(_path, _fileName));
+            }
+        }
+        private void CheckBanniereSerie()
+        {
+            if (!File.Exists($@"{_path}\{_fileNameBanniere}"))
+            {
+                File.Copy(_openFileBanniere.FileName, Path.Combine(_path, _fileNameBanniere));
+            }
+        }
 
         //COMMANDE AJOUT SERIE
         private void OnAjouterSerie(object obj)
@@ -686,30 +705,24 @@ namespace Projet.Presentation.Forms.ViewModel
                 {
                     if (int.TryParse(NbSaison, out _res) == true)
                     {
-                        if (!File.Exists($@"{_path}\{_fileName}"))
+                        FileInfo f = new FileInfo(_openFile.FileName);
+                        if (f.Length > 512000)
                         {
-                            FileInfo f = new FileInfo(_openFile.FileName);
-                            if (f.Length > 512000)
-                            {
-                                MessageBox.Show("La taille de l'image est trop grande (500 ko maximum)", "", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            }
-                            else
-                            {
-                                File.Copy(_openFile.FileName, Path.Combine(_path, _fileName));
-                                File.Copy(_openFileBanniere.FileName, Path.Combine(_path, _fileNameBanniere));
-                                GestionBDD.ajouter_Serie(NomSerie, DescriptionSerie, SelectGenre, ProducteurSerie, int.Parse(DureeMoyenneSerie), int.Parse(NbSaison), _fileName, _fileNameBanniere);
-                                Listserie.Add(NomSerie);
-                                chargerListSerie();
-                                MessageBox.Show("Ajout enregistrée", "Confirmation", MessageBoxButton.OK);
-                                setChampNullAjouter();
-                            }
+                            MessageBox.Show("La taille de l'image est trop grande (500 ko maximum)", "", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                         else
                         {
+                            CheckImageSerie();
+                            CheckBanniereSerie();
+
                             GestionBDD.ajouter_Serie(NomSerie, DescriptionSerie, SelectGenre, ProducteurSerie, int.Parse(DureeMoyenneSerie), int.Parse(NbSaison), _fileName, _fileNameBanniere);
                             Listserie.Add(NomSerie);
                             chargerListSerie();
                             MessageBox.Show("Ajout enregistrée", "Confirmation", MessageBoxButton.OK);
+
+                            //Déclenchement de l'événement pour mettre à jour le viewAccueil
+                            RefreshAcceuilEvent.GetInstance().OnRefreshAcceuilHandler(EventArgs.Empty);
+
                             setChampNullAjouter();
                         }
                     }
@@ -723,11 +736,10 @@ namespace Projet.Presentation.Forms.ViewModel
                     MessageBox.Show("Veuillez rentrer uniquement des nombres pour la Durée Moyenne de la serie", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
-
         }
         private bool CanexecuteAjouterSerie(object obj)
         {
-            if (NomSerie != null && DescriptionSerie != null && ProducteurSerie != null && DureeMoyenneSerie != null && SelectGenre != null && SourceImage != null)
+            if (NomSerie != null && DescriptionSerie != null && ProducteurSerie != null && DureeMoyenneSerie != null && SelectGenre != null && SourceImage != null && SourceImageBanniere != null)
             {
                 return true;
             }

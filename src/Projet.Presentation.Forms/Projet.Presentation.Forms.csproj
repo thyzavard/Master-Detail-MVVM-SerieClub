@@ -60,6 +60,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Events\OpenInfoSerieEvent.cs" />
+    <Compile Include="Events\RefreshAcceuilEvent.cs" />
     <Compile Include="Events\RetourWindowAccueilEvent.cs" />
     <Compile Include="Events\SerieAddedEvent.cs" />
     <Compile Include="Events\SerieEventArgs.cs" />
