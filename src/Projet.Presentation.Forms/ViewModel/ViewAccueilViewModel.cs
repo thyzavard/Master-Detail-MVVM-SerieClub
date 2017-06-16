@@ -11,11 +11,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Collections.ObjectModel;
 using Projet.Presentation.Forms.Events;
+using GalaSoft.MvvmLight;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
 
-    public class ViewAccueilViewModel : BaseViewModel
+    public class ViewAccueilViewModel : ObservableObject
     {
         #region private
         private List<Serie> _listSerie;
@@ -38,12 +39,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _selectedViewModel;
             }
-            set
-            {
-                _selectedViewModel = value;
-                AjouterSerieCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(SelectedViewModel));
-            }
+            set { Set(() => SelectedViewModel, ref _selectedViewModel, value); AjouterSerieCommand.RaiseCanExecuteChanged(); }
         }
 
 
@@ -53,12 +49,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _selectedSerie;
             }
-            set
-            {
-                _selectedSerie = value;
-                AjouterSerieCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(SelectedSerie));
-            }
+            set { Set(() => SelectedSerie, ref _selectedSerie, value); AjouterSerieCommand.RaiseCanExecuteChanged(); }
         }
         public string AjouterOuSupprimerButton
         {
@@ -66,13 +57,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _ajouterOuSupprimerButton;
             }
-
-            set
-            {
-                _ajouterOuSupprimerButton = value;
-                AjouterSerieCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(AjouterOuSupprimerButton));
-            }
+            set { Set(() => AjouterOuSupprimerButton, ref _ajouterOuSupprimerButton, value); AjouterSerieCommand.RaiseCanExecuteChanged(); }
         }
         #endregion
 

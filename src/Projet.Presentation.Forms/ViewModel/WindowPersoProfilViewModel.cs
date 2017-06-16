@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using GalaSoft.MvvmLight;
+using Microsoft.Win32;
 using Projet.Entite.Class;
 using Projet.Presentation.Forms.Commands;
 using Projet.Presentation.Forms.Converters;
@@ -17,7 +18,7 @@ using System.Windows.Media.Imaging;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
-    public class WindowPersoProfilViewModel : BaseViewModel
+    public class WindowPersoProfilViewModel : ObservableObject
     {
 
         #region private
@@ -47,12 +48,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _description;
             }
-            set
-            {
-                _description = value;
-                //SauverModifProfilCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(Description));
-            }
+            set { Set(() => Description, ref _description, value); }
         }
 
         public string SelectSexe
@@ -61,15 +57,10 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _selectSexe;
             }
-            set
-            {
-                _selectSexe = value;
-                //SauverModifProfilCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(SelectSexe));
-            }
+            set { Set(() => SelectSexe, ref _selectSexe, value); }
         }
 
-        public List<string> Listsexe { get { return _listsexe; } set { _listsexe = value; } }
+        public List<string> Listsexe { get { return _listsexe; } set { Set(() => Listsexe, ref _listsexe, value); } }
 
         public DateTime SelectDate
         {
@@ -77,11 +68,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _selectDate;
             }
-            set
-            {
-                _selectDate = value;
-                NotifyPropertyChanged(nameof(SelectDate));
-            }
+            set { Set(() => SelectDate, ref _selectDate, value); }
         }
 
         public BitmapImage ImageCourant
@@ -90,11 +77,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _imageCourant;
             }
-            set
-            {
-                _imageCourant = value;
-                NotifyPropertyChanged(nameof(ImageCourant));
-            }
+            set { Set(() => ImageCourant, ref _imageCourant, value); }
         }
         public string SourceImage
         {
@@ -102,12 +85,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _sourceImage;
             }
-
-            set
-            {
-                _sourceImage = value;
-                NotifyPropertyChanged(nameof(SourceImage));
-            }
+            set { Set(() => SourceImage, ref _sourceImage, value); }
         }
         public string SourceImageCouverture
         {
@@ -115,11 +93,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _sourceImageCouverture;
             }
-            set
-            {
-                _sourceImageCouverture = value;
-                NotifyPropertyChanged(nameof(SourceImageCouverture));
-            }
+            set { Set(() => SourceImageCouverture, ref _sourceImageCouverture, value); }
         }
 
         #endregion
@@ -209,8 +183,11 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private void OnSauverModifProfil(object obj)
         {
-            user_courant.Description = Description;
-            GestionBDD.updateDescription(Description, user_courant.Pseudo);
+            if(Description != user.Description)
+            {
+                user_courant.Description = Description;
+                GestionBDD.updateDescription(Description, user_courant.Pseudo);
+            }
 
             if (SelectSexe != "Pas spécifié...")
             {
@@ -271,6 +248,7 @@ namespace Projet.Presentation.Forms.ViewModel
                 }
             }
             MessageBox.Show("Modification enregistrée");
+            RefreshEvent.GetInstance().OnRefreshAcceuilHandler(EventArgs.Empty);
             WindowClosedEvent.GetInstance().OnWindowClosedHandler(EventArgs.Empty);
         }
         private bool CanExecuteSauverModifProfil(object obj)

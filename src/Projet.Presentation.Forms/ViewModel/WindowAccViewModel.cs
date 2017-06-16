@@ -1,4 +1,5 @@
-﻿using Projet.Entite.Class;
+﻿using GalaSoft.MvvmLight;
+using Projet.Entite.Class;
 using Projet.Presentation.Forms.Commands;
 using Projet.Presentation.Forms.Events;
 using Projet.Service.Fonctions;
@@ -16,7 +17,7 @@ using System.Windows.Media.Imaging;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
-    public class WindowAccViewModel : BaseViewModel
+    public class WindowAccViewModel : ObservableObject
     {
         #region private
         private UserCourant _user = UserCourant.Instance();
@@ -47,22 +48,12 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _pseudo;
             }
-
-            set
-            {
-                _pseudo = value;
-            }
+            set { Set(() => Pseudo, ref _pseudo, value); }
         }
         public object SelectedViewModel
         {
             get { return _selectedViewModel; }
-            set
-            {
-                _selectedViewModel = value;
-                OuvrirProfilCommand.RaiseCanExecuteChanged();
-                OuvrirAcceuilCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(SelectedViewModel));
-            }
+            set { Set(() => SelectedViewModel, ref _selectedViewModel, value); OuvrirAcceuilCommand.RaiseCanExecuteChanged(); OuvrirProfilCommand.RaiseCanExecuteChanged(); }
         }
 
         public string ImageSelect
@@ -71,7 +62,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _imageSelect;
             }
-            set { _imageSelect = value; }
+            set { Set(() => ImageSelect, ref _imageSelect, value); }
         }
 
         public bool IsVisible
@@ -80,12 +71,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _isVisible;
             }
-
-            set
-            {
-                _isVisible = value;
-                NotifyPropertyChanged(nameof(IsVisible));
-            }
+            set { Set(() => IsVisible, ref _isVisible, value); }
         }
 
         public bool IsVisibleAdmin
@@ -94,12 +80,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _isVisibleAdmin;
             }
-
-            set
-            {
-                _isVisibleAdmin = value;
-                NotifyPropertyChanged(nameof(IsVisibleAdmin));
-            }
+            set { Set(() => IsVisibleAdmin, ref _isVisibleAdmin, value); }
         }
 
         public string Recherche
@@ -108,14 +89,8 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _recherche;
             }
-            set
-            {
-                _recherche = value;
-                NotifyPropertyChanged(nameof(Recherche));
-                OnRechercher(new object());
-            }
+            set { Set(() => Recherche, ref _recherche, value); OnRechercher(new object()); }
         }
-
         #endregion
 
         public WindowAccViewModel()
@@ -153,7 +128,6 @@ namespace Projet.Presentation.Forms.ViewModel
                 List<Serie> listSerie = GestionBDD.returnTouteSerieFull();
 
                 var resRecherche = listSerie.Where(h => h.nom.ToLower().StartsWith(Recherche.ToLower()));
-
 
                 SelectedViewModel = new ViewRechercheViewModel(resRecherche, Recherche);
                 RetourWindowAccueilEvent.GetInstance().Handler += OnRetourAccueil;
@@ -259,17 +233,24 @@ namespace Projet.Presentation.Forms.ViewModel
         private void OnAdministration(object obj)
         {
             WindowClosedEvent.GetInstance().Handler += OnCloseWindowAdd;
-
-            RefreshAcceuilEvent.GetInstance().Handler += OnRefresh;
+            RefreshEvent.GetInstance().Handler += OnRefresh;
             _wAdd = new WindowAdd();
             _wAdd.ShowDialog();
         }
 
         private void OnRefresh(object sender, EventArgs e)
         {
-            SelectedViewModel = new ViewAccueilViewModel();
-            OpenInfoSerieEvent.GetInstance().Handler += OnOpenInfoSerie;
-            RetourWindowAccueilEvent.GetInstance().Handler += OnRetourAccueil;
+            if(SelectedViewModel.GetType() == typeof(ViewAccueilViewModel) || SelectedViewModel.GetType() == typeof(ViewSerieViewModel) || SelectedViewModel.GetType() == typeof(ViewRechercheViewModel))
+            {
+                SelectedViewModel = new ViewAccueilViewModel();
+                OpenInfoSerieEvent.GetInstance().Handler += OnOpenInfoSerie;
+                RetourWindowAccueilEvent.GetInstance().Handler += OnRetourAccueil;
+            }
+            if(SelectedViewModel.GetType() == typeof(ViewProfilViewModel)){
+                SelectedViewModel = new ViewProfilViewModel();
+                OpenInfoSerieEvent.GetInstance().Handler += OnOpenInfoSerie;
+            }
+            
         }
 
         private void OnCloseWindowAdd(object sender, EventArgs e)
@@ -289,6 +270,7 @@ namespace Projet.Presentation.Forms.ViewModel
         /// <param name="obj"></param>
         private void OnPersoProfil(object obj)
         {
+            RefreshEvent.GetInstance().Handler += OnRefresh;
             WindowClosedEvent.GetInstance().Handler += OnCloseWindowPersoProfil;
             _wPersoProfil = new WindowPersoProfil();
             _wPersoProfil.ShowDialog();

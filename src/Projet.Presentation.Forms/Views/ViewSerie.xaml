@@ -5,9 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Projet.Presentation.Forms"
              xmlns:viewmodel="clr-namespace:Projet.Presentation.Forms.ViewModel"
+             xmlns:converter="clr-namespace:Projet.Presentation.Forms.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="569" d:DesignWidth="742" FontSize="16">
 
+    <UserControl.Resources>
+        <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -133,7 +138,7 @@
 
                 <TextBlock FontWeight="UltraBlack" Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0,20,0,0" Text="{Binding Entetecommentaire}" TextDecorations="Underline"></TextBlock>
 
-                <ListView Grid.Row="4" Grid.ColumnSpan="3" Background="Transparent" BorderBrush="Transparent" ItemsSource="{Binding ListCommentaireSerie}" HorizontalAlignment="Center">
+                <ListView Grid.Row="4" Grid.ColumnSpan="3" Background="Transparent" BorderBrush="Transparent" ItemsSource="{Binding ListCommentaireSerie}" SelectedItem="{Binding SelectedCommentaire}" HorizontalAlignment="Center">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel/>
@@ -144,7 +149,11 @@
                         <DataTemplate>
                             <StackPanel Margin="30,15,30,30">
                                 <TextBlock Text="{Binding nomUtilisateur}" FontWeight="UltraBlack" VerticalAlignment="Center"/>
-                                <TextBlock Text="{Binding commentaire}" Margin="35,0,0,0" VerticalAlignment="Center"/>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Button Content="X" BorderBrush="Red" Command="{Binding DataContext.SupprimerCommentaireCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" Visibility="{Binding DataContext.IsVisibleButtonSuppr, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=ListBox}}" ToolTip="Suppimer ce commentaire"/>
+                                    <TextBlock Text="{Binding commentaire}" Margin="35,0,0,0" />
+                                </StackPanel>
+                                
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>

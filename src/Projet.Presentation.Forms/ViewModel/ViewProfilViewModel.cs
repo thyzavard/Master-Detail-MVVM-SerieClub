@@ -1,4 +1,5 @@
-﻿using Projet.Entite.Class;
+﻿using GalaSoft.MvvmLight;
+using Projet.Entite.Class;
 using Projet.Presentation.Forms.Commands;
 using Projet.Presentation.Forms.Events;
 using Projet.Presentation.Forms.Extension;
@@ -15,7 +16,7 @@ using System.Windows.Media.Imaging;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
-    public class ViewProfilViewModel : BaseViewModel
+    public class ViewProfilViewModel : ObservableObject
     {
         #region private
         private string _currentPseudo;
@@ -33,10 +34,7 @@ namespace Projet.Presentation.Forms.ViewModel
         public string CurrentPseudo
         {
             get { return _currentPseudo; }
-            set
-            {
-                _currentPseudo = value;
-            }
+            set { Set(() => CurrentPseudo, ref _currentPseudo, value); }
         }
 
         public string CurrentDescription
@@ -45,10 +43,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _currentDescription;
             }
-            set
-            {
-                _currentDescription = value;
-            }
+            set { Set(() => CurrentDescription, ref _currentDescription, value); }
         }
 
         public Serie SelectedSerie
@@ -57,12 +52,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _selectedSerie;
             }
-            set
-            {
-                _selectedSerie = value;
-                EnleverSerieCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(SelectedSerie));
-            }
+            set { Set(() => SelectedSerie, ref _selectedSerie, value); EnleverSerieCommand.RaiseCanExecuteChanged(); }
         }
 
         public string TitreEnFonctionDuNbDeSerie
@@ -71,12 +61,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _titreEnFonctionDuNbDeSerie;
             }
-            set
-            {
-                _titreEnFonctionDuNbDeSerie = value;
-                EnleverSerieCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(TitreEnFonctionDuNbDeSerie));
-            }
+            set { Set(() => TitreEnFonctionDuNbDeSerie, ref _titreEnFonctionDuNbDeSerie, value); EnleverSerieCommand.RaiseCanExecuteChanged(); }
         }
 
         public ObservableCollection<Serie> SerieUtilisateur { get; set; }
@@ -84,11 +69,7 @@ namespace Projet.Presentation.Forms.ViewModel
         public object SelectedViewModel
         {
             get { return _selectedViewModel; }
-            set
-            {
-                _selectedViewModel = value;
-                NotifyPropertyChanged(nameof(SelectedViewModel));
-            }
+            set { Set(() => SelectedViewModel, ref _selectedViewModel, value); }
         }
 
 
@@ -98,11 +79,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _imageUserCourant;
             }
-            set
-            {
-                _imageUserCourant = value;
-                NotifyPropertyChanged(nameof(ImageUserCourant));
-            }
+            set { Set(() => ImageUserCourant, ref _imageUserCourant, value); }
         }
         public BitmapImage SourceImageCouverture
         {
@@ -110,11 +87,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _sourceImageCouverture;
             }
-            set
-            {
-                _sourceImageCouverture = value;
-                NotifyPropertyChanged(nameof(SourceImageCouverture));
-            }
+            set { Set(() => SourceImageCouverture, ref _sourceImageCouverture, value); }
         }
         #endregion
 

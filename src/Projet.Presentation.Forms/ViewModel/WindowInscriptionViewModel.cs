@@ -1,4 +1,5 @@
-﻿using Projet.Presentation.Forms.Commands;
+﻿using GalaSoft.MvvmLight;
+using Projet.Presentation.Forms.Commands;
 using Projet.Presentation.Forms.Events;
 using Projet.Service.Fonctions;
 using System;
@@ -10,7 +11,7 @@ using System.Windows;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
-    public class WindowInscriptionViewModel
+    public class WindowInscriptionViewModel : ObservableObject
     {
         #region private
         private string _pseudo;
@@ -32,12 +33,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _pseudo;
             }
-
-            set
-            {
-                _pseudo = value;
-                InscriptionCommand.RaiseCanExecuteChanged();
-            }
+            set { Set(() => Pseudo, ref _pseudo, value); InscriptionCommand.RaiseCanExecuteChanged(); }
         }
 
         public string Password1
@@ -46,12 +42,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _password1;
             }
-
-            set
-            {
-                _password1 = value;
-                InscriptionCommand.RaiseCanExecuteChanged();
-            }
+            set { Set(() => Password1, ref _password1, value); InscriptionCommand.RaiseCanExecuteChanged(); }
         }
 
         public string Password2
@@ -60,12 +51,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _password2;
             }
-
-            set
-            {
-                _password2 = value;
-                InscriptionCommand.RaiseCanExecuteChanged();
-            }
+            set { Set(() => Password2, ref _password2, value); InscriptionCommand.RaiseCanExecuteChanged(); }
         }
 
         public List<string> SexeSource
@@ -74,11 +60,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _sexesource;
             }
-
-            set
-            {
-                _sexesource = value;
-            }
+            set { Set(() => SexeSource, ref _sexesource, value); }
         }
 
         public string SelectSexe
@@ -87,11 +69,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _selectSexe;
             }
-            set
-            {
-                _selectSexe = value;
-                InscriptionCommand.RaiseCanExecuteChanged();
-            }
+            set { Set(() => SelectSexe, ref _selectSexe, value); }
         }
         #endregion
 

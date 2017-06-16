@@ -24,14 +24,10 @@ namespace Projet.Presentation.Forms
     /// </summary>
     public partial class ViewProfil : UserControl
     {
-        private ViewProfilViewModel _vm;
 
         public ViewProfil()
         {
             InitializeComponent();
-            _vm = new ViewProfilViewModel();
-
-            DataContext = _vm;
         }
     }
 }

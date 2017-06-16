@@ -1,4 +1,5 @@
-﻿using Projet.Entite.Class;
+﻿using GalaSoft.MvvmLight;
+using Projet.Entite.Class;
 using Projet.Presentation.Forms.Commands;
 using Projet.Presentation.Forms.Events;
 using Projet.Presentation.Forms.Extension;
@@ -13,7 +14,7 @@ using System.Windows;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
-    public class ViewRechercheViewModel : BaseViewModel
+    public class ViewRechercheViewModel : ObservableObject
     {
         #region private
         private string _recherchepour;
@@ -30,28 +31,17 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _recherchepour;
             }
-            set
-            {
-                _recherchepour = value;
-                NotifyPropertyChanged(nameof(Recherchepour));
-            }
+            set { Set(() => Recherchepour, ref _recherchepour, value); }
         }
         public ObservableCollection<Serie> ListserieRecherche { get; set; }
 
-        public Serie SelectedSerie { get { return _selectedSerie; } set
-            {
-                _selectedSerie = value;
-                NotifyPropertyChanged(nameof(SelectedSerie));
-            }
+        public Serie SelectedSerie { get { return _selectedSerie; }
+            set { Set(() => SelectedSerie, ref _selectedSerie, value); }
         }
         public bool IsVisible
         {
             get { return _isVisible; }
-            set
-            {
-                _isVisible = value;
-                NotifyPropertyChanged(nameof(IsVisible));
-            }
+            set { Set(() => IsVisible, ref _isVisible, value); }
         }
         #endregion
 

@@ -1,4 +1,5 @@
-﻿using Projet.Entite.Class;
+﻿using GalaSoft.MvvmLight;
+using Projet.Entite.Class;
 using Projet.Presentation.Forms.Commands;
 using Projet.Presentation.Forms.Events;
 using Projet.Service.Fonctions;
@@ -13,7 +14,7 @@ using System.Windows.Input;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
-    public class MainWindowViewModel : BaseViewModel
+    public class MainWindowViewModel : ObservableObject
     {
         #region private
         private string _password;
@@ -35,12 +36,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _identifiant;
             }
-            set
-            {
-                _identifiant = value;
-                NotifyPropertyChanged(nameof(Identifiant));
-                InscrireCommand.RaiseCanExecuteChanged();
-            }
+            set { Set(() => Identifiant, ref _identifiant, value); }
         }
 
         public string Password
@@ -49,27 +45,8 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _password;
             }
-
-            set
-            {
-                _password = value;
-                NotifyPropertyChanged(nameof(Password));
-                ConnexionCommand.RaiseCanExecuteChanged();
-
-                //KeyPressEvent.GetInstance().Handler += OnKeyPressed;
-                //KeyPressEvent.GetInstance().OnOKeyPressHandler(new KeyEnter() { key = Key.Enter });
-                //penInfoSerieEvent.GetInstance().OnOpenInfoSerieHandler(new SerieEventArgs() { Serie = SelectedSerie });
-            }
+            set { Set(() => Password, ref _password, value); }
         }
-
-        /*private void OnKeyPressed(object sender, EventArgs e)
-        {
-            var args = e as KeyEventArgs;
-            if (args.Key == Key.Enter)
-            {
-                MessageBox.Show("ENTER !");
-            }
-        }*/
         #endregion
 
 

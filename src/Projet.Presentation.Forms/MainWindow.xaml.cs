@@ -33,28 +33,5 @@ namespace Projet.Presentation.Forms
 
             DataContext = _vm;
         }
-
-        /* private void btnConfirmer_Click(object sender, RoutedEventArgs e)
-         {
-             if(textboxId_Acc.Text != "" || passwordBox_Acc.Password != "")
-             {
-                 if(Service.Fonctions.GestionBDD.verifLoginMdp(textboxId_Acc.Text, passwordBox_Acc.Password))
-                 {
-                     Utilisateur user = Service.Fonctions.GestionBDD.remplirUser(textboxId_Acc.Text);
-                     WindowAcc w = new WindowAcc(user);
-                     this.Hide();
-                     w.Show();
-                 }
-                 else
-                 {
-                     MessageBox.Show("Les informations transmises n'ont pas permis de vous authentifier", "Erreur d'identification", MessageBoxButton.OK, MessageBoxImage.Warning);
-                 }
-             }
-             else
-             {
-                 MessageBox.Show("Veuillez remplir tous les champs", "Champs incomplet", MessageBoxButton.OK, MessageBoxImage.Warning);
-             }
-         }*/
-
     }
 }

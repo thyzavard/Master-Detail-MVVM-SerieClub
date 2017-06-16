@@ -367,6 +367,12 @@ namespace Projet.Service.Fonctions
         public static void supprSerie(string nom)
         {
             con.Open();
+            SqlCommand cmdNote = new SqlCommand("Delete from NoteSerie where NomSerie ='" + nom + "' ", con);
+            cmdNote.ExecuteNonQuery();
+            SqlCommand cmdComm = new SqlCommand("Delete from Commentaire where NomSerie ='" + nom + "' ", con);
+            cmdComm.ExecuteNonQuery();
+            SqlCommand cmdSerieUser = new SqlCommand("Delete from UtilisateurSerie where IdSerie ='" + nom + "'", con);
+            cmdSerieUser.ExecuteNonQuery();
             SqlCommand cmd = new SqlCommand("Delete from Serie where Nom='" + nom + "' ", con);
             cmd.ExecuteNonQuery();
             con.Close();
@@ -622,22 +628,6 @@ namespace Projet.Service.Fonctions
             cmd.ExecuteNonQuery();
             con.Close();
         }
-        
-        /*public static List<string> returnSerieUtilisateur(string pseudo)
-        {
-            List<string> list = new List<string>();
-            con.Open();
-            var command = new SqlCommand("Select IdSerie from UtilisateurSerie where IdUtilisateur='" + pseudo + "'", con);
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    list.Add(reader.GetString(0));
-                }
-            }
-            con.Close();
-            return list;
-        }*/
 
         /// <summary>
         /// Retourne une liste de toutes les séries ajouter en favoris de l'utilisateur passé en paramètre
@@ -694,6 +684,12 @@ namespace Projet.Service.Fonctions
                 dr.Read();
                 serie.ImageSerie = new BitmapImage(new Uri($"{AppDomain.CurrentDomain.BaseDirectory}/ImagesSerie/{dr.GetString(0)}"));
                 dr.Close();
+                //Banniere série
+                SqlCommand cmdBann = new SqlCommand("Select PathBanniere from Serie where Nom='" + list[i] + "'", con);
+                dr = cmdBann.ExecuteReader();
+                dr.Read();
+                serie.Banniereserie = new BitmapImage(new Uri($"{AppDomain.CurrentDomain.BaseDirectory}/ImagesSerie/{dr.GetString(0)}"));
+                dr.Close();
                 //Commentaire
                 using (var cmd = new SqlCommand("Select * from Commentaire where NomSerie='" + list[i] + "'", con))
                 {
@@ -709,6 +705,12 @@ namespace Projet.Service.Fonctions
                         }
                     }
                 }
+                //Note
+                var cmdNote = new SqlCommand("Select Note from Serie where Nom='" + list[i] + "'", con);
+                dr = cmdNote.ExecuteReader();
+                dr.Read();
+                serie.note = dr.GetInt32(0);
+                dr.Close();
                 serieUser.Add(serie);
             }
             con.Close();
@@ -777,6 +779,14 @@ namespace Projet.Service.Fonctions
             }
             con.Close();
             return com;
+        }
+
+        public static void supprimerCommentaire(Commentaire com)
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("Delete from Commentaire where NomSerie='" + com.nomSerie + "' and Commentaire='" + com.commentaire + "'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
         }
         #endregion
 

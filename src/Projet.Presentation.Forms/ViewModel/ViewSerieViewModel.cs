@@ -32,7 +32,8 @@ namespace Projet.Presentation.Forms.ViewModel
         private string _entetecommentaire;
         private BitmapImage _sourceImageCouverture;
         private Serie serieglobal;
-
+        private bool _isVisibleButtonSuppr;
+        private Commentaire _selectedCommentaire;
         #endregion
 
         #region Public 
@@ -183,6 +184,10 @@ namespace Projet.Presentation.Forms.ViewModel
                 NotifyPropertyChanged(nameof(SourceImageCouverture));
             }
         }
+
+        public bool IsVisibleButtonSuppr { get { return _isVisibleButtonSuppr; } set { _isVisibleButtonSuppr = value; NotifyPropertyChanged(nameof(IsVisibleButtonSuppr)); } }
+
+        public Commentaire SelectedCommentaire { get { return _selectedCommentaire; } set { _selectedCommentaire = value; NotifyPropertyChanged(nameof(SelectedCommentaire)); } }
         #endregion
 
         #region Command
@@ -190,8 +195,9 @@ namespace Projet.Presentation.Forms.ViewModel
         public RelayCommand EnvoyerCommentaireCommand { get; private set; }
         public RelayCommand NoterSerieCommand { get; private set; }
         public RelayCommand RetourArriereCommand { get; private set; }
+        public RelayCommand SupprimerCommentaireCommand { get; private set; }
         #endregion
-        
+
         #region SourceImage
         private string _source1;
         public string Source1 { get { return _source1; } set { _source1 = value; NotifyPropertyChanged(nameof(Source1)); } }
@@ -222,6 +228,8 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private string _source10;
         public string Source10 { get { return _source10; } set { _source10 = value; NotifyPropertyChanged(nameof(Source10)); } }
+
+
         #endregion
 
         public ViewSerieViewModel(Serie serie)
@@ -231,6 +239,7 @@ namespace Projet.Presentation.Forms.ViewModel
             EnvoyerCommentaireCommand = new RelayCommand(OnEnvoyerCommentaire, CanExecuteEnvoyerCommentaire);
             NoterSerieCommand = new RelayCommand(OnNoterSerie, CanExecuteNoterSerie);
             RetourArriereCommand = new RelayCommand(OnRetourArriere, CanExecuteRetourArriere);
+            SupprimerCommentaireCommand = new RelayCommand(OnSupprimerCommentaire, CanExecuteSupprimerCommentaire);
 
             if (!GestionBDD.checkSiDejaNoter(serieglobal.nom, _user.Pseudo)) { Note = GestionBDD.returnNoteUserSerie(serie.nom, _user.Pseudo); }
             else { Note = 0; }
@@ -251,11 +260,27 @@ namespace Projet.Presentation.Forms.ViewModel
             if (GestionBDD.checkSiSerieAjouter(_user.Pseudo, serie.nom)) { AjoutOuSupprFav = "Ajouter au favoris"; }
             else { AjoutOuSupprFav = "Supprimer des favoris"; }
 
+            IsVisibleButtonSuppr = _user.Modo;
 
             //Gestion barre de notation
             setSource();
 
             setTitreCommentaire();
+        }
+
+        private void OnSupprimerCommentaire(object obj)
+        {
+            if(SelectedCommentaire != null)
+            {
+                GestionBDD.supprimerCommentaire(SelectedCommentaire);
+                ListCommentaireSerie.Remove(SelectedCommentaire);
+                MessageBox.Show("Commentaire supprimé !", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private bool CanExecuteSupprimerCommentaire(object obj)
+        {
+            return true;
         }
 
         public void setTitreCommentaire()

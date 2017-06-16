@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using GalaSoft.MvvmLight;
+using Microsoft.Win32;
 using Projet.Entite.Class;
 using Projet.Presentation.Forms.Commands;
 using Projet.Presentation.Forms.Events;
@@ -15,7 +16,7 @@ using System.Windows.Media.Imaging;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
-    public class WindowAddViewModel : BaseViewModel
+    public class WindowAddViewModel : ObservableObject
     {
         #region private
         private List<string> _genresource;
@@ -79,10 +80,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _genresource;
             }
-            set
-            {
-                _genresource = value;
-            }
+            set { Set(() => GenreSource, ref _genresource, value); }
         }
 
         public string NomSerie
@@ -91,12 +89,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _nomserie;
             }
-            set
-            {
-                _nomserie = value;
-                AjouterSerieCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(NomSerie));
-            }
+            set { Set(() => NomSerie, ref _nomserie, value); AjouterSerieCommand.RaiseCanExecuteChanged(); }
         }
 
         public string DescriptionSerie
@@ -105,12 +98,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _descriptionserie;
             }
-            set
-            {
-                _descriptionserie = value;
-                AjouterSerieCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(DescriptionSerie));
-            }
+            set { Set(() => DescriptionSerie, ref _descriptionserie, value); AjouterSerieCommand.RaiseCanExecuteChanged(); }
         }
         public string ProducteurSerie
         {
@@ -118,12 +106,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _producteurserie;
             }
-            set
-            {
-                _producteurserie = value;
-                AjouterSerieCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(ProducteurSerie));
-            }
+            set { Set(() => ProducteurSerie, ref _producteurserie, value); AjouterSerieCommand.RaiseCanExecuteChanged(); }
         }
         public string DureeMoyenneSerie
         {
@@ -131,12 +114,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _dureemoyenneserie;
             }
-            set
-            {
-                _dureemoyenneserie = value;
-                AjouterSerieCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(DureeMoyenneSerie));
-            }
+            set { Set(() => DureeMoyenneSerie, ref _dureemoyenneserie, value); AjouterSerieCommand.RaiseCanExecuteChanged(); }
         }
 
         public string SelectGenre
@@ -145,12 +123,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _selectgenre;
             }
-            set
-            {
-                _selectgenre = value;
-                AjouterSerieCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(SelectGenre));
-            }
+            set { Set(() => SelectGenre, ref _selectgenre, value); AjouterSerieCommand.RaiseCanExecuteChanged(); }
         }
 
         public List<string> Listserie
@@ -159,11 +132,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _listserie;
             }
-            set
-            {
-                _listserie = value;
-                NotifyPropertyChanged(nameof(Listserie));
-            }
+            set { Set(() => Listserie, ref _listserie, value); }
         }
         public string SelectSerie
         {
@@ -171,16 +140,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _selectserie;
             }
-            set
-            {
-                _selectserie = value;
-                ParcourirImageUpdateCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(SelectSerie));
-                if(SelectSerie != null)
-                {
-                    remplirSerieModif();
-                }
-            }
+            set { Set(() => SelectSerie, ref _selectserie, value); ParcourirImageUpdateCommand.RaiseCanExecuteChanged(); if (SelectSerie != null) { remplirSerieModif(); } }
         }
 
         public string Descriptionseriemodif
@@ -189,12 +149,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _descriptionseriemodif;
             }
-            set
-            {
-                _descriptionseriemodif = value;
-                ModifierSerieCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(Descriptionseriemodif));
-            }
+            set { Set(() => Descriptionseriemodif, ref _descriptionseriemodif, value); ModifierSerieCommand.RaiseCanExecuteChanged(); }
         }
         public string Producteurseriemodif
         {
@@ -202,12 +157,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _producteurseriemodif;
             }
-            set
-            {
-                _producteurseriemodif = value;
-                ModifierSerieCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(Producteurseriemodif));
-            }
+            set { Set(() => Producteurseriemodif, ref _producteurseriemodif, value); ModifierSerieCommand.RaiseCanExecuteChanged(); }
         }
         public string Dureemoyenneseriemodif
         {
@@ -215,12 +165,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _dureemoyenneseriemodif;
             }
-            set
-            {
-                _dureemoyenneseriemodif = value;
-                ModifierSerieCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(Dureemoyenneseriemodif));
-            }
+            set { Set(() => Dureemoyenneseriemodif, ref _dureemoyenneseriemodif, value); ModifierSerieCommand.RaiseCanExecuteChanged(); }
         }
         public string Selectgenremodif
         {
@@ -228,26 +173,18 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _selectgenremodif;
             }
-            set
-            {
-                _selectgenremodif = value;
-                ModifierSerieCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(Selectgenremodif));
-            }
+            set { Set(() => Selectgenremodif, ref _selectgenremodif, value); ModifierSerieCommand.RaiseCanExecuteChanged(); }
         }
 
-        public List<string> ListPseudo { get { return _listpseudo; } set { _listpseudo = value; } }
+        public List<string> ListPseudo { get { return _listpseudo; } set { Set(() => ListPseudo, ref _listpseudo, value); } }
+
         public string Selectseriesuppr
         {
             get
             {
                 return _selectseriesuppr;
             }
-            set
-            {
-                _selectseriesuppr = value;
-                SupprimerSerieCommand.RaiseCanExecuteChanged();
-            }
+            set { Set(() => Selectseriesuppr, ref _selectseriesuppr, value); SupprimerSerieCommand.RaiseCanExecuteChanged(); }
         }
 
         public string Selectpseudo
@@ -256,13 +193,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _selectpseudo;
             }
-            set
-            {
-                _selectpseudo = value;
-                upAdminCommand.RaiseCanExecuteChanged();
-                downAdminCommand.RaiseCanExecuteChanged();
-            }
-
+            set { Set(() => Selectpseudo, ref _selectpseudo, value); upAdminCommand.RaiseCanExecuteChanged(); downAdminCommand.RaiseCanExecuteChanged(); }
         }
 
         public BitmapImage ImageSerieCourante
@@ -271,11 +202,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _imageSerieCourante;
             }
-            set
-            {
-                _imageSerieCourante = value;
-                NotifyPropertyChanged(nameof(ImageSerieCourante));
-            }
+            set { Set(() => ImageSerieCourante, ref _imageSerieCourante, value); }
         }
 
         public BitmapImage ImageSerieModif
@@ -284,11 +211,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _imageSerieModif;
             }
-            set
-            {
-                _imageSerieModif = value;
-                NotifyPropertyChanged(nameof(ImageSerieModif));
-            }
+            set { Set(() => ImageSerieModif, ref _imageSerieModif, value); }
         }
 
         public string SourceImageModif
@@ -297,13 +220,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _sourceImageModif;
             }
-            set
-            {
-                _sourceImageModif = value;
-                ModifierSerieCommand.RaiseCanExecuteChanged();
-                ParcourirImageUpdateCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(SourceImageModif));
-            }
+            set { Set(() => SourceImageModif, ref _sourceImageModif, value); ModifierSerieCommand.RaiseCanExecuteChanged(); ParcourirImageUpdateCommand.RaiseCanExecuteChanged(); }
         }
 
         public string SourceImage
@@ -312,13 +229,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _sourceImage;
             }
-            set
-            {
-                _sourceImage = value;
-                AjouterSerieCommand.RaiseCanExecuteChanged();
-                ParcourirImageAddCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(SourceImage));
-            }
+            set { Set(() => SourceImage, ref _sourceImage, value); AjouterSerieCommand.RaiseCanExecuteChanged(); ParcourirImageAddCommand.RaiseCanExecuteChanged(); }
         }
 
         public string NbSaison
@@ -327,12 +238,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _nbSaison;
             }
-            set
-            {
-                _nbSaison = value;
-                AjouterSerieCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(NbSaison));
-            }
+            set { Set(() => NbSaison, ref _nbSaison, value); AjouterSerieCommand.RaiseCanExecuteChanged(); }
         }
 
         public string NbSaisonModif
@@ -341,35 +247,18 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _nbSaisonModif;
             }
-            set
-            {
-                _nbSaisonModif = value;
-                ModifierSerieCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(NbSaisonModif));
-            }
+            set { Set(() => NbSaisonModif, ref _nbSaisonModif, value); ModifierSerieCommand.RaiseCanExecuteChanged(); }
         }
 
         public string SourceImageBanniere
         {
             get { return _sourceImageBanniere; }
-            set
-            {
-                _sourceImageBanniere = value;
-                AjouterSerieCommand.RaiseCanExecuteChanged();
-                ParcourirImageBanniereAddCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(SourceImageBanniere));
-            }
+            set { Set(() => SourceImageBanniere, ref _sourceImageBanniere, value); AjouterSerieCommand.RaiseCanExecuteChanged(); ParcourirImageBanniereAddCommand.RaiseCanExecuteChanged(); }
         }
         public string SourceImageModifBanniere
         {
             get { return _sourceImageModifBanniere; }
-            set
-            {
-                _sourceImageModifBanniere = value;
-                AjouterSerieCommand.RaiseCanExecuteChanged();
-                ParcourirImageBanniereUpdateCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(SourceImageModifBanniere));
-            }
+            set { Set(() => SourceImageModifBanniere, ref _sourceImageModifBanniere, value); AjouterSerieCommand.RaiseCanExecuteChanged(); ParcourirImageBanniereUpdateCommand.RaiseCanExecuteChanged(); }
         }
         #endregion
 
@@ -381,12 +270,13 @@ namespace Projet.Presentation.Forms.ViewModel
             chargerListSerie();
             ListPseudo = GestionBDD.returnToutUtilisateur();
 
+            //Chargement de tous les enum 'Genre' dans la liste 'GenreSource' pour être affiché dans les listBox
             GenreSource = new List<string>();
-            GenreSource.Add("Action");
-            GenreSource.Add("Comedie");
-            GenreSource.Add("Drame");
-            GenreSource.Add("Fantastique");
-            GenreSource.Add("Horreur");
+            Array array = Enum.GetValues(typeof(Genre));
+            foreach(object obj  in array)
+            {
+                GenreSource.Add(obj.ToString());
+            }
 
             AjouterSerieCommand = new RelayCommand(OnAjouterSerie, CanexecuteAjouterSerie);
             ModifierSerieCommand = new RelayCommand(OnModifierSerie, CanexecuteModifierSerie);
@@ -416,7 +306,14 @@ namespace Projet.Presentation.Forms.ViewModel
 
         private bool CanExecuteParcourirImageBanniereUpdate(object obj)
         {
-            return true;
+            if (SelectSerie == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         private void OnParcourirImageBanniereAdd(object obj)
@@ -600,7 +497,7 @@ namespace Projet.Presentation.Forms.ViewModel
                         Listserie.RemoveAt(i);
                     }
                 }
-                RefreshAcceuilEvent.GetInstance().OnRefreshAcceuilHandler(EventArgs.Empty);
+                RefreshEvent.GetInstance().OnRefreshAcceuilHandler(EventArgs.Empty);
                 chargerListSerie();
                 MessageBox.Show("Série supprimé");
 
@@ -642,7 +539,7 @@ namespace Projet.Presentation.Forms.ViewModel
                                 File.Copy(_openFileBanniereModif.FileName, Path.Combine(_path, _fileNameBanniereModif));
                                 GestionBDD.updateSerie(SelectSerie, Descriptionseriemodif, int.Parse(Dureemoyenneseriemodif), Producteurseriemodif, Selectgenremodif, _fileNameModif, int.Parse(NbSaisonModif), _fileNameBanniereModif);
                                 MessageBox.Show("Modification enrgistrée");
-                                RefreshAcceuilEvent.GetInstance().OnRefreshAcceuilHandler(EventArgs.Empty);
+                                RefreshEvent.GetInstance().OnRefreshAcceuilHandler(EventArgs.Empty);
                                 setChampModifNull();
                             }
                         }
@@ -651,7 +548,7 @@ namespace Projet.Presentation.Forms.ViewModel
                     {
                         GestionBDD.updateSeriesansImage(SelectSerie, Descriptionseriemodif, int.Parse(Dureemoyenneseriemodif), Producteurseriemodif, Selectgenremodif, int.Parse(NbSaisonModif));
                         MessageBox.Show("Modification enrgistrée");
-                        RefreshAcceuilEvent.GetInstance().OnRefreshAcceuilHandler(EventArgs.Empty);
+                        RefreshEvent.GetInstance().OnRefreshAcceuilHandler(EventArgs.Empty);
                         setChampModifNull();
                     }
                 }
@@ -721,7 +618,7 @@ namespace Projet.Presentation.Forms.ViewModel
                             MessageBox.Show("Ajout enregistrée", "Confirmation", MessageBoxButton.OK);
 
                             //Déclenchement de l'événement pour mettre à jour le viewAccueil
-                            RefreshAcceuilEvent.GetInstance().OnRefreshAcceuilHandler(EventArgs.Empty);
+                            RefreshEvent.GetInstance().OnRefreshAcceuilHandler(EventArgs.Empty);
 
                             setChampNullAjouter();
                         }
