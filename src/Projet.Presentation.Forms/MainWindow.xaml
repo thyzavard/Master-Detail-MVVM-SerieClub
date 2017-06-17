@@ -5,25 +5,55 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Projet.Presentation.Forms"
         xmlns:converter="clr-namespace:Projet.Presentation.Forms.Converters"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Série Club" Height="240" Width="300" Icon="Images/logoSerieClub.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FocusManager.FocusedElement="{Binding ElementName=textboxFocus}">
+        Title="Série Club" Height="280" Width="350" Icon="Images/logoSerieClub.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FocusManager.FocusedElement="{Binding ElementName=textboxFocus}">
     <Grid>
         <StackPanel>
-            <Label HorizontalAlignment="Center">Identifiant</Label>
-            <TextBox x:Name="textboxFocus" Width="120" MaxLength="15" Text="{Binding Identifiant,UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <Label HorizontalAlignment="Center">Mot de passe</Label>
-            <TextBox Name="text" Width="120" MaxLength="20" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <materialDesign:PackIcon Kind="AccountBoxOutline" Margin="0,5,0,0"/>
+                <Label>Identifiant</Label>
+            </StackPanel>
+
+            <TextBox x:Name="textboxFocus" Width="140" MaxLength="15" Text="{Binding Identifiant,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <materialDesign:PackIcon Kind="LockOutline" Margin="0,5,0,0"/>
+                <Label>Mot de passe</Label>
+            </StackPanel>
+            <TextBox Name="text" Width="140" MaxLength="20" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.InputBindings>
                     <KeyBinding Command="{Binding ConnexionCommand}" Key="Enter"/>
                 </TextBox.InputBindings>
             </TextBox>
-            <Button Margin="10" Width="75" BorderBrush="Green" Command="{Binding ConnexionCommand}">Confirmer</Button>
+            <Button Margin="10" Width="120" Command="{Binding ConnexionCommand}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Login" Margin="0,2,0,0"/>
+                        <TextBlock Text="Confirmer"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
             <Grid>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20">
-                    <Button Margin="5" BorderBrush="Red" Width="75" Command="{Binding QuitCommand}">Quitter</Button>
+                    <Button Margin="5" Width="110" Command="{Binding QuitCommand}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="ExitToApp" Margin="0,2,0,0"/>
+                                <TextBlock Text="Quitter"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
                 </StackPanel>
                 <TextBlock HorizontalAlignment="Right" Margin="20">
-                    <Button Margin="5" BorderBrush="Orange" Width="75" Command="{Binding InscrireCommand}" >S'inscrire</Button>
+                    <Button Margin="5" Width="110" Command="{Binding InscrireCommand}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="PlusBox" Margin="0,2,0,0"/>
+                                <TextBlock Text="S'inscrire"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
                 </TextBlock>
             </Grid>
         </StackPanel>

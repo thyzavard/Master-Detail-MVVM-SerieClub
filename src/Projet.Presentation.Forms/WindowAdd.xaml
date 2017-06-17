@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Projet.Presentation.Forms"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Panneau de configuration" Height="510" Width="310" Icon="Images/logoSerieClub.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Panneau de configuration" Height="510" Width="330" Icon="Images/logoSerieClub.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <TabControl>
             <TabItem Header="Ajouter">
@@ -14,12 +15,12 @@
                         <Label HorizontalAlignment="Center">Image de la série</Label>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Image Height="100" Width="75" Source="{Binding SourceImage, Mode=TwoWay}"></Image>
-                            <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageAddCommand}">Parcourir...</Button>
+                            <Button Width="110" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageAddCommand}">Parcourir...</Button>
                         </StackPanel>
                         <Label HorizontalAlignment="Center">Bannière de la série</Label>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Image Height="75" Width="120" Source="{Binding SourceImageBanniere, Mode=TwoWay}"></Image>
-                            <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageBanniereAddCommand}">Parcourir...</Button>
+                            <Button Width="110" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageBanniereAddCommand}">Parcourir...</Button>
                         </StackPanel>
                         <Label HorizontalAlignment="Center">Nom de la série</Label>
                         <TextBox Width="120" MaxLength="80" Text="{Binding NomSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
@@ -36,10 +37,24 @@
 
                         <Grid>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
-                                <Button Margin="5" BorderBrush="Red" Width="75" Command="{Binding QuitCommand}">Retour</Button>
+                                <Button Margin="5" Width="110" Command="{Binding QuitCommand}">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="ArrowLeft" Margin="0,2,0,0"/>
+                                            <TextBlock Text="Retour"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
                             </StackPanel>
                             <StackPanel HorizontalAlignment="Right" Margin="10">
-                                <Button Margin="5" BorderBrush="Green" Width="75" Command="{Binding AjouterSerieCommand}">Ajouter</Button>
+                                <Button Margin="5" Width="110" Command="{Binding AjouterSerieCommand}">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="PlusCircle" Margin="0,2,0,0"/>
+                                            <TextBlock Text="Ajouter"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
                             </StackPanel>
                         </Grid>
                     </StackPanel>
@@ -55,12 +70,12 @@
                         <Label x:Name="l_img" HorizontalAlignment="Center" Margin="0,15,0,0">Image de la série</Label>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Image Height="100" Width="75" Source="{Binding SourceImageModif, Mode=TwoWay}"></Image>
-                            <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageUpdateCommand}">Parcourir...</Button>
+                            <Button Width="110" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageUpdateCommand}">Parcourir...</Button>
                         </StackPanel>
                         <Label HorizontalAlignment="Center">Bannière de la série</Label>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Image Height="75" Width="120" Source="{Binding SourceImageModifBanniere, Mode=TwoWay}"></Image>
-                            <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageBanniereUpdateCommand}">Parcourir...</Button>
+                            <Button Width="110" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageBanniereUpdateCommand}">Parcourir...</Button>
                         </StackPanel>
                         <Label HorizontalAlignment="Center">Description</Label>
                         <TextBox Width="200" Height="50" MaxLength="1000" Text="{Binding Descriptionseriemodif, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"/>
@@ -77,10 +92,24 @@
 
                         <Grid>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
-                                <Button Margin="5" BorderBrush="Red" Width="75" Command="{Binding QuitCommand}">Retour</Button>
+                                <Button Margin="5" Width="110" Command="{Binding QuitCommand}">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="ArrowLeft" Margin="0,2,0,0"/>
+                                            <TextBlock Text="Retour"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
                             </StackPanel>
                             <StackPanel HorizontalAlignment="Right" Margin="10">
-                                <Button Margin="5" BorderBrush="Green" Width="75" Command="{Binding ModifierSerieCommand}" >Modifier</Button>
+                                <Button Margin="5" Width="110" Command="{Binding ModifierSerieCommand}">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="Pencil" Margin="0,2,0,0"/>
+                                            <TextBlock Text="Modifier"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
                             </StackPanel>
                         </Grid>
                     </StackPanel>
@@ -95,10 +124,24 @@
 
                     <Grid Margin="0,140,0,0">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
-                            <Button Margin="5" BorderBrush="Green" Width="75" Command="{Binding QuitCommand}">Retour</Button>
+                            <Button Margin="5" Width="120" Command="{Binding QuitCommand}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="ArrowLeft" Margin="0,2,0,0"/>
+                                        <TextBlock Text="Retour"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
                         </StackPanel>
                         <StackPanel HorizontalAlignment="Right" Margin="10">
-                            <Button Margin="5" BorderBrush="Red" Width="75" Command="{Binding SupprimerSerieCommand}">Supprimer</Button>
+                            <Button Margin="5" Width="120" Command="{Binding SupprimerSerieCommand}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Delete" Margin="0,2,0,0"/>
+                                        <TextBlock Text="Supprimer"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
@@ -107,17 +150,38 @@
             <TabItem Header="Modération">
                 <StackPanel Margin="0,150,0,0">
                     <Label HorizontalAlignment="Center">Choisir le pseudo de l'utilisateur</Label>
-                    <ComboBox Width="120" ItemsSource="{Binding ListPseudo}" SelectedItem="{Binding Selectpseudo}"></ComboBox>
+                    <ComboBox Width="150" ItemsSource="{Binding ListPseudo}" SelectedItem="{Binding Selectpseudo}"></ComboBox>
 
                     <Grid Margin="0,10,0,0">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
-                            <Button Margin="5" BorderBrush="Red" Width="75" Command="{Binding downAdminCommand}">Destituer</Button>
+                            <Button Margin="5" Width="125" Command="{Binding downAdminCommand}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="ArrowDownBold" Margin="0,2,0,0"/>
+                                        <TextBlock Text="Destituer"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
                         </StackPanel>
                         <StackPanel HorizontalAlignment="Right" Margin="10">
-                            <Button Margin="5" BorderBrush="Green" Width="75" Command="{Binding upAdminCommand}" >Promouvoir</Button>
+                            <Button  Margin="5" Width="125" Command="{Binding upAdminCommand}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="ArrowUpBold" Margin="0,2,0,0"/>
+                                        <TextBlock Text="Promouvoir"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
                         </StackPanel>
                     </Grid>
-                    <Button Width="75" Margin="0,140,0,0" BorderBrush="Red" Command="{Binding QuitCommand}">Retour</Button>
+                    <Button Width="110" Margin="0,120,0,0" Command="{Binding QuitCommand}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="ArrowLeft" Margin="0,2,0,0"/>
+                                <TextBlock Text="Retour"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
                 </StackPanel>
             </TabItem>
         </TabControl>

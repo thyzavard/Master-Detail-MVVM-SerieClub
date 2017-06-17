@@ -5,13 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Projet.Presentation.Forms"
              xmlns:converter="clr-namespace:Projet.Presentation.Forms.Converters"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="569" d:DesignWidth="742" FontSize="18">
 
     <UserControl.Resources>
         <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -23,7 +24,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Background="#dd403c">
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Background="#f44236">
             <Grid>
                 <StackPanel Orientation="Horizontal">
                     <Image Height="50" Width="50" Margin="10" Source="/Images/flecheretourgrise.png" Cursor="Hand">
@@ -54,14 +55,22 @@
                                 <StackPanel Margin="30,0,30,0">
                                     <Grid>
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                            <Button FontSize="12" BorderBrush="Blue" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40" Command="{Binding DataContext.InfoSerieCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" Content="Infos"/>
+                                            <Button HorizontalAlignment="Right" Command="{Binding DataContext.InfoSerieCommand, RelativeSource={RelativeSource AncestorType=ListBox}}">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="InformationVariant"/>
+                                                </Button.Content>
+                                            </Button>
                                         </StackPanel>
                                         <StackPanel HorizontalAlignment="Right">
-                                            <Button FontSize="12" BorderBrush="Orange" Margin="0,5,0,5" HorizontalAlignment="Right" Width="40" Command="{Binding DataContext.AjouterSerieCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" Content="Add"/>
+                                            <Button HorizontalAlignment="Right" Command="{Binding DataContext.AjouterSerieCommand, RelativeSource={RelativeSource AncestorType=ListBox}}">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="PlusCircleOutline"/>
+                                                </Button.Content>
+                                            </Button>
                                         </StackPanel>
                                     </Grid>
 
-                                    <Image Height="130" Width="90" Source="{Binding ImageSerie}"/>
+                                    <Image Height="130" Width="90" Source="{Binding ImageSerie}" Margin="0,5,0,0"/>
                                     <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"  TextWrapping="Wrap" Width="100"/>
                                 </StackPanel>
                             </Grid>
@@ -75,6 +84,6 @@
                 </StackPanel>
             </Grid>
         </ScrollViewer>
-        
+
     </Grid>
 </UserControl>

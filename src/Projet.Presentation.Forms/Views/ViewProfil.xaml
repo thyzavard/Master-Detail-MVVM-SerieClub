@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Projet.Presentation.Forms"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="569" d:DesignWidth="742" FontSize="20">
 
@@ -26,17 +27,17 @@
                 <ImageBrush ImageSource="{Binding SourceImageCouverture}" Stretch="UniformToFill" Opacity="0.9"></ImageBrush>
             </StackPanel.Background>
 
-                <Image Width="150" Height="150" Margin="80,0,20,0" Source="{Binding ImageUserCourant}"/>
+            <Image Width="150" Height="150" Margin="80,0,20,0" Source="{Binding ImageUserCourant}"/>
             <StackPanel VerticalAlignment="Center">
                 <TextBlock Text="{Binding CurrentPseudo}" FontSize="30" FontWeight="UltraBlack"></TextBlock>
                 <TextBlock Text="{Binding CurrentDescription}"></TextBlock>
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Background="#dd403c">
+        <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Background="#f44236">
             <TextBlock Text="{Binding TitreEnFonctionDuNbDeSerie}" HorizontalAlignment="Center"></TextBlock>
         </StackPanel>
-        
+
 
 
         <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto">
@@ -53,14 +54,22 @@
                         <StackPanel Margin="30,0,30,0">
                             <Grid>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Button FontSize="12" BorderBrush="Red" HorizontalAlignment="Stretch" Width="20" Command="{Binding DataContext.EnleverSerieCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" Content="x"/>
+                                    <Button HorizontalAlignment="Stretch" Command="{Binding DataContext.EnleverSerieCommand, RelativeSource={RelativeSource AncestorType=ListBox}}">
+                                        <Button.Content>
+                                            <materialDesign:PackIcon Kind="Delete"/>
+                                        </Button.Content>
+                                    </Button>
                                 </StackPanel>
                                 <StackPanel HorizontalAlignment="Right">
-                                    <Button FontSize="12" BorderBrush="Blue" HorizontalAlignment="Stretch" Width="40" Command="{Binding DataContext.InfoSerieCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" Content="Infos"/>
+                                    <Button HorizontalAlignment="Stretch" Command="{Binding DataContext.InfoSerieCommand, RelativeSource={RelativeSource AncestorType=ListBox}}">
+                                        <Button.Content>
+                                            <materialDesign:PackIcon Kind="InformationVariant"/>
+                                        </Button.Content>
+                                    </Button>
                                 </StackPanel>
                             </Grid>
 
-                            <Image Height="130" Width="90" Source="{Binding ImageSerie}"/>
+                            <Image Height="130" Width="90" Source="{Binding ImageSerie}" Margin="0,5,0,0"/>
                             <TextBlock Text="{Binding nom}" HorizontalAlignment="Left" FontSize="15" FontWeight="DemiBold"  TextWrapping="Wrap" Width="100"/>
                         </StackPanel>
 

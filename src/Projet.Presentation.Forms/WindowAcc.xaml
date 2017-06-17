@@ -7,6 +7,7 @@
         xmlns:viewmodels="clr-namespace:Projet.Presentation.Forms.ViewModel"
         xmlns:views="clr-namespace:Projet.Presentation.Forms"
         xmlns:converter="clr-namespace:Projet.Presentation.Forms.Converters"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
          Title="Serie Club" Height="600" Width="1000" Icon="Images/logoSerieClub.ico" FontSize="16" WindowStartupLocation="CenterScreen">
 
@@ -51,7 +52,7 @@
                 <Button Margin="20" Command="{Binding AdministrationCommand}" Visibility="{Binding IsVisibleAdmin, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
-                            <Image Height="20" Width="20" Source="Images/administrateur.png"/>
+                            <materialDesign:PackIcon Kind="Wrench" Margin="0,2,0,0"/>
                             <TextBlock Margin="10,0,0,0" Text="Administration"/>
                         </StackPanel>
                     </Button.Content>
@@ -62,7 +63,7 @@
                     <TextBox.InputBindings>
                         <KeyBinding Command="{Binding RechercherCommand}" Key="Capital"/>
                     </TextBox.InputBindings>
-                    
+
 
                     <TextBox.Style>
                         <Style TargetType="TextBox">
@@ -84,15 +85,29 @@
                         </Style>
                     </TextBox.Style>
                 </TextBox>
-                
+
                 <TextBlock HorizontalAlignment="Center" Text="{Binding Pseudo}" Foreground="White"></TextBlock>
-                <Button Margin="20" Command="{Binding OuvrirAcceuilCommand}">Accueil</Button>
-                <Button Margin="20" Command="{Binding OuvrirProfilCommand}">Profil</Button>
-                <Button Margin="20" FontSize="15" Command="{Binding PersoProfilCommand}">Personnaliser le profil</Button>
-                <Button Margin="20" BorderBrush="red" Command="{Binding QuitCommand}">
+                <Button Margin="20" Command="{Binding OuvrirAcceuilCommand}">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
-                            <Image Width="20" Height="20" Source="Images/quit.png"/>
+                            <materialDesign:PackIcon Margin="0,2,0,0" Kind="Home"/>
+                            <TextBlock Text="Accueil" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Margin="20" Command="{Binding OuvrirProfilCommand}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Account" Margin="0,2,0,0"/>
+                            <TextBlock Margin="5,0,0,0" Text="Profil"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Margin="20" FontSize="12" Command="{Binding PersoProfilCommand}">Personnaliser le profil</Button>
+                <Button Margin="20" Command="{Binding QuitCommand}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ExitToApp" Margin="0,2,0,0"/>
                             <TextBlock Margin="5,0,0,0" Text="Se déconnecter"/>
                         </StackPanel>
                     </Button.Content>

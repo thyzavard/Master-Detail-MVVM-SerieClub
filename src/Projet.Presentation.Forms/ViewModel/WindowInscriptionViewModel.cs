@@ -69,7 +69,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _selectSexe;
             }
-            set { Set(() => SelectSexe, ref _selectSexe, value); }
+            set { Set(() => SelectSexe, ref _selectSexe, value); InscriptionCommand.RaiseCanExecuteChanged(); }
         }
         #endregion
 

@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Projet.Presentation.Forms"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Inscription" Height="290" Width="300" Icon="Images/logoSerieClub.ico" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Inscription" Height="320" Width="300" Icon="Images/logoSerieClub.ico" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <StackPanel>
             <Label HorizontalAlignment="Center">Identifiant</Label>
@@ -19,10 +20,24 @@
 
             <Grid>
                 <StackPanel Orientation="Horizontal"  Margin="20" VerticalAlignment="Center">
-                    <Button  Margin="5" Width="75" BorderBrush="Red" Command="{Binding QuitCommand}">Retour</Button>
+                    <Button  Margin="5" Width="110" Command="{Binding QuitCommand}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="ArrowLeft" Margin="0,2,0,0"/>
+                                <TextBlock Text="Retour"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
                 </StackPanel>
                 <TextBlock HorizontalAlignment="Right" Margin="20">
-                     <Button  Margin="5" Width="75" BorderBrush="Green" Command="{Binding InscriptionCommand}">S'inscrire</Button>
+                     <Button  Margin="5" Width="110" Command="{Binding InscriptionCommand}">
+                         <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="PlusBox" Margin="0,2,0,0"/>
+                                <TextBlock Text="S'inscrire"/>
+                            </StackPanel>
+                         </Button.Content>
+                     </Button>
                 </TextBlock>
             </Grid>
         </StackPanel>

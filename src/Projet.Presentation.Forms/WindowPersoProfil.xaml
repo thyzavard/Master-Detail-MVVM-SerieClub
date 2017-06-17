@@ -5,37 +5,52 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Projet.Presentation.Forms"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Personnaliser son profil" Height="380" Width="300" Icon="Images/logoSerieClub.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False">
+        Title="Personnaliser son profil" Height="380" Width="330" Icon="Images/logoSerieClub.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False">
     <Grid>
         <ScrollViewer>
             <StackPanel>
                 <Label HorizontalAlignment="Center">Photo de profil</Label>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Image Height="75" Width="75" Source="{Binding SourceImage}"/>
-                    <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageCommand}">Parcourir...</Button>
-            </StackPanel>
+                    <Button Width="110" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageCommand}">Parcourir...</Button>
+                </StackPanel>
 
-            <Label HorizontalAlignment="Center" Content="Photo de couverture"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Image Height="75" Width="135" Source="{Binding SourceImageCouverture}"/>
-                <Button Width="75" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageCouvertureCommand}">Parcourir...</Button>
-            </StackPanel>
-            
-            <Label HorizontalAlignment="Center">Description</Label>
-            <TextBox Width="200" Height="50" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" TextWrapping="Wrap"></TextBox>
-            <Label HorizontalAlignment="Center">Date de naissance</Label>
-            <DatePicker HorizontalAlignment="Center" SelectedDate="{Binding Path=SelectDate, Mode=TwoWay, TargetNullValue={x:Static System:DateTime.Now}}" />
-                
-            <Label HorizontalAlignment="Center">Sexe</Label>
-            <ComboBox Width="120" ItemsSource="{Binding Listsexe}" SelectedItem="{Binding SelectSexe}"></ComboBox>
+                <Label HorizontalAlignment="Center" Content="Photo de couverture"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Image Height="75" Width="135" Source="{Binding SourceImageCouverture}"/>
+                    <Button Width="110" Height="25" VerticalAlignment="Bottom" Margin="10" Command="{Binding ParcourirImageCouvertureCommand}">Parcourir...</Button>
+                </StackPanel>
+
+                <Label HorizontalAlignment="Center">Description</Label>
+                <TextBox Width="200" Height="50" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" TextWrapping="Wrap"></TextBox>
+                <Label HorizontalAlignment="Center">Date de naissance</Label>
+                <DatePicker HorizontalAlignment="Center" SelectedDate="{Binding Path=SelectDate, Mode=TwoWay, TargetNullValue={x:Static System:DateTime.Now}}" />
+
+                <Label HorizontalAlignment="Center">Sexe</Label>
+                <ComboBox Width="120" ItemsSource="{Binding Listsexe}" SelectedItem="{Binding SelectSexe}"></ComboBox>
 
                 <Grid>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20">
-                        <Button Margin="5" BorderBrush="Red" Width="75" Command="{Binding QuitCommand}">Retour</Button>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
+                        <Button Width="125" Command="{Binding QuitCommand}">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="ArrowLeft" Margin="0,2,0,0"/>
+                                    <TextBlock Text="Retour"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
                     </StackPanel>
-                    <StackPanel HorizontalAlignment="Right" Margin="20">
-                        <Button Margin="5" BorderBrush="Green" Width="75" Command="{Binding SauverModifProfilCommand}">Sauvegarder</Button>
+                    <StackPanel HorizontalAlignment="Right" Margin="10">
+                        <Button Width="125" Command="{Binding SauverModifProfilCommand}" FontSize="11">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Pencil" Margin="0,2,0,0"/>
+                                    <TextBlock Text="Sauvegarder"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
                     </StackPanel>
                 </Grid>
             </StackPanel>

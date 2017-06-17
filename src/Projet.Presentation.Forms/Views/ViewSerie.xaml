@@ -6,13 +6,14 @@
              xmlns:local="clr-namespace:Projet.Presentation.Forms"
              xmlns:viewmodel="clr-namespace:Projet.Presentation.Forms.ViewModel"
              xmlns:converter="clr-namespace:Projet.Presentation.Forms.Converters"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="569" d:DesignWidth="742" FontSize="16">
 
     <UserControl.Resources>
         <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -25,9 +26,9 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
+
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
-            
+
             <StackPanel.Background>
                 <ImageBrush ImageSource="{Binding SourceImageCouverture}" Stretch="UniformToFill" Opacity="0.9"></ImageBrush>
             </StackPanel.Background>
@@ -38,14 +39,14 @@
                 </Image.InputBindings>
             </Image>
 
-            <TextBlock Text="{Binding NomSerie}" HorizontalAlignment="Center"  FontSize="26" Foreground="#dd403c">
-                
+            <TextBlock Text="{Binding NomSerie}" HorizontalAlignment="Center"  FontSize="26">
+
             </TextBlock>
-            <TextBlock Text="{Binding NoteSerie}" HorizontalAlignment="Center" Margin="0,0,0,10" Foreground="#dd403c"/>
-            <Button Width="200" Height="35" FontSize="16" Command="{Binding AjouterSerieCommand}" Content="{Binding AjoutOuSupprFav}" Foreground="#dd403c"/>
+            <TextBlock Text="{Binding NoteSerie}" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+            <Button Width="200" Height="35" FontSize="16" Command="{Binding AjouterSerieCommand}" Content="{Binding AjoutOuSupprFav}"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Background="#dd403c"/>
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Background="#f44236"/>
 
         <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2" VerticalScrollBarVisibility="Auto" Background="#b1b0b8">
             <Grid>
@@ -89,9 +90,6 @@
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    
-                    <!--<TextBlock Text="{Binding Note}" HorizontalAlignment="Center"/>-->
-
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                         <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source1}"/>
                         <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source2}"/>
@@ -148,12 +146,20 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="30,15,30,30">
-                                <TextBlock Text="{Binding nomUtilisateur}" FontWeight="UltraBlack" VerticalAlignment="Center"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Comment" Margin="0,0,10,0"/>
+                                    <TextBlock Text="{Binding nomUtilisateur}" FontWeight="UltraBlack" VerticalAlignment="Center"/>
+                                </StackPanel>
+
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Button Content="X" BorderBrush="Red" Command="{Binding DataContext.SupprimerCommentaireCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" Visibility="{Binding DataContext.IsVisibleButtonSuppr, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=ListBox}}" ToolTip="Suppimer ce commentaire"/>
+                                    <Button BorderBrush="Red" Command="{Binding DataContext.SupprimerCommentaireCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" Visibility="{Binding DataContext.IsVisibleButtonSuppr, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=ListBox}}" ToolTip="Suppimer ce commentaire">
+                                        <Button.Content>
+                                            <materialDesign:PackIcon Kind="Delete"/>
+                                        </Button.Content>
+                                    </Button>
                                     <TextBlock Text="{Binding commentaire}" Margin="35,0,0,0" />
                                 </StackPanel>
-                                
+
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>

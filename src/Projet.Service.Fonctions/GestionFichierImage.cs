@@ -23,7 +23,7 @@ namespace Projet.Service.Fonctions
             List<string> fichierImage = new List<string>();
             string[] fichierSource = Directory.GetFiles(path);
 
-            for(int i = 0; i < fichierSource.Length; i++)
+            for (int i = 0; i < fichierSource.Length; i++)
             {
                 fichierImage.Add(fichierSource[i]);
             }
@@ -35,7 +35,7 @@ namespace Projet.Service.Fonctions
                     fichierASuppr.Add(fichierImage[y]);
                 }
             }
-            
+
             for (int o = 0; o < fichierASuppr.Count; o++)
             {
                 File.Delete(Path.Combine(path, fichierASuppr[o]));
@@ -53,7 +53,7 @@ namespace Projet.Service.Fonctions
             List<string> fichierImage = new List<string>();
             string[] fichierSource = Directory.GetFiles(path);
 
-            for(int i = 0; i < fichierSource.Length; i++)
+            for (int i = 0; i < fichierSource.Length; i++)
             {
                 fichierImage.Add(fichierSource[i]);
             }
@@ -82,7 +82,7 @@ namespace Projet.Service.Fonctions
             string pathUser = Path.Combine(Environment.CurrentDirectory, "Images");
             string pathSerie = Path.Combine(Environment.CurrentDirectory, "ImagesSerie");
 
-            
+
             try
             {
                 if (!Directory.Exists(pathUser))
@@ -97,13 +97,23 @@ namespace Projet.Service.Fonctions
                 if (!Directory.Exists(pathSerie))
                 {
                     Directory.CreateDirectory(pathSerie);
+                    File.Copy($@"{ConfigurationManager.AppSettings["PathImagesSerie"]}\prisonbreak.jpg", Path.Combine(pathSerie, "prisonbreak.jpg"));
+                    File.Copy($@"{ConfigurationManager.AppSettings["PathImagesSerie"]}\prisonbreakbanniere.jpg", Path.Combine(pathSerie, "prisonbreakbanniere.jpg"));
+                    File.Copy($@"{ConfigurationManager.AppSettings["PathImagesSerie"]}\scream.jpg", Path.Combine(pathSerie, "scream.jpg"));
+                    File.Copy($@"{ConfigurationManager.AppSettings["PathImagesSerie"]}\screambanniere.jpg", Path.Combine(pathSerie, "screambanniere.jpg"));
+                    File.Copy($@"{ConfigurationManager.AppSettings["PathImagesSerie"]}\sense8.jpg", Path.Combine(pathSerie, "sense8.jpg"));
+                    File.Copy($@"{ConfigurationManager.AppSettings["PathImagesSerie"]}\sense8banniere.jpg", Path.Combine(pathSerie, "sense8banniere.jpg"));
+                    File.Copy($@"{ConfigurationManager.AppSettings["PathImagesSerie"]}\tbbt.jpg", Path.Combine(pathSerie, "tbbt.jpg"));
+                    File.Copy($@"{ConfigurationManager.AppSettings["PathImagesSerie"]}\tbbtbanniere.jpg", Path.Combine(pathSerie, "tbbtbanniere.jpg"));
+                    File.Copy($@"{ConfigurationManager.AppSettings["PathImagesSerie"]}\vikings.jpg", Path.Combine(pathSerie, "vikings.jpg"));
+                    File.Copy($@"{ConfigurationManager.AppSettings["PathImagesSerie"]}\vikingsbanniere.jpg", Path.Combine(pathSerie, "vikingsbanniere.jpg"));
                     retour = true;
                 }
                 else { retour = false; }
             }
             catch
             {
-                MessageBox.Show("Veuillez modifier le chemin d'accès au images dans le fichier app.config et supprimer le dossier 'Images' dans le dossier Debug de l'application.");
+                MessageBox.Show("Veuillez modifier le chemin d'accès au images dans le fichier app.config et supprimer le dossier 'Images' et 'ImagesSerie dans le dossier Debug de l'application. :)");
             }
 
             return retour;
