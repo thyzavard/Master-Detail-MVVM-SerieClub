@@ -1,4 +1,5 @@
-﻿using Projet.Entite.Class;
+﻿using GalaSoft.MvvmLight;
+using Projet.Entite.Class;
 using Projet.Presentation.Forms.Commands;
 using Projet.Presentation.Forms.Events;
 using Projet.Presentation.Forms.Extension;
@@ -15,7 +16,7 @@ using System.Windows.Media.Imaging;
 
 namespace Projet.Presentation.Forms.ViewModel
 {
-    public class ViewSerieViewModel : BaseViewModel
+    public class ViewSerieViewModel : ObservableObject
     {
         #region private
         private UserCourant _user = UserCourant.Instance();
@@ -34,6 +35,7 @@ namespace Projet.Presentation.Forms.ViewModel
         private Serie serieglobal;
         private bool _isVisibleButtonSuppr;
         private Commentaire _selectedCommentaire;
+        private string _selectSaison;
         #endregion
 
         #region Public 
@@ -43,11 +45,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _noteSerie;
             }
-            set
-            {
-                _noteSerie = value;
-                NotifyPropertyChanged(nameof(NoteSerie));
-            }
+            set { Set(() => NoteSerie, ref _noteSerie, value); }
         }
         public string NomSerie
         {
@@ -55,11 +53,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _nomSerie;
             }
-            set
-            {
-                _nomSerie = value;
-                NotifyPropertyChanged(nameof(NomSerie));
-            }
+            set { Set(() => NomSerie, ref _nomSerie, value); }
         }
 
         public string DescriptionSerie
@@ -68,11 +62,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _descriptionSerie;
             }
-            set
-            {
-                _descriptionSerie = value;
-                NotifyPropertyChanged(nameof(DescriptionSerie));
-            }
+            set { Set(() => DescriptionSerie, ref _descriptionSerie, value); }
         }
 
         public string CommentaireSerie
@@ -81,12 +71,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _commentaireSerie;
             }
-            set
-            {
-                _commentaireSerie = value;
-                EnvoyerCommentaireCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(CommentaireSerie));
-            }
+            set { Set(() => CommentaireSerie, ref _commentaireSerie, value); EnvoyerCommentaireCommand.RaiseCanExecuteChanged(); }
         }
         public string SelectedSaison
         {
@@ -94,10 +79,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _selectedSaison;
             }
-            set
-            {
-                _selectedSaison = value;
-            }
+            set { Set(() => SelectedSaison, ref _selectedSaison, value); }
         }
         public string AjoutOuSupprFav
         {
@@ -105,26 +87,18 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _ajoutOuSupprFav;
             }
-            set
-            {
-                _ajoutOuSupprFav = value;
-                NotifyPropertyChanged(nameof(AjoutOuSupprFav));
-            }
+            set { Set(() => AjoutOuSupprFav, ref _ajoutOuSupprFav, value); }
         }
 
-    public ObservableCollection<Commentaire> ListCommentaireSerie { get; set; }
+        public ObservableCollection<Commentaire> ListCommentaireSerie { get; set; }
 
-    public string NbSaison
+        public string NbSaison
         {
             get
             {
                 return _nbSaison;
             }
-            set
-            {
-                _nbSaison = value;
-                NotifyPropertyChanged(nameof(NbSaison));
-            }
+            set { Set(() => NbSaison, ref _nbSaison, value); }
         }
         public string Producteur
         {
@@ -132,11 +106,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _producteur;
             }
-            set
-            {
-                _producteur = value;
-                NotifyPropertyChanged(nameof(Producteur));
-            }
+            set { Set(() => Producteur, ref _producteur, value); }
         }
         public string DureeMoyenne
         {
@@ -144,11 +114,7 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _dureeMoyenne;
             }
-            set
-            {
-                _dureeMoyenne = value;
-                NotifyPropertyChanged(nameof(DureeMoyenne));
-            }
+            set { Set(() => DureeMoyenne, ref _dureeMoyenne, value); }
         }
         public int Note
         {
@@ -156,38 +122,39 @@ namespace Projet.Presentation.Forms.ViewModel
             {
                 return _note;
             }
-            set
-            {
-                _note = value;
-                NoterSerieCommand.RaiseCanExecuteChanged();
-                NotifyPropertyChanged(nameof(Note));
-            }
+            set { Set(() => Note, ref _note, value); NoterSerieCommand.RaiseCanExecuteChanged(); }
         }
-        public string Entetecommentaire
-        {
-            get
-            {
-                return _entetecommentaire;
-            }
-            set
-            {
-                _entetecommentaire = value;
-                NotifyPropertyChanged(nameof(Entetecommentaire));
-            }
-        }
+
         public BitmapImage SourceImageCouverture
         {
             get { return _sourceImageCouverture; }
-            set
-            {
-                _sourceImageCouverture = value;
-                NotifyPropertyChanged(nameof(SourceImageCouverture));
-            }
+            set { Set(() => SourceImageCouverture, ref _sourceImageCouverture, value); }
         }
 
-        public bool IsVisibleButtonSuppr { get { return _isVisibleButtonSuppr; } set { _isVisibleButtonSuppr = value; NotifyPropertyChanged(nameof(IsVisibleButtonSuppr)); } }
+        public bool IsVisibleButtonSuppr
+        {
+            get { return _isVisibleButtonSuppr; }
+            set { Set(() => IsVisibleButtonSuppr, ref _isVisibleButtonSuppr, value); }
+        }
 
-        public Commentaire SelectedCommentaire { get { return _selectedCommentaire; } set { _selectedCommentaire = value; NotifyPropertyChanged(nameof(SelectedCommentaire)); } }
+        public Commentaire SelectedCommentaire
+        {
+            get { return _selectedCommentaire; }
+            set { Set(() => SelectedCommentaire, ref _selectedCommentaire, value); }
+        }
+
+        public List<string> SaisonSerie { get; set; }
+        public List<Episode> ListEpisode { get; set; }
+        public ObservableCollection<Episode> ListAffichier { get; set; }
+
+        public string SelectSaison
+        {
+            get
+            {
+                return _selectSaison;
+            }
+            set { Set(() => SelectSaison, ref _selectSaison, value); afficherEpisode(); }
+        }
         #endregion
 
         #region Command
@@ -200,40 +167,60 @@ namespace Projet.Presentation.Forms.ViewModel
 
         #region SourceImage
         private string _source1;
-        public string Source1 { get { return _source1; } set { _source1 = value; NotifyPropertyChanged(nameof(Source1)); } }
-        
+        public string Source1 { get { return _source1; } set { Set(() => Source1, ref _source1, value); } }
+
         private string _source2;
-        public string Source2 { get { return _source2; } set { _source2 = value; NotifyPropertyChanged(nameof(Source2)); } }
+        public string Source2 { get { return _source2; } set { Set(() => Source2, ref _source2, value); } }
 
         private string _source3;
-        public string Source3 { get { return _source3; } set { _source3 = value; NotifyPropertyChanged(nameof(Source3)); } }
+        public string Source3 { get { return _source3; } set { Set(() => Source3, ref _source3, value); } }
 
         private string _source4;
-        public string Source4 { get { return _source4; } set { _source4 = value; NotifyPropertyChanged(nameof(Source4)); } }
+        public string Source4 { get { return _source4; } set { Set(() => Source4, ref _source4, value); } }
 
         private string _source5;
-        public string Source5 { get { return _source5; } set { _source5 = value; NotifyPropertyChanged(nameof(Source5)); } }
+        public string Source5 { get { return _source5; } set { Set(() => Source5, ref _source5, value); } }
 
         private string _source6;
-        public string Source6 { get { return _source6; } set { _source6 = value; NotifyPropertyChanged(nameof(Source6)); } }
+        public string Source6 { get { return _source6; } set { Set(() => Source6, ref _source6, value); } }
 
         private string _source7;
-        public string Source7 { get { return _source7; } set { _source7 = value; NotifyPropertyChanged(nameof(Source7)); } }
+        public string Source7 { get { return _source7; } set { Set(() => Source7, ref _source7, value); } }
 
         private string _source8;
-        public string Source8 { get { return _source8; } set { _source8 = value; NotifyPropertyChanged(nameof(Source8)); } }
+        public string Source8 { get { return _source8; } set { Set(() => Source8, ref _source8, value); } }
 
         private string _source9;
-        public string Source9 { get { return _source9; } set { _source9 = value; NotifyPropertyChanged(nameof(Source9)); } }
+        public string Source9 { get { return _source9; } set { Set(() => Source9, ref _source9, value); } }
 
         private string _source10;
-        public string Source10 { get { return _source10; } set { _source10 = value; NotifyPropertyChanged(nameof(Source10)); } }
-
-
+        public string Source10 { get { return _source10; } set { Set(() => Source10, ref _source10, value); } }
         #endregion
 
         public ViewSerieViewModel(Serie serie)
         {
+            ListAffichier = new ObservableCollection<Episode>();
+            SaisonSerie = new List<string>();
+            //Ajoute le nombre de saison dans la combobox
+            for(int i=1; i < serie.nbSaison + 1; i++)
+            {
+                SaisonSerie.Add($"Saison {i}");
+            }
+            
+            //Gestion épisode
+            ListEpisode = new List<Episode>();
+            int y = 1;
+            for(int i = 1; i< serie.nbSaison + 1; i++)
+            {
+                for (int o=1 ; o < serie.nbEpisode + 1; o++)
+                {
+                    Episode ep = new Episode(o, $"Episode {y}", $"Saison {i}");
+                    ListEpisode.Add(ep);
+                    y++;
+                }
+            }
+            SelectSaison = "Saison 1";
+
             serieglobal = serie;
             AjouterSerieCommand = new RelayCommand(OnAjouterSerie, CanExecuteAjouterSerie);
             EnvoyerCommentaireCommand = new RelayCommand(OnEnvoyerCommentaire, CanExecuteEnvoyerCommentaire);
@@ -264,8 +251,21 @@ namespace Projet.Presentation.Forms.ViewModel
 
             //Gestion barre de notation
             setSource();
+            
+        }
 
-            setTitreCommentaire();
+        /// <summary>
+        /// Change les épisode afficher selon la saison choisi dans la combobox
+        /// </summary>
+        public void afficherEpisode()
+        {
+            ListAffichier.Clear();
+            var resRecherche = ListEpisode.Where(h => h.saison.Contains(SelectSaison));
+
+            foreach (Episode s in resRecherche)
+            {
+                ListAffichier.Add(s);
+            }
         }
 
         private void OnSupprimerCommentaire(object obj)
@@ -283,13 +283,7 @@ namespace Projet.Presentation.Forms.ViewModel
             return true;
         }
 
-        public void setTitreCommentaire()
-        {
-            if (ListCommentaireSerie.Count != 0)
-            {
-                Entetecommentaire = "COMMENTAIRE";
-            }
-        }
+
 
         /// <summary>
         /// Déclenche un événement permettant de revenir sur l'accueil
@@ -374,7 +368,6 @@ namespace Projet.Presentation.Forms.ViewModel
             serieglobal.commentaire.Add(com);
             GestionBDD.ajouterCommentaireSerie(com);
             ListCommentaireSerie.Add(com);
-            setTitreCommentaire();
             MessageBox.Show("Commentaire enregistré !");
             CommentaireSerie = null;
         }

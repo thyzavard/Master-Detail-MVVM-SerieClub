@@ -111,11 +111,11 @@ namespace Projet.Presentation.Forms.ViewModel
             
         }
 
-        private bool CanExecutetestCommand(object obj)
-        {
-            return true;
-        }
 
+        /// <summary>
+        /// Fonction appelé dès que l'utilisateur entre une lettre dans la combobox de recherche, et compare la liste des série avec ce qu'a écris l'utilisateur et ouvre la viewRecherche et affiche les série correspondante ou non
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnRechercher(object obj)
         {
             if (Recherche == "")

@@ -45,7 +45,8 @@ namespace Projet.Presentation.Forms.ViewModel
         private BitmapImage _imageSerieCourante;
         private BitmapImage _imageSerieModif;
         private Serie _seriemodif;
-
+        private string _nbEpisode;
+        private string _nbEpisodeModif;
         //Gestion image
         private string _path;
         private string _fileName;
@@ -260,6 +261,17 @@ namespace Projet.Presentation.Forms.ViewModel
             get { return _sourceImageModifBanniere; }
             set { Set(() => SourceImageModifBanniere, ref _sourceImageModifBanniere, value); AjouterSerieCommand.RaiseCanExecuteChanged(); ParcourirImageBanniereUpdateCommand.RaiseCanExecuteChanged(); }
         }
+
+        public string NbEpisode
+        {
+                get { return _nbEpisode; }
+                set { Set(() => NbEpisode, ref _nbEpisode, value); AjouterSerieCommand.RaiseCanExecuteChanged(); testSiNumeriqueAdd(); }
+        }
+        public string NbEpisodeModif
+        {
+            get { return _nbEpisodeModif; }
+            set { Set(() => NbEpisodeModif, ref _nbEpisodeModif, value); ModifierSerieCommand.RaiseCanExecuteChanged(); testSiNumeriqueModif(); }
+        }
         #endregion
 
         public WindowAddViewModel()
@@ -290,52 +302,7 @@ namespace Projet.Presentation.Forms.ViewModel
             QuitCommand = new RelayCommand(OnQuit, CanExecuteQuit);
         }
 
-        private void OnParcourirImageBanniereUpdate(object obj)
-        {
-            _openFileBanniereModif.Title = "Selectionner une image";
-            _openFileBanniereModif.DefaultExt = "jpg";
-            _openFileBanniereModif.Filter = " Fichier JPG (*.jpg)|*.jpg";
-            if (_openFileBanniereModif.ShowDialog() == true)
-            {
-                //ImageSerieCourante = new BitmapImage(new Uri(_openFile.FileName));
-                _fileNameBanniereModif = Path.GetFileName(_openFileBanniereModif.FileName);
-                //Aperçu de l'image
-                SourceImageModifBanniere = Path.GetFullPath(_openFileBanniereModif.FileName);
-            }
-        }
-
-        private bool CanExecuteParcourirImageBanniereUpdate(object obj)
-        {
-            if (SelectSerie == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        private void OnParcourirImageBanniereAdd(object obj)
-        {
-            _openFileBanniere.Title = "Selectionner une image";
-            _openFileBanniere.DefaultExt = "jpg";
-            _openFileBanniere.Filter = " Fichier JPG (*.jpg)|*.jpg";
-            if (_openFileBanniere.ShowDialog() == true)
-            {
-                //ImageSerieCourante = new BitmapImage(new Uri(_openFile.FileName));
-                _fileNameBanniere = Path.GetFileName(_openFileBanniere.FileName);
-                //Aperçu de l'image
-                SourceImageBanniere = Path.GetFullPath(_openFileBanniere.FileName);
-            }
-        }
-
-        private bool CanExecuteParcourirImageBanniereAdd(object obj)
-        {
-            return true;
-        }
-
-        //Fonctions utilitaires
+        #region Fonctions utilitaires
         public void chargerListSerie()
         {
             Listserie = GestionBDD.returnTouteSerie();
@@ -350,6 +317,7 @@ namespace Projet.Presentation.Forms.ViewModel
             ProducteurSerie = null;
             NbSaison = null;
             DureeMoyenneSerie = null;
+            NbEpisode = "";
         }
         public void setChampModifNull()
         {
@@ -361,6 +329,7 @@ namespace Projet.Presentation.Forms.ViewModel
             NbSaisonModif = null;
             Dureemoyenneseriemodif = null;
             SourceImageModifBanniere = null;
+            NbEpisodeModif = "";
         }
         public void remplirSerieModif()
         {
@@ -372,9 +341,32 @@ namespace Projet.Presentation.Forms.ViewModel
             NbSaisonModif = _seriemodif.nbSaison.ToString();
             SourceImageModif = _seriemodif.ImageSerie.ToString();
             SourceImageModifBanniere = _seriemodif.Banniereserie.ToString();
+            NbEpisodeModif = _seriemodif.nbEpisode.ToString();
         }
+        public void testSiNumeriqueAdd()
+        {
+            if (NbEpisode != "")
+            {
+                if (!int.TryParse(NbEpisode, out _result) == true)
+                {
+                    NbEpisode = "0";
+                    MessageBox.Show("Merci de ne rentrer que des chiffres");
+                }
+            }
+        }
+        public void testSiNumeriqueModif()
+        {
+            if (NbEpisodeModif != "")
+            {
+                if (!int.TryParse(NbEpisodeModif, out _result) == true)
+                {
+                    NbEpisodeModif = "0";
+                    MessageBox.Show("Merci de ne rentrer que des chiffres");
+                }
+            }
+        }
+        #endregion
 
-        //Fonctions Commandes
         private void OnQuit(object obj)
         {
             WindowClosedEvent.GetInstance().OnWindowClosedHandler(EventArgs.Empty);
@@ -385,52 +377,11 @@ namespace Projet.Presentation.Forms.ViewModel
             return true;
         }
 
-        private void OnParcourirImageUpdate(object obj)
-        {
-            _openFileModif.Title = "Selectionner une image";
-            _openFileModif.DefaultExt = "jpg";
-            _openFileModif.Filter = " Fichier JPG (*.jpg)|*.jpg";
-            if (_openFileModif.ShowDialog() == true)
-            {
-                //ImageSerieModif = new BitmapImage(new Uri(_openFileModif.FileName));
-                _fileNameModif = Path.GetFileName(_openFileModif.FileName);
-                //Aperçu de l'image
-                SourceImageModif = Path.GetFullPath(_openFileModif.FileName);
-                _verif = true;
-            }
-        }
-
-        private bool CanExecuteParcourirImageUpdate(object obj)
-        {
-            if (SelectSerie == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        private void OnParcourirImageAdd(object obj)
-        {
-            _openFile.Title = "Selectionner une image";
-            _openFile.DefaultExt = "jpg";
-            _openFile.Filter = " Fichier JPG (*.jpg)|*.jpg";
-            if (_openFile.ShowDialog() == true)
-            {
-                //ImageSerieCourante = new BitmapImage(new Uri(_openFile.FileName));
-                _fileName = Path.GetFileName(_openFile.FileName);
-                //Aperçu de l'image
-                SourceImage = Path.GetFullPath(_openFile.FileName);
-            }
-        }
-
-        private bool CanExecuteParcourirImageAdd(object obj)
-        {
-            return true;
-        }
-
+        #region Modération
+        /// <summary>
+        /// Dégrade un utilisateur du poste de modérateur
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnDownAdmin(object obj)
         {
             if (MessageBox.Show($"Voulez vous désister {Selectpseudo} du poste de modérateur ?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -457,7 +408,10 @@ namespace Projet.Presentation.Forms.ViewModel
                 return false;
             }
         }
-
+        /// <summary>
+        /// Promouvois un utilisateur au poste de modérateur
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnUpAdmin(object obj)
         {
             if (MessageBox.Show($"Voulez vous promouvoir {Selectpseudo} au poste de modérateur ?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -484,7 +438,13 @@ namespace Projet.Presentation.Forms.ViewModel
                 return false;
             }
         }
+        #endregion
 
+        #region Suppression Série
+        /// <summary>
+        /// Supprime la série selectionné
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnSupprmierSerie(object obj)
         {
             if (MessageBox.Show($"Voulez vous vraiment supprimer la série : {Selectseriesuppr} ?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -516,8 +476,14 @@ namespace Projet.Presentation.Forms.ViewModel
                 return false;
             }
         }
+        #endregion
 
+        #region Modification Série
         //COMMANDE MODIFIER SERIE
+        /// <summary>
+        /// Vérifie si la duree moyenne et le nombre de saison sont bien des chiffres. Si oui la série est modifié
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnModifierSerie(object obj)
         {
             if (int.TryParse(Dureemoyenneseriemodif, out _result) == true)
@@ -537,7 +503,7 @@ namespace Projet.Presentation.Forms.ViewModel
                             {
                                 File.Copy(_openFileModif.FileName, Path.Combine(_path, _fileNameModif));
                                 File.Copy(_openFileBanniereModif.FileName, Path.Combine(_path, _fileNameBanniereModif));
-                                GestionBDD.updateSerie(SelectSerie, Descriptionseriemodif, int.Parse(Dureemoyenneseriemodif), Producteurseriemodif, Selectgenremodif, _fileNameModif, int.Parse(NbSaisonModif), _fileNameBanniereModif);
+                                GestionBDD.updateSerie(SelectSerie, Descriptionseriemodif, int.Parse(Dureemoyenneseriemodif), Producteurseriemodif, Selectgenremodif, _fileNameModif, int.Parse(NbSaisonModif), _fileNameBanniereModif, int.Parse(NbEpisodeModif));
                                 MessageBox.Show("Modification enrgistrée");
                                 RefreshEvent.GetInstance().OnRefreshAcceuilHandler(EventArgs.Empty);
                                 setChampModifNull();
@@ -546,7 +512,7 @@ namespace Projet.Presentation.Forms.ViewModel
                     }
                     else
                     {
-                        GestionBDD.updateSeriesansImage(SelectSerie, Descriptionseriemodif, int.Parse(Dureemoyenneseriemodif), Producteurseriemodif, Selectgenremodif, int.Parse(NbSaisonModif));
+                        GestionBDD.updateSeriesansImage(SelectSerie, Descriptionseriemodif, int.Parse(Dureemoyenneseriemodif), Producteurseriemodif, Selectgenremodif, int.Parse(NbSaisonModif), int.Parse(NbEpisodeModif));
                         MessageBox.Show("Modification enrgistrée");
                         RefreshEvent.GetInstance().OnRefreshAcceuilHandler(EventArgs.Empty);
                         setChampModifNull();
@@ -589,7 +555,66 @@ namespace Projet.Presentation.Forms.ViewModel
             }
         }
 
+        private void OnParcourirImageUpdate(object obj)
+        {
+            _openFileModif.Title = "Selectionner une image";
+            _openFileModif.DefaultExt = "jpg";
+            _openFileModif.Filter = " Fichier JPG (*.jpg)|*.jpg";
+            if (_openFileModif.ShowDialog() == true)
+            {
+                //ImageSerieModif = new BitmapImage(new Uri(_openFileModif.FileName));
+                _fileNameModif = Path.GetFileName(_openFileModif.FileName);
+                //Aperçu de l'image
+                SourceImageModif = Path.GetFullPath(_openFileModif.FileName);
+                _verif = true;
+            }
+        }
+
+        private bool CanExecuteParcourirImageUpdate(object obj)
+        {
+            if (SelectSerie == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private void OnParcourirImageBanniereUpdate(object obj)
+        {
+            _openFileBanniereModif.Title = "Selectionner une image";
+            _openFileBanniereModif.DefaultExt = "jpg";
+            _openFileBanniereModif.Filter = " Fichier JPG (*.jpg)|*.jpg";
+            if (_openFileBanniereModif.ShowDialog() == true)
+            {
+                //ImageSerieCourante = new BitmapImage(new Uri(_openFile.FileName));
+                _fileNameBanniereModif = Path.GetFileName(_openFileBanniereModif.FileName);
+                //Aperçu de l'image
+                SourceImageModifBanniere = Path.GetFullPath(_openFileBanniereModif.FileName);
+            }
+        }
+
+        private bool CanExecuteParcourirImageBanniereUpdate(object obj)
+        {
+            if (SelectSerie == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        #endregion
+
+        #region Ajout Série
         //COMMANDE AJOUT SERIE
+        /// <summary>
+        /// Vérifié que la durée moyenne et le nombre de saison sont bien des chiffres. Si oui la série est ajouté
+        /// </summary>
+        /// <param name="obj"></param>
         private void OnAjouterSerie(object obj)
         {
             if (GestionBDD.verifSerie(NomSerie))
@@ -612,7 +637,7 @@ namespace Projet.Presentation.Forms.ViewModel
                             CheckImageSerie();
                             CheckBanniereSerie();
 
-                            GestionBDD.ajouter_Serie(NomSerie, DescriptionSerie, SelectGenre, ProducteurSerie, int.Parse(DureeMoyenneSerie), int.Parse(NbSaison), _fileName, _fileNameBanniere);
+                            GestionBDD.ajouter_Serie(NomSerie, DescriptionSerie, SelectGenre, ProducteurSerie, int.Parse(DureeMoyenneSerie), int.Parse(NbSaison), _fileName, _fileNameBanniere, int.Parse(NbEpisode));
                             Listserie.Add(NomSerie);
                             chargerListSerie();
                             MessageBox.Show("Ajout enregistrée", "Confirmation", MessageBoxButton.OK);
@@ -636,11 +661,50 @@ namespace Projet.Presentation.Forms.ViewModel
         }
         private bool CanexecuteAjouterSerie(object obj)
         {
-            if (NomSerie != null && DescriptionSerie != null && ProducteurSerie != null && DureeMoyenneSerie != null && SelectGenre != null && SourceImage != null && SourceImageBanniere != null)
+            if (NomSerie != null && DescriptionSerie != null && ProducteurSerie != null && DureeMoyenneSerie != null && SelectGenre != null && SourceImage != null && SourceImageBanniere != null && NbEpisode != null)
             {
                 return true;
             }
             return false;
         }
+
+        private void OnParcourirImageAdd(object obj)
+        {
+            _openFile.Title = "Selectionner une image";
+            _openFile.DefaultExt = "jpg";
+            _openFile.Filter = " Fichier JPG (*.jpg)|*.jpg";
+            if (_openFile.ShowDialog() == true)
+            {
+                //ImageSerieCourante = new BitmapImage(new Uri(_openFile.FileName));
+                _fileName = Path.GetFileName(_openFile.FileName);
+                //Aperçu de l'image
+                SourceImage = Path.GetFullPath(_openFile.FileName);
+            }
+        }
+        private bool CanExecuteParcourirImageAdd(object obj)
+        {
+            return true;
+        }
+
+        private void OnParcourirImageBanniereAdd(object obj)
+        {
+            _openFileBanniere.Title = "Selectionner une image";
+            _openFileBanniere.DefaultExt = "jpg";
+            _openFileBanniere.Filter = " Fichier JPG (*.jpg)|*.jpg";
+            if (_openFileBanniere.ShowDialog() == true)
+            {
+                //ImageSerieCourante = new BitmapImage(new Uri(_openFile.FileName));
+                _fileNameBanniere = Path.GetFileName(_openFileBanniere.FileName);
+                //Aperçu de l'image
+                SourceImageBanniere = Path.GetFullPath(_openFileBanniere.FileName);
+            }
+        }
+
+        private bool CanExecuteParcourirImageBanniereAdd(object obj)
+        {
+            return true;
+        }
+        #endregion
     }
+
 }

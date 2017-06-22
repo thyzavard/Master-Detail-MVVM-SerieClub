@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commentaire.cs" />
+    <Compile Include="Episode.cs" />
     <Compile Include="Genre.cs" />
     <Compile Include="Serie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

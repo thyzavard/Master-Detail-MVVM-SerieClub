@@ -16,7 +16,7 @@ namespace Projet.Service.Fonctions
 {
     public class GestionBDD
     {
-        private static SqlConnection con = new SqlConnection($@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={ConfigurationManager.AppSettings["BDDPAth"]};Integrated Security=True");
+        private static SqlConnection con = new SqlConnection($@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={ConfigurationManager.AppSettings["BDDPath"]};Integrated Security=True");
 
         #region Utilisateur
         /// <summary>
@@ -26,7 +26,7 @@ namespace Projet.Service.Fonctions
         public static void remplirUserCourant(string pseudo)
         {
             con.Open();
-            
+
             //*****Récupération de la description de l'utilisateur courant*****
             SqlCommand cmddesc = new SqlCommand("Select Description From Utilisateur where Pseudo='" + pseudo + "' ", con);
             SqlDataReader dr = cmddesc.ExecuteReader();
@@ -219,11 +219,11 @@ namespace Projet.Service.Fonctions
         /// <param name="nbsaison">Nombre de saisons de la série</param>
         /// <param name="path">Chemin de l'image de la série</param>
         /// <param name="banniere">Chemin de la bannière de la série</param>
-        public static void ajouter_Serie(string nom, string desc, string genre, string producteur, int dureemoy, int nbsaison, string path, string banniere)
+        public static void ajouter_Serie(string nom, string desc, string genre, string producteur, int dureemoy, int nbsaison, string path, string banniere, int nbep)
         {
             desc = desc.Replace("'", "''");
             con.Open();
-            var command = new SqlCommand("Insert into Serie (Nom, Description, Genre, Note, Producteur, DureeMoyenne, PhotoSerie, NbSaison, PathBanniere) values('" + nom + "', '" + desc + "', '" + genre + "','" + 0 + "','" + producteur + "','" + dureemoy + "','" + path + "', '" + nbsaison + "', '"+banniere+"') ", con);
+            var command = new SqlCommand("Insert into Serie (Nom, Description, Genre, Note, Producteur, DureeMoyenne, PhotoSerie, NbSaison, PathBanniere, NbEpisode) values('" + nom + "', '" + desc + "', '" + genre + "','" + 0 + "','" + producteur + "','" + dureemoy + "','" + path + "', '" + nbsaison + "', '" + banniere + "', '" + nbep + "') ", con);
             command.ExecuteNonQuery();
             con.Close();
         }
@@ -333,6 +333,12 @@ namespace Projet.Service.Fonctions
                 dr.Read();
                 serie.Banniereserie = new BitmapImage(new Uri($"{AppDomain.CurrentDomain.BaseDirectory}/ImagesSerie/{dr.GetString(0)}"));
                 dr.Close();
+                //Nombre d'épisode
+                SqlCommand cmdep = new SqlCommand("Select NbEpisode from Serie where Nom='" + list[i] + "'", con);
+                dr = cmdep.ExecuteReader();
+                dr.Read();
+                serie.nbEpisode = dr.GetInt32(0);
+                dr.Close();
                 //Commentaire
                 using (var cmd = new SqlCommand("Select * from Commentaire where NomSerie='" + list[i] + "'", con))
                 {
@@ -431,6 +437,11 @@ namespace Projet.Service.Fonctions
             dr.Read();
             serie.Banniereserie = new BitmapImage(new Uri($"{AppDomain.CurrentDomain.BaseDirectory}/ImagesSerie/{dr.GetString(0)}"));
             dr.Close();
+            SqlCommand cmdep = new SqlCommand("Select NbEpisode from Serie where Nom='" + nom + "'", con);
+            dr = cmdep.ExecuteReader();
+            dr.Read();
+            serie.nbEpisode = dr.GetInt32(0);
+            dr.Close();
             //Commentaire
             using (var cmd = new SqlCommand("Select * from Commentaire where NomSerie='" + nom + "'", con))
             {
@@ -467,11 +478,11 @@ namespace Projet.Service.Fonctions
         /// <param name="path">Chemin de l'image à modifier</param>
         /// <param name="nbsaison">Nombre de saison à modifier</param>
         /// <param name="banniere">Chemon de la banniere à modifier</param>
-        public static void updateSerie(string nom, string desc, int dureMoy, string producteur, string genre, string path, int nbsaison, string banniere)
+        public static void updateSerie(string nom, string desc, int dureMoy, string producteur, string genre, string path, int nbsaison, string banniere, int nbep)
         {
             desc = desc.Replace("'", "''");
             con.Open();
-            SqlCommand cmd = new SqlCommand("Update Serie set Description ='" + desc + "', Producteur ='" + producteur + "', Genre ='" + genre + "', DureeMoyenne ='" + dureMoy + "', PhotoSerie='" + path + "', NbSaison='" + nbsaison + "', '"+banniere+"' where Nom='" + nom + "'", con);
+            SqlCommand cmd = new SqlCommand("Update Serie set Description ='" + desc + "', Producteur ='" + producteur + "', Genre ='" + genre + "', DureeMoyenne ='" + dureMoy + "', PhotoSerie='" + path + "', NbSaison='" + nbsaison + "', '" + banniere + "', NbEpisode='" + nbep + "' where Nom='" + nom + "'", con);
             cmd.ExecuteNonQuery();
             con.Close();
         }
@@ -484,11 +495,11 @@ namespace Projet.Service.Fonctions
         /// <param name="producteur"></param>
         /// <param name="genre"></param>
         /// <param name="nbsaison"></param>
-        public static void updateSeriesansImage(string nom, string desc, int dureMoy, string producteur, string genre, int nbsaison)
+        public static void updateSeriesansImage(string nom, string desc, int dureMoy, string producteur, string genre, int nbsaison, int nbep)
         {
             desc = desc.Replace("'", "''");
             con.Open();
-            SqlCommand cmd = new SqlCommand("Update Serie set Description ='" + desc + "', Producteur ='" + producteur + "', Genre ='" + genre + "', DureeMoyenne ='" + dureMoy + "', NbSaison='" + nbsaison + "' where Nom='" + nom + "'", con);
+            SqlCommand cmd = new SqlCommand("Update Serie set Description ='" + desc + "', Producteur ='" + producteur + "', Genre ='" + genre + "', DureeMoyenne ='" + dureMoy + "', NbSaison='" + nbsaison + "', NbEpisode='" + nbep + "' where Nom='" + nom + "'", con);
             cmd.ExecuteNonQuery();
             con.Close();
         }
@@ -830,7 +841,7 @@ namespace Projet.Service.Fonctions
             var reader = command.ExecuteReader();
             reader.Read();
             int note = reader.GetInt32(0);
-           
+
             con.Close();
             return note;
         }
@@ -875,7 +886,7 @@ namespace Projet.Service.Fonctions
             con.Open();
             int recup = (int)command.ExecuteScalar();
             con.Close();
-            if(recup >= 1)
+            if (recup >= 1)
             {
                 return false;
             }
@@ -885,5 +896,6 @@ namespace Projet.Service.Fonctions
             }
         }
         #endregion
+
     }
 }

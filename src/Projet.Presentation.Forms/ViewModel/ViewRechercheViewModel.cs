@@ -51,7 +51,11 @@ namespace Projet.Presentation.Forms.ViewModel
         public RelayCommand InfoSerieCommand { get; private set; }
         #endregion
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rechercheserie">IEnumerable<Serie> qui correspondent à la recherche de l'utilisateur</param>
+        /// <param name="txt">Texte recherché par l'utilisateur</param>
         public ViewRechercheViewModel(IEnumerable<Serie> rechercheserie, string txt)
         {
             RetourArriereCommand = new RelayCommand(OnRetourArriere, CanExecuteRetourArriere);

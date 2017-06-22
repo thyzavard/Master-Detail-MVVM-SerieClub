@@ -88,9 +88,7 @@
     <Compile Include="Events\WindowClosedEvent.cs" />
     <Compile Include="Events\WindowAccClosedEvent.cs" />
     <Compile Include="Extension\ObservableExtension.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="ViewModel\ViewRechercheViewModel.cs" />
     <Compile Include="ViewModel\ViewSerieViewModel.cs" />
     <Compile Include="ViewModel\WindowAccViewModel.cs" />

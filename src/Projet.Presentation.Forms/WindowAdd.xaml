@@ -30,6 +30,8 @@
                         <ComboBox Width="120" ItemsSource="{Binding GenreSource}" SelectedItem="{Binding SelectGenre, Mode=TwoWay}"/>
                         <Label HorizontalContentAlignment="Center">Nombre de saisons</Label>
                         <TextBox Width="120" MaxLength="10" Text="{Binding NbSaison, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <Label HorizontalAlignment="Center">Nombre d'épisodes par saisons</Label>
+                        <TextBox Width="120" MaxLength="10" Text="{Binding NbEpisode, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label HorizontalAlignment="Center">Producteur</Label>
                         <TextBox Width="120" MaxLength="80" Text="{Binding ProducteurSerie, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
                         <Label HorizontalAlignment="Center">Durée moyenne des épisodes</Label>
@@ -81,9 +83,10 @@
                         <TextBox Width="200" Height="50" MaxLength="1000" Text="{Binding Descriptionseriemodif, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"/>
                         <Label HorizontalAlignment="Center">Genre</Label>
                         <ComboBox Width="120" ItemsSource="{Binding GenreSource}" SelectedItem="{Binding Selectgenremodif}" ></ComboBox>
-                        <Label HorizontalContentAlignment="Center">Nombre de saisons
-                        </Label>
+                        <Label HorizontalContentAlignment="Center">Nombre de saisons</Label>
                         <TextBox Width="120" MaxLength="10" Text="{Binding NbSaisonModif, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label HorizontalAlignment="Center">Nombre d'épisodes par saisons</Label>
+                        <TextBox Width="120" MaxLength="10" Text="{Binding NbEpisodeModif, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label HorizontalAlignment="Center">Producteur</Label>
                         <TextBox Width="120" MaxLength="80" Text="{Binding Producteurseriemodif, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                         <Label HorizontalAlignment="Center" >Durée moyenne des épisodes</Label>

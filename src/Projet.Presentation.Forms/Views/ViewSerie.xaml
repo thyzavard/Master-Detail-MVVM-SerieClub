@@ -56,14 +56,85 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="250">
+                <StackPanel Grid.ColumnSpan="3">
+
+                    <StackPanel Orientation="Horizontal" Margin="10,5,0,-20">
+                        <TextBlock Text="{Binding Producteur}" ToolTip="Producteur" FontWeight="Bold"/>
+                        <TextBlock Text=" • " FontWeight="Bold"/>
+                        <TextBlock Text="{Binding NbSaison}" FontWeight="Bold"/>
+                        <TextBlock Text=" Saisons" FontWeight="Bold"/>
+                    </StackPanel>
+                    <TextBlock Text="{Binding DescriptionSerie}" HorizontalAlignment="Center" FontSize="12" TextWrapping="Wrap" TextAlignment="Justify" Margin="10,0,0,0"/>
+                    
+                </StackPanel>
+
+                <!--Gestion épisode -->
+                <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="0,30,0,30">
+
+                    <Grid Margin="10">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="FormatListBulleted" Margin="0,3,10,0"/>
+                            <TextBlock Text="EPISODES" FontWeight="DemiBold"/>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Right">
+                            <ComboBox ItemsSource="{Binding SaisonSerie}" SelectedItem="{Binding SelectSaison}" HorizontalAlignment="Right"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <ListBox Grid.Row="5" Grid.ColumnSpan="3" Background="Transparent" BorderBrush="Transparent" ItemsSource="{Binding ListAffichier, Mode=TwoWay}" HorizontalAlignment="Center">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="10">
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding numeroEp}"/>
+                                        <TextBlock Text="           -           "/>
+                                        <TextBlock Text="{Binding nomEp}"/>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                </StackPanel>
+                <!--*******************-->
+                
+                <StackPanel Grid.Column="2" Grid.RowSpan="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,30,0,30">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source1}"/>
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source2}"/>
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source3}"/>
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source4}"/>
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source5}"/>
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source6}"/>
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source7}"/>
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source8}"/>
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source9}"/>
+                        <Image Margin="0,5" Height="20" Width="20" Source="{Binding Source10}"/>
+                    </StackPanel>
+
+                    <Slider Maximum="10" Width="160" Value="{Binding Note, Mode=TwoWay}" ToolTip="Il faut avoir la série en favoris afin de pouvoir voter."/>
+                    <Button Width="120" Margin="0,10,0,0" Content="Noter" Command="{Binding NoterSerieCommand}"/>
+
+                </StackPanel>
+                
+                <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Height="250">
                     <StackPanel>
                         <TextBlock TextDecorations="Underline" HorizontalAlignment="Center" FontWeight="UltraBlack">DESCRIPTION</TextBlock>
                         <TextBlock Text="{Binding DescriptionSerie}" HorizontalAlignment="Center" Width="210" FontSize="12" TextWrapping="Wrap" TextAlignment="Justify"/>
@@ -106,9 +177,17 @@
                     <Slider Maximum="10" Width="160" Value="{Binding Note, Mode=TwoWay}" ToolTip="Il faut avoir la série en favoris afin de pouvoir voter."/>
                     <Button Width="120" Margin="0,10,0,0" Content="Noter" Command="{Binding NoterSerieCommand}"/>
 
-                </StackPanel>
+                </StackPanel>-->
 
-                <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center">
+                <!--COMMENTAIRE-->
+                <!--<TextBlock FontWeight="UltraBlack" Grid.Row="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0,20,0,0" Text="{Binding Entetecommentaire}" TextDecorations="Underline"/>-->
+                <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="5,0,0,0">
+                    <materialDesign:PackIcon Kind="EmoticonHappy" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+                    <TextBlock FontWeight="UltraBlack"  Margin="5,20,0,0" Text="COMMENTAIRE"/>
+                </StackPanel>
+                
+                
+                <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center">
                     <TextBox Margin="0,25,0,0" Width="400" Height="50" Text="{Binding CommentaireSerie, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" ToolTip="Il faut avoir la série en favoris afin de pouvoir donner son avis sur celle-ci.">
                         <TextBox.Style>
                             <Style TargetType="TextBox">
@@ -133,10 +212,7 @@
                     <Button Command="{Binding EnvoyerCommentaireCommand}"  Height="30" Width="100" HorizontalAlignment="Right" Margin="0,10,0,0">Envoyer !</Button>
                 </StackPanel>
 
-
-                <TextBlock FontWeight="UltraBlack" Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0,20,0,0" Text="{Binding Entetecommentaire}" TextDecorations="Underline"></TextBlock>
-
-                <ListView Grid.Row="4" Grid.ColumnSpan="3" Background="Transparent" BorderBrush="Transparent" ItemsSource="{Binding ListCommentaireSerie}" SelectedItem="{Binding SelectedCommentaire}" HorizontalAlignment="Center">
+                <ListView Grid.Row="5" Grid.ColumnSpan="3" Background="Transparent" BorderBrush="Transparent" ItemsSource="{Binding ListCommentaireSerie}" SelectedItem="{Binding SelectedCommentaire}" HorizontalAlignment="Center">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel/>
@@ -152,7 +228,7 @@
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Button BorderBrush="Red" Command="{Binding DataContext.SupprimerCommentaireCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" Visibility="{Binding DataContext.IsVisibleButtonSuppr, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=ListBox}}" ToolTip="Suppimer ce commentaire">
+                                    <Button BorderBrush="Red" Margin="0,5,0,0" Command="{Binding DataContext.SupprimerCommentaireCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" Visibility="{Binding DataContext.IsVisibleButtonSuppr, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=ListBox}}" ToolTip="Suppimer ce commentaire">
                                         <Button.Content>
                                             <materialDesign:PackIcon Kind="Delete"/>
                                         </Button.Content>
