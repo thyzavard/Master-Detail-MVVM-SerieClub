@@ -1,2 +1,5 @@
-# Serie Club
-# Author : Thomas Yzavard and Thomas Deffradas
+# Serie Club Master Detail
+
+
+
+#Confi
