@@ -10,3 +10,4 @@ Répertorie des séries télévisées par genre, un système de connexion est pr
   * La variable ImagesPath correspond au chemon relatif du fichier 'Images' dans le projet 'Projet.Presentations.Forms'
   * La variable PathImagesSerie correspond au chemin relatif du fichier "ImagesSerie" dans le projet "Projet.Presentation.Forms"
 
+* Définir le projet "Projet.Presentation.Forms" comme projet de démarrage
